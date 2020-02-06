@@ -1,0 +1,28 @@
+{
+  "name": "snekql",
+  "version": "1.0.0",
+  "description": "SnekQL is a multi-paradigm query language oriented towards data science. Pragmatic and intuitive, our language is intended to provide a simple yet powerful way of manipulating (representing &amp; visualizing) data.",
+  "main": "index.js",
+  "dependencies": {
+    "jest": "^25.1.0",
+    "ohm-js": "^0.14.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jennashea/snekql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jennashea/snekql/issues"
+  },
+  "homepage": "https://github.com/jennashea/snekql#readme"
+}
