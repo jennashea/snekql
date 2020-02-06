@@ -1,6 +1,6 @@
 # Snekql
 
-![SnekQL Logo](docs/images/SnekqlLogoOff.png)
+![SnekQL Logo](docs/images/snekQLLogoOff.png)
 
 ## Introduction
 
