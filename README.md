@@ -38,7 +38,7 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 ### Characters: `char`
 
-`char charValue = z`
+`char charValue = 'z'`
 
 ### Matrices: `matrix`
 
@@ -57,31 +57,40 @@ matrix matrixExample = [ 1, 2, 3,
 
 ## Operators
 
-### Additive Operators: `+, -`
+### Additive Operators: `+, -, +=, -=`
 
-````
-int addition = 9 + 10
-int subtraction = 5 - 1
-````
-
-### Multiplicative Operators: `*, /, %`
-
-````
-int multiplication = 7 * 81
-int division = 54 / 6
-int modulus =  79 % 11
+````python
+int addition = 9 + 10  # 19
+int subtraction = 5 - 1  # 4
+subtraction += 1  # 5
+addition -= 3  # 16
+string greeting = "Hi"
+char let = 't'
+string please = greeting + let  # 'Hit'
+please += ' me'  # 'Hit me'
 ````
 
-### Relational Operators and Reference Equality: `<, >, <=, >=, ==, !=, =`
+### Multiplicative Operators: `*, /, %, *=, /=, **`
 
+````python
+int multiplication = 7 * 81  # 567
+int division = 54 / 6  # 9
+int modulus =  79 % 11  # 2
+division *= 3  # 27
+multiplication /= 21  # 27
+string batman = "Na" * 20  # "NaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNa"
 ````
+
+### Relational Operators and Reference Equality: `<, >, <=, >=, ==, !=`
+
+````python
     22 > 1
-    5.2 != 4.9
+    5.2 != 4.9  
 ````
 
 ### Logic and Prefix Operators: `and, or, not, !`
 
-````
+````python
     bool truthy = true and true
     bool falsy = not true
 ````
@@ -90,8 +99,7 @@ int modulus =  79 % 11
 
 ### `for` Loop
 
-````
-    int i = 0
+````python
     string uni = "Loyola Marymount"
 
     for i in uni:
@@ -100,22 +108,22 @@ int modulus =  79 % 11
 
 ### `while` Loop
 
-````
+````python
     int j = 10
-    double naught = 0.0
+    dub naught = 0.0
 
     while true:
-        naught = naught + 2.7
-        j--
+        naught += 2.7
+        j -= 1
 ````
 
 ### `if/else` Loop
 
-````
+````python
     int k = 100
     int l = 62
 
-    if k == l: 
+    if k == l:
         print("Values are Equal")
     else
         someEqualizerFunc(k, l)
