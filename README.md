@@ -173,4 +173,102 @@ print("Values are Equal") if k -l == 38 else anotherEqualizerFunc(k, l)
 
 ## Example Programs
 
-TBD
+### Area of a Circle:
+
+````python
+def areaOfACircle(radius):
+    dub pi = 3.14
+    return pi * radius ** 2 #Precendence follows PEMDAS
+````
+
+### Fibonacci + Load to Column Obejct:
+
+````python
+numberOfTerms = 10
+array = []
+fibonacciNumbers = column("Numbers", array, True, True)
+
+def fibonacci(n):
+   if n <= 1:
+       return n
+   else:
+       return(fibonacci(n-1) + fibonacci(n-2))
+
+def addValuesToColumn():
+    for i in range(numberOfTerms):
+       array.append(fibonacci(i))
+````
+
+### Table Creation for Pythagorean Triples:
+
+````python
+legAValues = []
+legBValues = []
+hypotenuseValues = []
+
+legsA = column("Legs", legAValues, True, True)
+legsB = column("Legs", legbValues, True, True)
+hypotenuses = column("Hyptonuses", hypotenuseValues, True, True)
+
+pythagoreanTriples = tabulate(legsA, legsB, hypotenuses)
+
+def pythagoreanTriplets(limit):
+    hypotenuse = 0
+    two = 2
+
+    while hypotenuse < limit:
+        for i in range(1, two) :
+            legA = two * two - i * i
+            legB = 2 * two * i
+            hypotenuse = two * two + i * i
+
+            if hypotenuse > limit:
+                break
+            legsA.addRow(legA)
+            legsB.addRow(legB)
+            hypotenuses.addRow(hypotenuse)
+        two += 1
+
+pythagoreanTriplets(20)
+````
+
+### Rule Creation for Tables:
+
+````python
+array = [32, 7, 60, 100, 5]
+digits = column("Double Digits", array, True, True)
+def removeSingleDigitValues(oldColumn):
+    parsedColumn = oldColumn
+    i = 0
+
+    for i in column:
+        parsedColumn.addRow(oldColumn[i]) if column[i] >= 10 else column.addRule(column[i] < 10)
+
+    return parsedColumn
+
+removeSingleDigitValues(digits)
+````
+
+### Sorting Column with Bubble Sort Algorithm:
+
+````python
+values = column("List of Numbers", [22, 23434, 2332, 7543, 10132], True, True)
+
+def bubbleSort(column):
+    length  = 0
+    switch  = True
+
+    for i in column:
+        length += 1
+
+    while switch:
+        switch = False
+        for i in range(length - 1):
+            if column[i] > column[i + 1]:
+                temp = column[i]
+                column[i] = column[i + 1]
+                column[i + 1] = temp
+                switch  = True
+
+bubbleSort(values)
+````
