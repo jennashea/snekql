@@ -6,7 +6,7 @@
 
 SnekQL is a multi-paradigm query language oriented towards data science. Pragmatic and intuitive, our language is intended to provide a simple yet powerful way of manipulating (representing &amp; visualizing) data.
 
-SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Alvin Lai, Imani Martin, Qiyue, and Jared Rebuyon.**
+SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Alvin Lai, Imani Martin, Qiyue Aixinjueluo, and Jared Rebuyon.**
 
 ## Features
 
