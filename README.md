@@ -57,7 +57,8 @@ array[1]  # 3
 ### Rules: 'rul'
 
 ````python
-    rule1 =
+    rule1 = @ > 0  # @ represents the variable to be passed in.
+    rule2 = @ == "Jenna"
 ````
 
 ### Columns: 'col'
@@ -69,7 +70,7 @@ array[1]  # 3
     firstName.notNone  # True
     firstName.unique  # True
     firstName.addRow("Brandon")  # ["Jenna", "Jared", "Brandon"]
-    firstName.addRule()
+    firstName.addRule(@ != "Jenna")  # Rule 1 not satisfied for row 1.
 ````
 
 ### Tables 'tbl'
@@ -80,7 +81,8 @@ array[1]  # 3
     groupName.addColumn(middleName) # [firstName, lastName, middleName]
     groupName.addRow(["Jenna", "Berlinberg", "Shea"])
     groupName.dropColumn(lastName)  # [firstName, middleName]
-    groupName.addRule()
+    groupName.addRule(firstName, @ != "Jared")
+    groupName.addRow(["Jared", "Matthew"])  # Rule 1 not satisfied for new row
 ````
 
 ## Operators
