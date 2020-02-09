@@ -1,28 +1,24 @@
 snekQL {
-  Program      = Exp
-  Exp          = "let" Dec+ "in" Exps "end"                 -- let
-               | "if" Exp "then" Exp ("else" Exp)?          -- if
-               | "while" Exp "do" Exp                       -- while
-               | "for" id ":=" Exp "to" Exp "do" Exp        -- for
-               | Lvalue ":=" Exp                            -- assign
+  Program      = Exp*
+  Exp          = Dec+
+               | "if" Exp*: Exp* ("elif" Exp* ":" Exp*)* ("else" Exp*)?   -- if
+               | "while" Exp ":" Exp*                       -- while
+               | "for" id "in" Exp ":" Exp*                  -- for
+               | Lvalue "=" Exp                            -- assign
                | "break"                                    -- break
+               | print
                | Exp1
-  Dec          = TypeDec | VarDec | FunDec
-  TypeDec      = "type" typeId "=" Type
-  Type         = typeId                                     -- named
-               | ArrayType
-               | RecordType
-  ArrayType    = "array" "of" typeId
-  RecordType   = "{" ListOf<Field, ","> "}"
-  FunDec       = "function" id Params (":" typeId)? "=" Exp
-  VarDec       = "var" id (":" typeId)? ":=" Exp
-  Field        = id ":" typeId
+
+  Dec          = VarDec | FunDec
+  FunDec       = "fnc" id Params ":" Exp
+  VarDec       = id assignop Exp
   Params       = "(" ListOf<Param, ","> ")"
-  Param        = id ":" typeId
-  Exps         = ListOf<Exp, ";">
-  Exp1         = Exp1 "|" Exp2                              -- binary
+  Param        = id ":" Type
+
+  Exps         = ListOf<Exp>
+  Exp1         = Exp1 "or" Exp2                              -- binary
                | Exp2
-  Exp2         = Exp2 "&" Exp3                              -- binary
+  Exp2         = Exp2 "and" Exp3                              -- binary
                | Exp3
   Exp3         = Exp4 relop Exp4                            -- binary
                | Exp4
@@ -30,34 +26,47 @@ snekQL {
                | Exp5
   Exp5         = Exp5 mulop Exp6                            -- binary
                | Exp6
-  Exp6         = "-" Exp7                                   -- negation
+  Exp6         = Exp6 "**" Exp7                             --binary
                | Exp7
-  Exp7         = Call | ArrayExp | RecordExp | ExpSeq | Literal | Lvalue
-  Literal      = intlit
-               | stringlit
-               | "nil"                                      -- nil
+  Exp7         = "-" Exp8                                   --negation
+               | Exp8
+  Exp8         = Call | Literal | Lvalue | rule | arr
+
+  Literal      = numlit
+               | strlit
+               | boolit
+               | "null"                                    -- null
+
   Lvalue       = Lvalue "[" Exp "]"                         -- subscripted
                | Lvalue "." id                              -- field
                | id                                         -- id
-  ArrayExp     = typeId "[" Exp "]" "of" Exp
-  RecordExp    = typeId "{" ListOf<Binding, ","> "}"
   Binding      = id "=" Exp
   Call         = id "(" ListOf<Exp, ","> ")"
-  ExpSeq       = "(" ListOf<Exp, ";"> ")"
-  keyword      = ("array" | "break" | "do" | "else" | "end" | "for"
-               | "function" | "if" | "in" | "let" | "nil" | "of"
-               | "then" | "to" | "type" | "var" | "while") ~idrest
+  Return       = "return" Exp         -- returnExpression
+               | "return"             -- returnNothing
+  Type         = "arr" | "boo" | "dub" | "int" | "str"
+
+  keyword      = ("break" | "else" | "false" | "for" | "fnc" | "if" | "in"
+               | "null" | "print" | "return" | "true" | "while") ~idrest
   id           = ~keyword letter idrest*
   idrest       = letter | digit | "_"
-  typeId       = id
+  print        = "print" (strlit | Exp)
+
+
+  rule         = "@" relop Exp+
+  arr          =  "[" ListOf<Exp, ","> "]"
+  numlit       = intlit | dublit
   intlit       = digit+
-  stringlit    = "\"" char* "\""
-  char         = ~"\\" ~"\"" ~"\n" any | escape
+  dublit       = digit+ "." digit+
+  strlit       = "\"" (~"\""any)* "\""
+  boolit       = "true" | "false"
+
   escape       = "\\" ("\\" | "\"" | "n" | "t" | codepoint)
-  codepoint    = "u{" hexDigit+ "}"
-  mulop        = "*" | "/"
+  assignop     = "=" | "*=" | "/=" | "+=" | "-="
+  mulop        = "*" | "%" | "/" | "//"
   addop        = "+" | "-"
-  relop        = "<=" | "<>" | "<" | ">=" | ">" | "="
-  space       := " " | "\t" | "\n" | comment
-  comment      = "/*" (~"*/" any)* "*/"
+  relop        = "<=" | "!=" | "<" | ">=" | ">" | "=="
+  space        = " " | "\t" | "\n" | comment
+  comment      = "#" (~"\n" any)*               --comment
+               | "~~~" (~"~~~" any)* "~~~"      --multiLineComment
 }

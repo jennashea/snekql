@@ -36,7 +36,7 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 `stringValue = "Hello, There!"`
 
-### Characters: `char`
+### Characters: `cha`
 
 `charValue = 'z'`
 
@@ -67,7 +67,7 @@ rule2 = @ == "Jenna"
 firstName = column("name", ["Jenna", "Jared"], true, false)
 firstName.name  # 'name'
 firstName.value  # ["Jenna", "Jared"]
-firstName.notNone  # true
+firstName.notNull  # true
 firstName.unique  # false
 firstName.addRow("Brandon")  # ["Jenna", "Jared", "Brandon"]
 firstName.addRule(@ != "Jenna")  # Rule 1 not satisfied for row 1.
