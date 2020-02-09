@@ -8,7 +8,9 @@
 const syntaxCheck = require('../syntax-checker');
 
 const errors = [
-  ['rogue else', 'else x > 1: break']
+  ['rogue else', 'else x > 1: break'],
+  ['used keyword as variable name', 'fnc = 10'],
+  ['rogue semicolon', 'print("hi");']
 ];
 
 describe('The syntax checker', () => {
