@@ -1,12 +1,11 @@
 snekQL {
   Program      = Exp*
   Exp          = Dec+
-               | "if" Exp*: Exp* ("elif" Exp* ":" Exp*)* ("else" Exp*)?   -- if
+               | "if" Exp* ":" Exp* ("elif" Exp* ":" Exp*)* ("else" Exp*)?   -- if
                | "while" Exp ":" Exp*                       -- while
                | "for" id "in" Exp ":" Exp*                  -- for
                | Lvalue "=" Exp                            -- assign
                | "break"                                    -- break
-               | print
                | Exp1
 
   Dec          = VarDec | FunDec
@@ -15,7 +14,7 @@ snekQL {
   Params       = "(" ListOf<Param, ","> ")"
   Param        = id ":" Type
 
-  Exps         = ListOf<Exp>
+
   Exp1         = Exp1 "or" Exp2                              -- binary
                | Exp2
   Exp2         = Exp2 "and" Exp3                              -- binary
@@ -30,7 +29,7 @@ snekQL {
                | Exp7
   Exp7         = "-" Exp8                                   --negation
                | Exp8
-  Exp8         = Call | Literal | Lvalue | rule | arr
+  Exp8         = Call | Literal | Lvalue | Rule | Arr
 
   Literal      = numlit
                | strlit
@@ -44,29 +43,29 @@ snekQL {
   Call         = id "(" ListOf<Exp, ","> ")"
   Return       = "return" Exp         -- returnExpression
                | "return"             -- returnNothing
+
   Type         = "arr" | "boo" | "dub" | "int" | "str"
 
   keyword      = ("break" | "else" | "false" | "for" | "fnc" | "if" | "in"
                | "null" | "print" | "return" | "true" | "while") ~idrest
   id           = ~keyword letter idrest*
   idrest       = letter | digit | "_"
-  print        = "print" (strlit | Exp)
 
 
-  rule         = "@" relop Exp+
-  arr          =  "[" ListOf<Exp, ","> "]"
+
+  Rule         = "@" relop Exp+
+  Arr          =  "[" ListOf<Exp, ","> "]"
   numlit       = intlit | dublit
   intlit       = digit+
   dublit       = digit+ "." digit+
   strlit       = "\"" (~"\""any)* "\""
   boolit       = "true" | "false"
 
-  escape       = "\\" ("\\" | "\"" | "n" | "t" | codepoint)
+  escape       = "\\" ("\\" | "\"" | "n" | "t")
   assignop     = "=" | "*=" | "/=" | "+=" | "-="
   mulop        = "*" | "%" | "/" | "//"
   addop        = "+" | "-"
   relop        = "<=" | "!=" | "<" | ">=" | ">" | "=="
-  space        = " " | "\t" | "\n" | comment
   comment      = "#" (~"\n" any)*               --comment
                | "~~~" (~"~~~" any)* "~~~"      --multiLineComment
 }
