@@ -54,17 +54,17 @@ array[1]  # 3
         print("Hello World)
 ````
 
-### Rules: 'rul'
+### Rules: `rul`
 
 ````python
     rule1 = @ > 0  # @ represents the variable to be passed in.
     rule2 = @ == "Jenna"
 ````
 
-### Columns: 'col'
+### Columns: `col`
 
 ````python
-    firstName = column('name', ["Jenna", "Jared"], True, True)
+    firstName = column("name", ["Jenna", "Jared"], True, True)
     firstName.name  # 'name'
     firstName.value  # ["Jenna", "Jared"]
     firstName.notNone  # True
@@ -73,7 +73,7 @@ array[1]  # 3
     firstName.addRule(@ != "Jenna")  # Rule 1 not satisfied for row 1.
 ````
 
-### Tables 'tbl'
+### Tables `tbl`
 
 ````python
     groupName = tabulate(firstName, lastName)
