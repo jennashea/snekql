@@ -18,41 +18,69 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 ## Types, Variables, and Declarations
 
-### Booleans: `bool`
+### Booleans: `boo`
 
-`bool truthy = true`
+`truthy = true`
 
-`bool falsy = false`
+`falsy = false`
 
 ### Doubles: `dub`
 
-`dub doubleValue = 5.0`
+`doubleValue = 5.0`
 
 ### Integers: `int`
 
-`int integerValue = 42`
+`integerValue = 42`
 
-### Strings: `string`
+### Strings: `str`
 
-`string stringValue = "Hello, There!"`
+`stringValue = "Hello, There!"`
 
 ### Characters: `char`
 
-`char charValue = 'z'`
+`charValue = 'z'`
 
-### Matrices: `matrix`
+### Arrays: `arr`
 
-````
-matrix matrixExample = [ 1, 2, 3,
-                         4, 5, 6,
-                         7, 8, 9 ]
+````python
+array = [2, 3, 4]
+array[1]  # 3
 ````
 
 ### Functions: `def`
 
-````
+````python
     def helloWorld():
         print("Hello World)
+````
+
+### Rules: 'rul'
+
+````python
+    rule1 =
+````
+
+### Columns: 'col'
+
+````python
+    firstName = column('name', ["Jenna", "Jared"], True, True)
+    firstName.name  # 'name'
+    firstName.value  # ["Jenna", "Jared"]
+    firstName.notNone  # True
+    firstName.unique  # True
+    firstName.addRow("Brandon")  # ["Jenna", "Jared", "Brandon"]
+    firstName.addRule()
+````
+
+### Tables 'tbl'
+
+````python
+    groupName = tabulate(firstName, lastName)
+    groupName.columns   # [firstName, lastName]
+    groupName.addColumn(middleName) # [firstName, lastName, middleName]
+    groupName.addRow(["Jenna", "Berlinberg", "Shea"])
+    groupName.dropColumn(lastName)  # [firstName, middleName]
+    groupName.addRule()
 ````
 
 ## Operators
@@ -100,17 +128,24 @@ string batman = "Na" * 20  # "NaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNa"
 ### `for` Loop
 
 ````python
-    string uni = "Loyola Marymount"
+    uni = "Loyola Marymount"
+    arr = [1, 2, 3, 4, 5, 6]
 
     for i in uni:
+        print(i)
+
+    for i in range(4):
+        print(i)
+
+    for i in arr:
         print(i)
 ````
 
 ### `while` Loop
 
 ````python
-    int j = 10
-    dub naught = 0.0
+    j = 10
+    naught = 0.0
 
     while true:
         naught += 2.7
@@ -120,8 +155,8 @@ string batman = "Na" * 20  # "NaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNa"
 ### `if/else` Loop
 
 ````python
-    int k = 100
-    int l = 62
+    k = 100
+    l = 62
 
     if k == l:
         print("Values are Equal")
