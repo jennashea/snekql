@@ -20,9 +20,9 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 ### Booleans: `boo`
 
-`truthy = True`
+`truthy = true`
 
-`falsy = False`
+`falsy = false`
 
 ### Doubles: `dub`
 
@@ -47,10 +47,10 @@ array = [2, 3, 4]
 array[1]  # 3
 ````
 
-### Functions: `def`
+### Functions: `fnc`
 
 ````python
-def helloWorld():
+fnc helloWorld():
     print("Hello World)
 ````
 
@@ -64,11 +64,11 @@ rule2 = @ == "Jenna"
 ### Columns: `col`
 
 ````python
-firstName = column("name", ["Jenna", "Jared"], True, True)
+firstName = column("name", ["Jenna", "Jared"], true, false)
 firstName.name  # 'name'
 firstName.value  # ["Jenna", "Jared"]
-firstName.notNone  # True
-firstName.unique  # True
+firstName.notNone  # true
+firstName.unique  # false
 firstName.addRow("Brandon")  # ["Jenna", "Jared", "Brandon"]
 firstName.addRule(@ != "Jenna")  # Rule 1 not satisfied for row 1.
 ````
@@ -90,25 +90,25 @@ groupName.addRow(["Jared", "Matthew"])  # Rule 1 not satisfied for new row
 ### Additive Operators: `+, -, +=, -=`
 
 ````python
-int addition = 9 + 10  # 19
-int subtraction = 5 - 1  # 4
-subtraction += 1  # 5
+addition = 9 + 10  # 19
+subtraction = 5 - 1  # 4
+subtraction += 1.0  # 5.0
 addition -= 3  # 16
-string greeting = "Hi"
-char let = 't'
-string please = greeting + let  # 'Hit'
+greeting = "Hi"
+let = 't'
+please = greeting + let  # 'Hit'
 please += ' me'  # 'Hit me'
 ````
 
 ### Multiplicative Operators: `*, /, %, *=, /=, **`
 
 ````python
-int multiplication = 7 * 81  # 567
-int division = 54 / 6  # 9
-int modulus =  79 % 11  # 2
+multiplication = 7 * 81  # 567
+division = 54 / 6  # 9
+modulus =  79 % 11  # 2
 division *= 3  # 27
 multiplication /= 21  # 27
-string batman = "Na" * 20  # "NaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNa"
+batman = "Na" * 20  # "NaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNa"
 ````
 
 ### Relational Operators and Reference Equality: `<, >, <=, >=, ==, !=`
@@ -121,8 +121,8 @@ string batman = "Na" * 20  # "NaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNa"
 ### Logic and Prefix Operators: `and, or, not, !`
 
 ````python
-bool truthy = true and true
-bool falsy = not true
+truthy = true and true
+falsy = not true
 ````
 
 ## Control Flow
@@ -176,27 +176,27 @@ print("Values are Equal") if k -l == 38 else anotherEqualizerFunc(k, l)
 ### Area of a Circle:
 
 ````python
-def areaOfACircle(radius):
-    dub pi = 3.14
-    return pi * radius ** 2 #Precendence follows PEMDAS
+fnc areaOfACircle(radius):
+    pi = 3.14
+    return pi * radius ** 2  # Precendence follows PEMDAS
 ````
 
-### Fibonacci + Load to Column Obejct:
+### Fibonacci + Load to Column Object:
 
 ````python
 numberOfTerms = 10
 array = []
 fibonacciNumbers = column("Numbers", array, True, True)
 
-def fibonacci(n):
+fnc fibonacci(n):
    if n <= 1:
        return n
    else:
        return(fibonacci(n-1) + fibonacci(n-2))
 
-def addValuesToColumn():
+fnc addValuesToColumn():
     for i in range(numberOfTerms):
-       array.append(fibonacci(i))
+       array.add(fibonacci(i))
 ````
 
 ### Table Creation for Pythagorean Triples:
@@ -212,7 +212,7 @@ hypotenuses = column("Hyptonuses", hypotenuseValues, True, True)
 
 pythagoreanTriples = tabulate(legsA, legsB, hypotenuses)
 
-def pythagoreanTriplets(limit):
+fnc pythagoreanTriplets(limit):
     hypotenuse = 0
     two = 2
 
@@ -237,7 +237,7 @@ pythagoreanTriplets(20)
 ````python
 array = [32, 7, 60, 100, 5]
 digits = column("Double Digits", array, True, True)
-def removeSingleDigitValues(oldColumn):
+fnc removeSingleDigitValues(oldColumn):
     parsedColumn = oldColumn
     i = 0
 
@@ -254,21 +254,21 @@ removeSingleDigitValues(digits)
 ````python
 values = column("List of Numbers", [22, 23434, 2332, 7543, 10132], True, True)
 
-def bubbleSort(column):
+fnc bubbleSort(column):
     length  = 0
-    switch  = True
+    switch  = true
 
     for i in column:
         length += 1
 
     while switch:
-        switch = False
+        switch = false
         for i in range(length - 1):
             if column[i] > column[i + 1]:
                 temp = column[i]
                 column[i] = column[i + 1]
                 column[i + 1] = temp
-                switch  = True
+                switch  = true
 
 bubbleSort(values)
 ````
