@@ -20,9 +20,9 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 ### Booleans: `boo`
 
-`truthy = true`
+`truthy = True`
 
-`falsy = false`
+`falsy = False`
 
 ### Doubles: `dub`
 
