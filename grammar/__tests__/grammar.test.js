@@ -14,6 +14,7 @@ null
 for x in range(10):
   print(x)
 a = 20
+20 % 3
 a += 3
 while 1:
   a *= 2
