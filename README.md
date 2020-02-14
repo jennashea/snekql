@@ -36,10 +36,6 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 `stringValue = "Hello, There!"`
 
-### Characters: `cha`
-
-`charValue = 'z'`
-
 ### Arrays: `arr`
 
 ````python
@@ -51,7 +47,7 @@ array[1]  # 3
 
 ````python
 fnc helloWorld():
-    print("Hello World)
+    hiss("Hello World)
 ````
 
 ### Rules: `rul`
@@ -134,13 +130,13 @@ uni = "Loyola Marymount"
 arr = [1, 2, 3, 4, 5, 6]
 
 for i in uni:
-    print(i)
+    hiss(i)
 
 for i in range(4):
-    print(i)
+    hiss(i)
 
 for i in arr:
-    print(i)
+    hiss(i)
 ````
 
 ### `while` Loop
@@ -161,14 +157,14 @@ k = 100
 l = 62
 
 if k == l:
-    print("Values are Equal")
+    hiss("Values are Equal")
 else
     someEqualizerFunc(k, l)
 
 if k - l == 38:
-    print("Values are Equal")
+    hiss("Values are Equal")
 
-print("Values are Equal") if k -l == 38 else anotherEqualizerFunc(k, l)
+hiss("Values are Equal") if k -l == 38 else anotherEqualizerFunc(k, l)
 ````
 
 ## Example Programs
