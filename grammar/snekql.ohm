@@ -48,7 +48,7 @@ snekQL {
   Type         = "arr" | "boo" | "dub" | "int" | "str"
 
   keyword      = ("break" | "else" | "false" | "for" | "fnc" | "if" | "in"
-               | "null" | "print" | "return" | "true" | "while") ~idrest
+               | "null" | "hiss" | "return" | "true" | "while") ~idrest
   id           = ~keyword letter idrest*
   idrest       = letter | digit | "_"
 
@@ -56,7 +56,7 @@ snekQL {
 
   Rule         = "@" relop Exp+
   Arr          =  "[" ListOf<Exp, ","> "]"
-  Print        = "print(" (strlit | Exp) ")"
+  Print        = "hiss(" (strlit | Exp) ")"
   numlit       = intlit | dublit
   intlit       = digit+
   dublit       = digit+ "." digit+
