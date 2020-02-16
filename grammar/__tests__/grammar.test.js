@@ -14,6 +14,7 @@ null
 for x in range(10):
   print(x)
 a = 20 // 1
+b = 199.9219
 20 % 3
 a += 3
 while 1:
@@ -33,6 +34,8 @@ SDKFJLS;KDJFALKSJDF
 
 const integerDivision = String.raw`10 // 4`;
 
+const decimals = String.raw`a = 1.4`;
+
 describe('The syntax checker', () => {
   test('accepts the mega program with all syntactic forms', (done) => {
     expect(syntaxCheck(program)).toBe(true);
@@ -45,6 +48,11 @@ describe('The syntax checker', () => {
 
   test('integer division', (done) => {
     expect(syntaxCheck(integerDivision)).toBe(true);
+    done();
+  });
+
+  test('decimals', (done) => {
+    expect(syntaxCheck(decimals)).toBe(true);
     done();
   });
 });

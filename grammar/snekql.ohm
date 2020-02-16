@@ -38,7 +38,7 @@ snekQL {
                | "null"                                    -- null
 
   Lvalue       = Lvalue "[" Exp "]"                         -- subscripted
-               | Lvalue "." id                              -- field
+               | Lvalue "-" id                              -- field
                | id                                         -- id
   Binding      = id "=" Exp
   Call         = id "(" ListOf<Exp, ","> ")"
@@ -57,9 +57,7 @@ snekQL {
   Rule         = "@" relop Exp+
   Arr          =  "[" ListOf<Exp, ","> "]"
   Print        = "hiss(" (strlit | Exp) ")"
-  numlit       = intlit | dublit
-  intlit       = digit+
-  dublit       = digit+ "." digit+
+  numlit       =  digit+ ("." digit+)?
   strlit       = "\"" (~"\""any)* "\""
   boolit       = "true" | "false"
 
