@@ -68,6 +68,8 @@ snekQL {
   mulop        = "*" | "%" | "/" | "//"
   addop        = "+" | "-"
   relop        = "<=" | "!=" | "<" | ">=" | ">" | "=="
-  comment      = "#" (~"\n" any)*               --comment
-               | "~~~" (~"~~~" any)* "~~~"      --multiLineComment
+  space       := " " | "\t" | "\n" | comment
+  comment      = "#" (~"\n" any)*                   --singlelineComment
+               | "~~~" (~"~~~:" any)* "~~~:"        --multilineComment
+
 }

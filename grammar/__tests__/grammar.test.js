@@ -22,9 +22,22 @@ while 1:
     break
 `;
 
+const comments = String.raw`
+# teslkjsdlkfj
+~~~
+MULTILINES COMMENTS YAY
+SDKFJLS;KDJFALKSJDF
+~~~:
+
+`;
+
 describe('The syntax checker', () => {
   test('accepts the mega program with all syntactic forms', (done) => {
     expect(syntaxCheck(program)).toBe(true);
+    done();
+  });
+  test('comments', (done) => {
+    expect(syntaxCheck(comments)).toBe(true);
     done();
   });
 });
