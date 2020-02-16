@@ -13,7 +13,7 @@ rule1 = @ >= 390284
 null
 for x in range(10):
   print(x)
-a = 20
+a = 20 // 1
 20 % 3
 a += 3
 while 1:
@@ -31,6 +31,8 @@ SDKFJLS;KDJFALKSJDF
 
 `;
 
+const integerDivision = String.raw`10 // 4`;
+
 describe('The syntax checker', () => {
   test('accepts the mega program with all syntactic forms', (done) => {
     expect(syntaxCheck(program)).toBe(true);
@@ -38,6 +40,11 @@ describe('The syntax checker', () => {
   });
   test('comments', (done) => {
     expect(syntaxCheck(comments)).toBe(true);
+    done();
+  });
+
+  test('integer division', (done) => {
+    expect(syntaxCheck(integerDivision)).toBe(true);
     done();
   });
 });
