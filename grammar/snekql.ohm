@@ -47,8 +47,9 @@ snekQL {
 
   Type         = "arr" | "boo" | "dub" | "int" | "str"
 
-  keyword      = ("break" | "else" | "false" | "for" | "fnc" | "if" | "in"
-               | "null" | "hiss" | "return" | "true" | "while") ~idrest
+  keyword      = ("break" | "column" | "else" | "false" | "for" | "fnc" | "if"
+               | "in" | "null" | "hiss" | "return" | "table" | "tabulate"
+               | "true" | "while") ~idrest
   id           = ~keyword letter idrest*
   idrest       = letter | digit | "_"
 
@@ -63,7 +64,7 @@ snekQL {
 
   escape       = "\\" ("\\" | "\"" | "n" | "t")
   assignop     = "=" | "*=" | "/=" | "+=" | "-="
-  mulop        = "*" | "%" | "//" |"/" 
+  mulop        = "*" | "%" | "//" |"/"
   addop        = "+" | "-"
   relop        = "<=" | "!=" | "<" | ">=" | ">" | "=="
   space       := " " | "\t" | "\n" | comment
