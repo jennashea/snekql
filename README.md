@@ -237,9 +237,9 @@ fnc removeSingleDigitValues(oldColumn):
     parsedColumn = oldColumn
     i = 0
 
-    for i in column:
-        parsedColumn.addRow(oldColumn[i]) if column[i] >= 10 else column.addRule(column[i] < 10)
-
+    for i in oldColumn:
+        parsedColumn.addRow(oldColumn[i])
+        
     return parsedColumn
 
 removeSingleDigitValues(digits)
