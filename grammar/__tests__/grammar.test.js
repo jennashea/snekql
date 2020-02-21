@@ -29,7 +29,6 @@ const comments = String.raw`
 MULTILINES COMMENTS YAY
 SDKFJLS;KDJFALKSJDF
 ~~~:
-
 `;
 
 const integerDivision = String.raw`10 // 4`;
@@ -41,6 +40,7 @@ describe('The syntax checker', () => {
     expect(syntaxCheck(program)).toBe(true);
     done();
   });
+  
   test('comments', (done) => {
     expect(syntaxCheck(comments)).toBe(true);
     done();
