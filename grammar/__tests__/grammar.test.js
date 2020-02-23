@@ -63,6 +63,28 @@ dict[5  * 100]
 dict[for something in arr: hiss(arr)]
 `;
 
+const if_statements = String.raw`
+if a or b: c = "NO" elif a and b: c = "YES" else c = "???"
+`;
+
+const if_statements2 = String.raw`
+if a > b:
+    hiss("a is greater than b")
+else
+    hiss("b and a definitely numbers")
+`;
+const if_statements3 = String.raw`
+if a > b:
+    hiss("a is greater than b")
+elif b > a:
+    hiss("b is greater than a")
+`;
+const if_statements4 = String.raw`
+if a > b:
+    hiss("a is greater than b")
+`;
+
+
 describe('The syntax checker', () => {
   test('accepts the mega program with all syntactic forms', (done) => {
     expect(syntaxCheck(program)).toBe(true);
@@ -98,5 +120,24 @@ describe('The syntax checker', () => {
     done();
   });
 
+  test('if_statements', (done) => {
+    expect(syntaxCheck(if_statements)).toBe(true);
+    done();
+  });
   
+  test('if_statements2', (done) => {
+    expect(syntaxCheck(if_statements2)).toBe(true);
+    done();
+  });
+
+  test('if_statements3', (done) => {
+    expect(syntaxCheck(if_statements3)).toBe(true);
+    done();
+  });
+  
+  test('if_statements4', (done) => {
+    expect(syntaxCheck(if_statements4)).toBe(true);
+    done();
+  });
+
 });
