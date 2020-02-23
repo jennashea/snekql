@@ -11,7 +11,7 @@ snekQL {
 
   Dec          = VarDec | FunDec
   FunDec       = "fnc" id Params ":" Exp
-  VarDec       = id assignop Exp
+  VarDec       = id assignop Exp1
   Params       = "(" ListOf<Param, ","> ")"
   Param        = id ":" Type
 
@@ -37,12 +37,12 @@ snekQL {
                | boolit
                | "null"                                    -- null
 
-  Lvalue       = Lvalue "[" Exp "]"                         -- subscripted
+  Lvalue       = Lvalue "[" Exp1 "]"                         -- subscripted
                | Lvalue "-" id                              -- field
                | id                                         -- id
-  Binding      = id "=" Exp
-  Call         = id "(" ListOf<Exp, ","> ")"
-  Return       = "return" Exp         -- returnExpression
+  Binding      = id "=" Exp1
+  Call         = id "(" ListOf<Exp1, ","> ")"
+  Return       = "return" Exp1         -- returnExpression
                | "return"             -- returnNothing
 
   Type         = "arr" | "boo" | "dub" | "int" | "str"
@@ -55,8 +55,8 @@ snekQL {
 
 
   Rule         = "@" relop Exp+
-  Arr          =  "[" ListOf<Exp, ","> "]"
-  Print        = "hiss(" (strlit | Exp) ")"
+  Arr          =  "[" ListOf<Exp1, ","> "]"
+  Print        = "hiss(" (strlit | Exp1) ")"
   numlit       =  digit+ ("." digit+)?
   strlit       = "\"" (~"\""any)* "\""
   boolit       = "true" | "false"

@@ -60,7 +60,8 @@ const decimals = String.raw`a = 1.4`;
 const leftValues = String.raw`
 arr[0] = [1, 2, 3, 4]
 dict[5  * 100]
-dict[for something in arr: hiss(arr)]
+# NOT OK myArray[if a > b: hiss("yay")]
+# NOT OK myArray[for something in data: hiss(something)]
 `;
 
 const if_statements = String.raw`
