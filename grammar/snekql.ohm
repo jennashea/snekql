@@ -38,7 +38,7 @@ snekQL {
                | "null"                                    -- null
 
   Lvalue       = Lvalue "[" Exp1 "]"                         -- subscripted
-               | Lvalue "-" id                              -- field
+               | Lvalue "." id                              -- field
                | id                                         -- id
   Binding      = id "=" Exp1
   Call         = id "(" ListOf<Exp1, ","> ")"
