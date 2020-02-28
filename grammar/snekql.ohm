@@ -1,16 +1,16 @@
 snekQL {
-  Program      = Exp*
-  Exp          = Dec+
-               | "if" Exp1 ":" Exp* ("elif" Exp1 ":" Exp*)* ("else" Exp*)?   -- if
-               | "while" Exp1 ":" Exp*                       -- while
-               | "for" id "in" Exp ":" Exp*                  -- for
+  Program      = Statement*
+  Statement    = Dec+
+               | "if" Exp1 ":" Statement* ("elif" Exp1 ":" Statement*)* ("else" Statement*)?   -- if
+               | "while" Exp1 ":" Statement*                       -- while
+               | "for" id "in" Statement ":" Statement*                  -- for
                | Lvalue "=" Exp1                            -- assign
                | "break"                                    -- break
                | Print
                | Exp1
 
   Dec          = VarDec | FunDec
-  FunDec       = "fnc" id Params ":" Exp
+  FunDec       = "fnc" id Params ":" Statement
   VarDec       = id assignop Exp1
   Params       = "(" ListOf<Param, ","> ")"
   Param        = id ":" Type
@@ -63,7 +63,7 @@ snekQL {
 
   escape       = "\\" ("\\" | "\"" | "n" | "t")
   assignop     = "=" | "*=" | "/=" | "+=" | "-="
-  mulop        = "*" | "%" | "//" |"/" 
+  mulop        = "*" | "%" | "//" |"/"
   addop        = "+" | "-"
   relop        = "<=" | "!=" | "<" | ">=" | ">" | "=="
   space       := " " | "\t" | "\n" | comment
