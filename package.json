@@ -4,12 +4,12 @@
   "description": "SnekQL is a multi-paradigm query language oriented towards data science. Pragmatic and intuitive, our language is intended to provide a simple yet powerful way of manipulating (representing &amp; visualizing) data.",
   "main": "index.js",
   "dependencies": {
+    "eslint-config-prettier": "^6.10.0",
     "jest": "^25.1.0",
     "ohm-js": "^0.14.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1"
   },
   "scripts": {
