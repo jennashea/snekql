@@ -1,24 +1,23 @@
 snekQL {
   Program      = Statement*
   Statement    = Dec+
-               | "if" Exp1 ":" Suite
-                 ("elif" Exp1 ":" Suite)*
-                 ("else" ":" Suite)?                 -- if
-               | "while" Exp1 ":" Suite              -- while
-               | "for" id "in" Statement ":" Suite   -- for
+               | if Exp1 ":" Suite
+                 (elif Exp1 ":" Suite)*
+                 (else ":" Suite)?                   -- if
+               | while Exp1 ":" Suite                -- while
+               | for id in Statement ":" Suite       -- for
                | Lvalue "=" Exp1                     -- assign
-               | "break"                             -- break
+               | break                               -- break
                | Print
                | Exp1
 
   Suite        = indent Statement* dedent
 
   Dec          = VarDec | FunDec
-  FunDec       = "fnc" id Params ":" Statement
+  FunDec       = fnc id Params ":" Suite
   VarDec       = id assignop Exp1
   Params       = "(" ListOf<Param, ","> ")"
   Param        = id ":" Type
-
 
   Exp1         = Exp1 "or" Exp2                      -- binary
                | Exp2
@@ -39,7 +38,7 @@ snekQL {
   Literal      = numlit
                | strlit
                | boolit
-               | "null"                              -- null
+               | null                                -- null
 
   Lvalue       = Lvalue "[" Exp1 (":" Exp1)? "]"     -- subscripted
                | Lvalue "." (Call | id)              -- field
@@ -47,17 +46,37 @@ snekQL {
   Binding      = id "=" Exp1
   Call         = id "(" ListOf<Argument, ","> ")"
   Argument     = (id "=")? Exp1
-  Return       = "return" Exp1                       -- returnExpression
-               | "return"                            -- returnNothing
+  Return       = return Exp1                         -- returnExpression
+               | return                              -- returnNothing
 
-  Type         = "arr[" Type "]"                     -- array
-               | "boo"
-               | "dub"
-               | "int"
-               | "str"
+  Type         = arr "[" Type "]"                     -- array
+               | boo
+               | dub
+               | int
+               | str
 
-  keyword      = ("break" | "else" |"elif" | "false" | "for" | "fnc" | "if" | "in"
-               | "null" | "hiss" | "return" | "true" | "while") ~idrest
+  arr          = "arr" ~idrest
+  boo          = "boo" ~idrest
+  break        = "break" ~idrest
+  dub          = "dub" ~idrest
+  else         = "else" ~idrest
+  elif         = "elif" ~idrest
+  false        = "false" ~idrest
+  fnc          = "fnc" ~idrest
+  for          = "for" ~idrest
+  hiss         = "for" ~idrest
+  if           = "if" ~idrest
+  in           = "in" ~idrest
+  int          = "int" ~idrest
+  null         = "null" ~idrest
+  return       = "return" ~idrest
+  str          = "str" ~idrest
+  true         = "true" ~idrest
+  while        = "while" ~idrest
+
+  keyword      = arr | boo | break | dub | else | elif | false | fnc | for | hiss
+               | if | in | int | null | return | str | true | while
+
   id           = ~keyword letter idrest*
   idrest       = letter | digit | "_"
 
