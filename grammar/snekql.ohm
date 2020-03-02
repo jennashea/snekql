@@ -1,13 +1,17 @@
 snekQL {
   Program      = Statement*
   Statement    = Dec+
-               | "if" Exp1 ":" Statement* ("elif" Exp1 ":" Statement*)* ("else" Statement*)?   -- if
-               | "while" Exp1 ":" Statement*                       -- while
-               | "for" id "in" Statement ":" Statement*                  -- for
-               | Lvalue "=" Exp1                            -- assign
-               | "break"                                    -- break
+               | "if" Exp1 ":" Suite
+                 ("elif" Exp1 ":" Suite)*
+                 ("else" ":" Suite)?                    -- if
+               | "while" Exp1 ":" Suite                 -- while
+               | "for" id "in" Statement ":" Suite      -- for
+               | Lvalue "=" Exp1                        -- assign
+               | "break"                                -- break
                | Print
                | Exp1
+
+  Suite        = indent Statement* dedent
 
   Dec          = VarDec | FunDec
   FunDec       = "fnc" id Params ":" Statement
@@ -52,7 +56,8 @@ snekQL {
   id           = ~keyword letter idrest*
   idrest       = letter | digit | "_"
 
-
+  indent      =  "⇨"
+  dedent      =  "⇦"
 
   Rule         = "@" relop Exp1+
   Arr          =  "[" ListOf<Exp1, ","> "]"
