@@ -3,11 +3,11 @@ snekQL {
   Statement    = Dec+
                | "if" Exp1 ":" Suite
                  ("elif" Exp1 ":" Suite)*
-                 ("else" ":" Suite)?                    -- if
-               | "while" Exp1 ":" Suite                 -- while
-               | "for" id "in" Statement ":" Suite      -- for
-               | Lvalue "=" Exp1                        -- assign
-               | "break"                                -- break
+                 ("else" ":" Suite)?                 -- if
+               | "while" Exp1 ":" Suite              -- while
+               | "for" id "in" Statement ":" Suite   -- for
+               | Lvalue "=" Exp1                     -- assign
+               | "break"                             -- break
                | Print
                | Exp1
 
@@ -20,36 +20,41 @@ snekQL {
   Param        = id ":" Type
 
 
-  Exp1         = Exp1 "or" Exp2                              -- binary
+  Exp1         = Exp1 "or" Exp2                      -- binary
                | Exp2
-  Exp2         = Exp2 "and" Exp3                              -- binary
+  Exp2         = Exp2 "and" Exp3                     -- binary
                | Exp3
-  Exp3         = Exp4 relop Exp4                            -- binary
+  Exp3         = Exp4 relop Exp4                     -- binary
                | Exp4
-  Exp4         = Exp4 addop Exp5                            -- binary
+  Exp4         = Exp4 addop Exp5                     -- binary
                | Exp5
-  Exp5         = Exp5 mulop Exp6                            -- binary
+  Exp5         = Exp5 mulop Exp6                     -- binary
                | Exp6
-  Exp6         = Exp6 "**" Exp7                             --binary
+  Exp6         = Exp6 "**" Exp7                      -- binary
                | Exp7
-  Exp7         = "-" Exp8                                   --negation
+  Exp7         = "-" Exp8                            -- negation
                | Exp8
   Exp8         = Call | Literal | Lvalue | Rule | Arr
 
   Literal      = numlit
                | strlit
                | boolit
-               | "null"                                    -- null
+               | "null"                              -- null
 
-  Lvalue       = Lvalue "[" Exp1 "]"                         -- subscripted
-               | Lvalue "." (Call | id)                           -- field
-               | id                                         -- id
+  Lvalue       = Lvalue "[" Exp1 (":" Exp1)? "]"     -- subscripted
+               | Lvalue "." (Call | id)              -- field
+               | id                                  -- id
   Binding      = id "=" Exp1
-  Call         = id "(" ListOf<Exp1, ","> ")"
-  Return       = "return" Exp1         -- returnExpression
-               | "return"             -- returnNothing
+  Call         = id "(" ListOf<Argument, ","> ")"
+  Argument     = (id "=")? Exp1
+  Return       = "return" Exp1                       -- returnExpression
+               | "return"                            -- returnNothing
 
-  Type         = "arr" | "boo" | "dub" | "int" | "str"
+  Type         = "arr[" Type "]"                     -- array
+               | "boo"
+               | "dub"
+               | "int"
+               | "str"
 
   keyword      = ("break" | "else" |"elif" | "false" | "for" | "fnc" | "if" | "in"
                | "null" | "hiss" | "return" | "true" | "while") ~idrest
@@ -72,7 +77,7 @@ snekQL {
   addop        = "+" | "-"
   relop        = "<=" | "!=" | "<" | ">=" | ">" | "=="
   space       := " " | "\t" | "\n" | comment
-  comment      = "#" (~"\n" any)*                   --singlelineComment
-               | "~~~" (~"~~~:" any)* "~~~:"        --multilineComment
+  comment      = "#" (~"\n" any)*                    -- singlelineComment
+               | "~~~" (~"~~~:" any)* "~~~:"         -- multilineComment
 
 }
