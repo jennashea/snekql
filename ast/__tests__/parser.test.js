@@ -13,7 +13,7 @@ const {
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
-  BinaryExp, Literal, IdExp, Print
+  BinaryExp, Literal, IdExp, Print, Assignment
 } = require('../../ast');
 
 const fixture = {
@@ -24,6 +24,10 @@ const fixture = {
   hello: [
     String.raw`hiss("Hello, world")`,
     [new Print(new Literal('Hello, world'))],
+  ],
+  assignment: [
+    String.raw`c = 1000`,
+    [[new Assignment('=', new IdExp('c'), new Literal(1000))]],
   ],
 
   // breaks: [

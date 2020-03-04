@@ -10,11 +10,11 @@
 //   }
 // }
 
-// class Assignment {
-//   constructor(target, source) {
-//     Object.assign(this, { target, source });
-//   }
-// }
+class Assignment {
+  constructor(operator, target, source) {
+    Object.assign(this, { operator, target, source });
+  }
+}
 
 class BinaryExp {
   constructor(op, left, right) {
@@ -155,7 +155,7 @@ class Print{
 // }
 
 module.exports = {
-  BinaryExp, IdExp, Literal, Print
+  BinaryExp, IdExp, Literal, Print, Assignment
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,

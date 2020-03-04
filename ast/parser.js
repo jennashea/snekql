@@ -4,7 +4,7 @@ const {
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
-  BinaryExp, Literal, IdExp, Print
+  BinaryExp, Literal, IdExp, Print, Assignment
 } = require('./index');
 
 const grammar = ohm.grammar(fs.readFileSync('grammar/snekql.ohm'));
@@ -19,6 +19,18 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   // Exp_let(_let, decs, _in, body, _end) {
   //   return new LetExp(decs.ast(), body.ast());
   // },
+  // Exp_assign(target, _gets, source) {
+  //   return new Assignment(target.ast(), source.ast());
+  // },
+  VarDec(target, operator, source){
+    return new Assignment(operator.ast(), target.ast(), source.ast());
+  },
+  // Binding(id, _eq, value) {
+  //   return new Binding(id.ast(), value.ast());
+  // },
+  // TypeDec(_type, id, _is, type) {
+  //   return new TypeDec(id.ast(), type.ast());
+  // },
   // Exp_if(_if, test, _then, consequent, _else, alternate) {
   //   return new IfExp(test.ast(), consequent.ast(), arrayToNullable(alternate.ast()));
   // },
@@ -28,14 +40,8 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   // Exp_for(_for, id, _gets, initial, _to, test, _do, body) {
   //   return new ForExp(id.sourceString, initial.ast(), test.ast(), body.ast());
   // },
-  // Exp_assign(target, _gets, source) {
-  //   return new Assignment(target.ast(), source.ast());
-  // },
   // Exp_break(_break) {
   //   return new Break();
-  // },
-  // TypeDec(_type, id, _is, type) {
-  //   return new TypeDec(id.ast(), type.ast());
   // },
   // ArrayType(_array, _of, id) {
   //   return new ArrayType(id.ast());
@@ -73,7 +79,10 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   // Exp5_binary(left, op, right) {
   //   return new BinaryExp(op.ast(), left.ast(), right.ast());
   // },
-  // Exp6_negation(_negative, operand) {
+  // Exp6_binary(left, op, right) {
+  //   return new BinaryExp(op.ast(), left.ast(), right.ast());
+  // },
+  // Exp7_negation(_negative, operand) {
   //   return new NegationExp(operand.ast());
   // },
   // Literal_nil(_nil) {
@@ -94,9 +103,6 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   // RecordExp(type, _open, bindings, _close) {
   //   return new RecordExp(type.ast(), bindings.ast());
   // },
-  // Binding(id, _eq, value) {
-  //   return new Binding(id.ast(), value.ast());
-  // },
   // Call(callee, _open, args, _close) {
   //   return new Call(callee.ast(), args.ast());
   // },
@@ -109,6 +115,7 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   // EmptyListOf() {
   //   return [];
   // },
+
   numlit(whole, dot, fraction) {
     return new Literal(+this.sourceString);
   },
@@ -118,9 +125,12 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   strlit(_openQuote, chars, _closeQuote) {
     return new Literal(this.sourceString.slice(1, -1));
   },
-  // id(_firstChar, _restChars) {
-  //   return this.sourceString;
-  // },
+  id(_firstChar, _restChars) {
+    return this.sourceString;
+  },
+  assignop(operator){
+    return operator.ast();
+  },
   _terminal() {
     return this.sourceString;
   },
