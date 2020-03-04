@@ -84,7 +84,7 @@ snekQL {
 
   Rule         = "@" relop Exp1+
   Arr          =  "[" ListOf<Exp1, ","> "]"
-  Print        = "hiss(" (strlit | Exp1) ")"
+  Print        = "hiss(" Exp1 ")"
   numlit       =  digit+ ("." digit+)?
   strlit       = "\"" (~"\""any)* "\""
   boolit       = "true" | "false"

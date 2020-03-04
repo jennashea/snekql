@@ -4,7 +4,7 @@ const {
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
-  BinaryExp, Literal, IdExp, 
+  BinaryExp, Literal, IdExp, Print
 } = require('./index');
 
 const grammar = ohm.grammar(fs.readFileSync('grammar/snekql.ohm'));
@@ -111,6 +111,9 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   // },
   numlit(whole, dot, fraction) {
     return new Literal(+this.sourceString);
+  },
+  Print(_open, expression, _close){
+    return new Print(expression.ast());
   },
   strlit(_openQuote, chars, _closeQuote) {
     return new Literal(this.sourceString.slice(1, -1));

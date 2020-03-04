@@ -13,18 +13,18 @@ const {
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
-  BinaryExp, Literal, IdExp,
+  BinaryExp, Literal, IdExp, Print
 } = require('../../ast');
 
 const fixture = {
   binaryOperators :[
     String.raw`1 or 0`,
-    new BinaryExp('or', new Literal(1), new Literal(0)),
+    [new BinaryExp('or', new Literal(1), new Literal(0))],
   ],
-  // hello: [
-  //   String.raw`print("Hello, world\n")`,
-  //   new Call('print', [new Literal('Hello, world\\n')]),
-  // ],
+  hello: [
+    String.raw`hiss("Hello, world")`,
+    [new Print(new Literal('Hello, world'))],
+  ],
 
   // breaks: [
   //   String.raw`while 0 do (break; break)`,

@@ -67,6 +67,7 @@ class IdExp {
   }
 }
 
+
 // class IfExp {
 //   constructor(test, consequent, alternate) {
 //     Object.assign(this, { test, consequent, alternate });
@@ -112,6 +113,11 @@ class Literal {
 //   }
 // }
 
+class Print{
+  constructor(expression){
+    Object.assign(this, {expression});
+  }
+}
 // class RecordExp {
 //   constructor(type, bindings) {
 //     Object.assign(this, { type, bindings });
@@ -149,7 +155,7 @@ class Literal {
 // }
 
 module.exports = {
-  BinaryExp, IdExp, Literal,
+  BinaryExp, IdExp, Literal, Print
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
