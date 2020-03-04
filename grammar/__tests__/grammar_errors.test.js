@@ -13,11 +13,22 @@ const errors = [
   ['rogue semicolon', 'print("hi");'],
   [
     'Indent',
-    `print(1)
+    `hiss(1)
 if x:
-    print(1)
-  print(3)`,
+    hiss(1)
+  hiss(3)`,
   ],
+  ['improper array', 'myArray[if a > b: hiss("yay")]'],
+  ['improper array 2', 'myArray[for something in data: hiss(something)]'],
+  [
+    'no semi-colon',
+    `if c > 10
+      return 0`
+  ],
+  ['incorrect binary expression', '3///4'],
+  ['lack of continuation from statement','if 10:'],
+  ['bad call', 'hiss(10']
+  // ['', '']
 ];
 
 describe('The syntax checker', () => {
