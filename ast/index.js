@@ -92,11 +92,11 @@ class Literal {
 //   }
 // }
 
-// class NegationExp {
-//   constructor(operand) {
-//     Object.assign(this, { operand });
-//   }
-// }
+class NegationExp {
+  constructor(operand) {
+    Object.assign(this, { operand });
+  }
+}
 
 // class Nil {
 // }
@@ -136,6 +136,12 @@ class Print{
 //   }
 // }
 
+class Suite {
+  constructor(stmt) {
+    Object.assign(this, { stmt});
+  }
+}
+
 // class TypeDec {
 //   constructor(id, type) {
 //     Object.assign(this, { id, type });
@@ -148,14 +154,14 @@ class Print{
 //   }
 // }
 
-// class WhileExp {
-//   constructor(test, body) {
-//     Object.assign(this, { test, body });
-//   }
-// }
+class WhileExp {
+  constructor(test, body) {
+    Object.assign(this, { test, body });
+  }
+}
 
 module.exports = {
-  BinaryExp, IdExp, Literal, Print, Assignment
+  BinaryExp, IdExp, Literal, Print, Assignment, NegationExp, WhileExp, Suite
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,

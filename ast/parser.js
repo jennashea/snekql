@@ -1,13 +1,20 @@
-const fs = require('fs');
-const ohm = require('ohm-js');
+const fs = require("fs");
+const ohm = require("ohm-js");
 const {
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
-  BinaryExp, Literal, IdExp, Print, Assignment
-} = require('./index');
+  BinaryExp,
+  Literal,
+  IdExp,
+  Print,
+  Assignment,
+  NegationExp,
+  WhileExp,
+  Suite
+} = require("./index");
 
-const grammar = ohm.grammar(fs.readFileSync('grammar/snekql.ohm'));
+const grammar = ohm.grammar(fs.readFileSync("grammar/snekql.ohm"));
 
 // Ohm turns `x?` into either [x] or [], which we should clean up for our AST.
 function arrayToNullable(a) {
@@ -15,14 +22,20 @@ function arrayToNullable(a) {
 }
 
 /* eslint-disable no-unused-vars */
-const astGenerator = grammar.createSemantics().addOperation('ast', {
+const astGenerator = grammar.createSemantics().addOperation("ast", {
+  Statement_while(_while, condition, _colon, suite) {
+    return new WhileExp(condition.ast(), suite.ast());
+  },
+  Suite(indent, stmt, dedent) {
+    return new Suite(stmt.ast());
+  },
   // Exp_let(_let, decs, _in, body, _end) {
   //   return new LetExp(decs.ast(), body.ast());
   // },
   // Exp_assign(target, _gets, source) {
   //   return new Assignment(target.ast(), source.ast());
   // },
-  VarDec(target, operator, source){
+  VarDec(target, operator, source) {
     return new Assignment(operator.ast(), target.ast(), source.ast());
   },
   // Binding(id, _eq, value) {
@@ -67,24 +80,24 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   Exp1_binary(left, op, right) {
     return new BinaryExp(op.ast(), left.ast(), right.ast());
   },
-  // Exp2_binary(left, op, right) {
-  //   return new BinaryExp(op.ast(), left.ast(), right.ast());
-  // },
-  // Exp3_binary(left, op, right) {
-  //   return new BinaryExp(op.ast(), left.ast(), right.ast());
-  // },
-  // Exp4_binary(left, op, right) {
-  //   return new BinaryExp(op.ast(), left.ast(), right.ast());
-  // },
-  // Exp5_binary(left, op, right) {
-  //   return new BinaryExp(op.ast(), left.ast(), right.ast());
-  // },
-  // Exp6_binary(left, op, right) {
-  //   return new BinaryExp(op.ast(), left.ast(), right.ast());
-  // },
-  // Exp7_negation(_negative, operand) {
-  //   return new NegationExp(operand.ast());
-  // },
+  Exp2_binary(left, op, right) {
+    return new BinaryExp(op.ast(), left.ast(), right.ast());
+  },
+  Exp3_binary(left, op, right) {
+    return new BinaryExp(op.ast(), left.ast(), right.ast());
+  },
+  Exp4_binary(left, op, right) {
+    return new BinaryExp(op.ast(), left.ast(), right.ast());
+  },
+  Exp5_binary(left, op, right) {
+    return new BinaryExp(op.ast(), left.ast(), right.ast());
+  },
+  Exp6_binary(left, op, right) {
+    return new BinaryExp(op.ast(), left.ast(), right.ast());
+  },
+  Exp7_negation(_negative, operand) {
+    return new NegationExp(operand.ast());
+  },
   // Literal_nil(_nil) {
   //   return new Nil();
   // },
@@ -119,7 +132,7 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   numlit(whole, dot, fraction) {
     return new Literal(+this.sourceString);
   },
-  Print(_open, expression, _close){
+  Print(_open, expression, _close) {
     return new Print(expression.ast());
   },
   strlit(_openQuote, chars, _closeQuote) {
@@ -128,16 +141,22 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   id(_firstChar, _restChars) {
     return new IdExp(this.sourceString);
   },
-  assignop(operator){
+  indent(indentChar) {
+    return indentChar.sourceString;
+  },
+  dedent(dedentChar) {
+    return dedentChar.sourceString;
+  },
+  assignop(operator) {
     return operator.ast();
   },
   _terminal() {
     return this.sourceString;
-  },
+  }
 });
 /* eslint-enable no-unused-vars */
 
-module.exports = (text) => {
+module.exports = text => {
   const match = grammar.match(text);
   if (!match.succeeded()) {
     throw new Error(`Syntax Error: ${match.message}`);

@@ -13,13 +13,25 @@ const {
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
-  BinaryExp, Literal, IdExp, Print, Assignment
+  BinaryExp, Literal, IdExp, Print, Assignment, NegationExp, WhileExp, Suite
 } = require('../../ast');
 
 const fixture = {
   binaryOperators :[
     String.raw`1 or 0`,
     [new BinaryExp('or', new Literal(1), new Literal(0))],
+  ],
+  binaryOperators2 :[
+    String.raw`1 + 0`,
+    [new BinaryExp('+', new Literal(1), new Literal(0))],
+  ],
+  binaryOperators3 :[
+    String.raw`10 <= 100`,
+    [new BinaryExp('<=', new Literal(10), new Literal(100))],
+  ],
+  negation :[
+    String.raw`-200 + 100`,
+    [new BinaryExp('+', new NegationExp(new Literal(200)), new Literal(100))],
   ],
   hello: [
     String.raw`hiss("Hello, world")`,
@@ -29,6 +41,17 @@ const fixture = {
     String.raw`c = 1000`,
     [[new Assignment('=', new IdExp('c'), new Literal(1000))]],
   ],
+  whileLoop: [
+    String.raw`
+    while 1 < 5:
+    ⇨hiss("Hello World")
+    ⇦
+    `,
+    [new WhileExp(new BinaryExp('<', new Literal(1), new Literal(5)), 
+      new Suite([new Print(new Literal("Hello World"))])
+    )],
+  ],
+
 
   // breaks: [
   //   String.raw`while 0 do (break; break)`,
