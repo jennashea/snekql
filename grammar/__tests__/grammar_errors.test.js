@@ -27,8 +27,10 @@ if x:
   ],
   ['incorrect binary expression', '3///4'],
   ['lack of continuation from statement','if 10:'],
-  ['bad call', 'hiss(10']
-  // ['', '']
+  ['bad call', 'hiss(10'],
+  ['bad comparator', '10 =< 2'],
+  ['bad reassign','a =* 10'],
+  ['bad array','x = [2, 3, 4,]']
 ];
 
 describe('The syntax checker', () => {
