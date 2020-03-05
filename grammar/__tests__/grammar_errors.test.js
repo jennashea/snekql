@@ -30,7 +30,22 @@ if x:
   ['bad call', 'hiss(10'],
   ['bad comparator', '10 =< 2'],
   ['bad reassign','a =* 10'],
-  ['bad array','x = [2, 3, 4,]']
+  ['bad array 1','x = [2, 3, 4,]'],
+  ['bad array 2','x = [, 2, 3, 4]'],
+  ['bad array 3','x = 2, 3, 4]'],
+  ['bad array 4','x = [2, 3, 4'],
+  ['bad array 5','x = 2, 3, 4'],
+  ['else without if', 'else: hiss(2)'],
+  ['elif without if', 'elif x > 3: hiss(2)'],
+  [
+    'else before elif',
+    `if x < 2:
+      hiss("no")
+    else:
+      hiss(2)
+    elif x > 3:
+      hiss(3)`
+  ]
 ];
 
 describe('The syntax checker', () => {
