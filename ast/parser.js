@@ -24,15 +24,28 @@ function arrayToNullable(a) {
 
 /* eslint-disable no-unused-vars */
 const astGenerator = grammar.createSemantics().addOperation("ast", {
+  // Statement_if(_if, condition, _colon, suite, ...???) {
+  //   return new ???(condition.ast(), suite.ast(), ...???);
+  // },
   Statement_while(_while, condition, _colon, suite) {
     return new WhileExp(condition.ast(), suite.ast());
   },
   Statement_for(_for, id, _in, iterable, _colon, suite){
     return new ForExp(id.ast(), iterable.ast(), suite.ast());
   },
+  Statement_Lvalue(target, operator, source) {
+    return new Assignment(operator.ast(), target.ast(), source.ast());
+  },
   Suite(indent, stmt, dedent) {
     return new Suite(stmt.ast());
   },
+  Dec(varDec, operator, funDec) {
+    // return new ???(varDec.ast(), operator.ast(), funDec.ast());
+  },
+  FunDec(_fnc, _id, params, _colon, suite) {
+    // return new ???();
+  },
+
   // Exp_let(_let, decs, _in, body, _end) {
   //   return new LetExp(decs.ast(), body.ast());
   // },
@@ -42,6 +55,15 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   VarDec(target, operator, source) {
     return new Assignment(operator.ast(), target.ast(), source.ast());
   },
+  // Params(_lparen, ???, _comma, _rparen) {
+  //   return new ()
+  // },
+  // Param(id, _colon, ???) {
+  //   return new (id.ast(), ???)
+  // }
+
+
+
   // Binding(id, _eq, value) {
   //   return new Binding(id.ast(), value.ast());
   // },

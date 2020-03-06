@@ -22,12 +22,24 @@ const fixture = {
     [new BinaryExp('or', new Literal(1), new Literal(0))],
   ],
   binaryOperators2 :[
+    String.raw`1 and 0`,
+    [new BinaryExp('and', new Literal(1), new Literal(0))],
+  ],
+  binaryOperators3 :[
     String.raw`1 + 0`,
     [new BinaryExp('+', new Literal(1), new Literal(0))],
   ],
-  binaryOperators3 :[
+  binaryOperators4 :[
+    String.raw`1 * 2`,
+    [new BinaryExp('*', new Literal(1), new Literal(2))],
+  ],
+  binaryOperators5 :[
     String.raw`10 <= 100`,
     [new BinaryExp('<=', new Literal(10), new Literal(100))],
+  ],
+  binaryOperators6 :[
+    String.raw`2 ** 3`,
+    [new BinaryExp('**', new Literal(2), new Literal(3))],
   ],
   negation :[
     String.raw`-200 + 100`,
