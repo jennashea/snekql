@@ -11,7 +11,8 @@ const {
   Assignment,
   NegationExp,
   WhileExp,
-  Suite
+  Suite,
+  ForExp
 } = require("./index");
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/snekql.ohm"));
@@ -25,6 +26,9 @@ function arrayToNullable(a) {
 const astGenerator = grammar.createSemantics().addOperation("ast", {
   Statement_while(_while, condition, _colon, suite) {
     return new WhileExp(condition.ast(), suite.ast());
+  },
+  Statement_for(_for, id, _in, iterable, _colon, suite){
+    return new ForExp(id.ast(), iterable.ast(), suite.ast());
   },
   Suite(indent, stmt, dedent) {
     return new Suite(stmt.ast());

@@ -49,11 +49,11 @@ class BinaryExp {
 //   }
 // }
 
-// class ForExp {
-//   constructor(index, low, high, body) {
-//     Object.assign(this, { index, low, high, body });
-//   }
-// }
+class ForExp {
+  constructor(id, iterable, suite) {
+    Object.assign(this, { id, iterable, suite });
+  }
+}
 
 // class Func {
 //   constructor(id, params, returnType, body) {
@@ -161,7 +161,7 @@ class WhileExp {
 }
 
 module.exports = {
-  BinaryExp, IdExp, Literal, Print, Assignment, NegationExp, WhileExp, Suite
+  BinaryExp, IdExp, Literal, Print, Assignment, NegationExp, WhileExp, Suite, ForExp
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,

@@ -5,7 +5,7 @@ snekQL {
                  (elif Exp1 ":" Suite)*
                  (else ":" Suite)?                   -- if
                | while Exp1 ":" Suite                -- while
-               | for id in Statement ":" Suite       -- for
+               | for id in Exp1 ":" Suite            -- for
                | Lvalue "=" Exp1                     -- assign
                | break                               -- break
                | Print

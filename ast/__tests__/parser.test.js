@@ -13,7 +13,7 @@ const {
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
-  BinaryExp, Literal, IdExp, Print, Assignment, NegationExp, WhileExp, Suite
+  BinaryExp, Literal, IdExp, Print, Assignment, NegationExp, WhileExp, Suite, ForExp
 } = require('../../ast');
 
 const fixture = {
@@ -50,6 +50,16 @@ const fixture = {
     [new WhileExp(new BinaryExp('<', new Literal(1), new Literal(5)), 
       new Suite([new Print(new Literal("Hello World"))])
     )],
+  ],
+  forLoop: [
+    String.raw`
+    for i in snek:
+    ⇨hiss("Hello World")
+    ⇦
+    `,
+    [new ForExp(new IdExp('i'), new IdExp('snek'),
+      new Suite([new Print(new Literal("Hello World"))]))
+    ],
   ],
 
 
