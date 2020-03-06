@@ -42,9 +42,8 @@ snekQL {
 
   Lvalue       = Lvalue "[" Exp1 (":" Exp1)? "]"     -- subscripted
                | Lvalue "." (Call | id)              -- field
-               | Call
                | id                                  -- id
-  Call         = Lvalue "(" ListOf<Argument, ","> ")"
+  Call         = id "(" ListOf<Argument, ","> ")"
   Argument     = (id "=")? Exp1
   Return       = return Exp1                         -- returnExpression
                | return                              -- returnNothing

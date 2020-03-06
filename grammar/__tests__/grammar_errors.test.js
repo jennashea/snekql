@@ -8,29 +8,40 @@
 const syntaxCheck = require('../syntax-checker');
 
 const operationErrors = [
-  ['used keyword as variable name', 'fnc = 10'],
-  ['rogue semicolon', 'print("hi");'],
+  ['unsupported semicolon', 'print("hi");'],
+  ['unsupported tilde', '3~'],
+  ['improper integer division', '3///4'],
+  ['improper integer division', '3///4'],
+  ['improper call', 'hiss(10'],
+  ['improper comparator 1', '10 =< 2'],
+  ['improper comparator 2', '10 => 2'],
+  ['improper comparator 3', '10 !> 2'],
+  ['improper comparator 4', '10 >! 2'],
+  ['improper comparator 5', '10 =! 2'],
+  ['improper comparator 6', '10 >> 2'],
+  ['improper comparator 7', '10 << 2']
+];
+
+const variableErrors =   [
+  ['illegal variable name', 'fnc = 10'],
+  ['improper reassign','a =* 10'],
+  ['improper array 1','x = [2, 3, 4,]'],
+  ['improper array 2','x = [, 2, 3, 4]'],
+  ['improper array 3','x = 2, 3, 4]'],
+  ['improper array 4','x = [2, 3, 4'],
+  ['improper array 5','x = 2, 3, 4'],
+  ['improper array call', 'a[if a > b: hiss("yay")]'],
+  ['improper array call 2', 'a[for something in data: hiss(something)]']
+];
+
+const loopErrors = [
   [
-    'Indent',
+    'improper indent 1',
     `hiss(1)
 if x:
     hiss(1)
-  hiss(3)`,
+  hiss(3)`
   ],
-  ['improper array', 'myArray[if a > b: hiss("yay")]'],
-  ['improper array 2', 'myArray[for something in data: hiss(something)]'],
-  ['incorrect binary expression', '3///4'],
-  ['bad call', 'hiss(10'],
-  ['bad comparator', '10 =< 2'],
-  ['bad reassign','a =* 10'],
-  ['bad array 1','x = [2, 3, 4,]'],
-  ['bad array 2','x = [, 2, 3, 4]'],
-  ['bad array 3','x = 2, 3, 4]'],
-  ['bad array 4','x = [2, 3, 4'],
-  ['bad array 5','x = 2, 3, 4'],
-];
-
-loopErrors = [
   ['rogue else', 'else x > 1: break'],
   ['else without if', 'else: hiss(2)'],
   ['elif without if', 'elif x > 3: hiss(2)'],
