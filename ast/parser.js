@@ -18,7 +18,10 @@ const {
   Null,
   Member,
   SubscriptedRangeable,
-  IfStmt
+  IfStmt,
+  Break,
+  Rule,
+  Arr
 } = require("./index");
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/snekql.ohm"));
@@ -92,6 +95,12 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   VarDec(target, operator, source) {
     return new Assignment(operator.ast(), target.ast(), source.ast());
   },
+  Rule(_atSign, operator, expressions) {
+    return new Rule(operator.ast(), expressions.ast());
+  },
+  Arr(_open, expressions, _close) {
+    return new Arr(expressions.ast());
+  },
   // Params(_lparen, ???, _comma, _rparen) {
   //   return new ()
   // },
@@ -114,9 +123,9 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   // Exp_for(_for, id, _gets, initial, _to, test, _do, body) {
   //   return new ForExp(id.sourceString, initial.ast(), test.ast(), body.ast());
   // },
-  // Exp_break(_break) {
-  //   return new Break();
-  // },
+  Statement_break(_break) {
+    return new Break();
+  },
   // ArrayType(_array, _of, id) {
   //   return new ArrayType(id.ast());
   // },

@@ -97,14 +97,23 @@ class Member {
     Object.assign(this, { target, firstExp, secondExp });
   }
 }
+class Rule {
+  constructor(operator, expressions) {
+    Object.assign(this, { operator, expressions });
+  }
+}
+class Arr {
+  constructor(expressions) {
+    Object.assign(this, { expressions });
+  }
+}
 // class Binding {
 //   constructor(id, value) {
 //     Object.assign(this, { id, value });
 //   }
 // }
 
-// class Break {
-// }
+class Break {}
 
 // class ExpSeq {
 //   constructor(exps) {
@@ -201,7 +210,10 @@ module.exports = {
   Null,
   Member,
   SubscriptedRangeable,
-  IfStmt
+  IfStmt,
+  Break,
+  Rule,
+  Arr
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,

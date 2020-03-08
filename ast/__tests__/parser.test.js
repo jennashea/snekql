@@ -27,7 +27,10 @@ const {
   Null,
   Member,
   SubscriptedRangeable,
-  IfStmt
+  IfStmt,
+  Break,
+  Rule,
+  Arr
 } = require("../../ast");
 
 const fixture = {
@@ -143,6 +146,25 @@ const fixture = {
         new Suite([new Print(new Literal("i is equivalent to 1"))])
       )
     ]
+  ],
+
+  breaks: [
+    String.raw`
+  break
+  `,
+    [new Break()]
+  ],
+  rules: [
+    String.raw`
+      @ > 100
+    `,
+    [new Rule(">", [new Literal(100)])]
+  ],
+  arrays: [
+    String.raw`
+      [1, 2, 3, 4]
+    `,
+    [new Arr([new Literal(1), new Literal(2), new Literal(3), new Literal(4)])]
   ]
 
   // breaks: [
