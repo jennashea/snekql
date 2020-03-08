@@ -17,7 +17,8 @@ const {
   Argument,
   Null,
   Member,
-  SubscriptedRangeable
+  SubscriptedRangeable,
+  IfStmt
 } = require("./index");
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/snekql.ohm"));
@@ -29,9 +30,27 @@ function arrayToNullable(a) {
 
 /* eslint-disable no-unused-vars */
 const astGenerator = grammar.createSemantics().addOperation("ast", {
-  // Statement_if(_if, condition, _colon, suite, ...???) {
-  //   return new ???(condition.ast(), suite.ast(), ...???);
-  // },
+  Statement_if(
+    _if,
+    firstCondition,
+    _firstColon,
+    firstSuite,
+    _elif,
+    potentialConditions,
+    _potentialColons,
+    potentialBlocks,
+    _else,
+    _elseColon,
+    elseCaseSuite
+  ) {
+    return new IfStmt(
+      firstCondition.ast(),
+      firstSuite.ast(),
+      potentialConditions.ast(),
+      potentialBlocks.ast(),
+      arrayToNullable(elseCaseSuite.ast())
+    );
+  },
   Statement_while(_while, condition, _colon, suite) {
     return new WhileExp(condition.ast(), suite.ast());
   },

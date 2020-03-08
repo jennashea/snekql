@@ -36,6 +36,24 @@ class ForExp {
   }
 }
 
+class IfStmt {
+  constructor(
+    firstCondition,
+    firstSuite,
+    potentialConditions,
+    potentialBlocks,
+    elseCaseSuite
+  ) {
+    Object.assign(this, {
+      firstCondition,
+      firstSuite,
+      potentialConditions,
+      potentialBlocks,
+      elseCaseSuite
+    });
+  }
+}
+
 class IdExp {
   constructor(ref) {
     Object.assign(this, { ref });
@@ -182,7 +200,8 @@ module.exports = {
   Argument,
   Null,
   Member,
-  SubscriptedRangeable
+  SubscriptedRangeable,
+  IfStmt
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,

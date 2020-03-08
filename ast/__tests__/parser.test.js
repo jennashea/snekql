@@ -26,7 +26,8 @@ const {
   Argument,
   Null,
   Member,
-  SubscriptedRangeable
+  SubscriptedRangeable,
+  IfStmt
 } = require("../../ast");
 
 const fixture = {
@@ -120,6 +121,26 @@ const fixture = {
         "=",
         new SubscriptedRangeable(new IdExp("foo"), new Literal(0), null),
         new Literal(100)
+      )
+    ]
+  ],
+  ifStatements: [
+    String.raw`
+    if i < 1:
+    ⇨hiss("i is less than 1")
+    ⇦elif i > 1:
+    ⇨hiss("i is greater than 1")
+    ⇦else:
+    ⇨hiss("i is equivalent to 1")
+    ⇦
+    `,
+    [
+      new IfStmt(
+        new BinaryExp("<", new IdExp("i"), new Literal(1)),
+        new Suite([new Print(new Literal("i is less than 1"))]),
+        [new BinaryExp(">", new IdExp("i"), new Literal(1))],
+        [new Suite([new Print(new Literal("i is greater than 1"))])],
+        new Suite([new Print(new Literal("i is equivalent to 1"))])
       )
     ]
   ]
