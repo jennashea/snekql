@@ -1,14 +1,3 @@
-// class ArrayExp {
-//   constructor(type, size, fill) {
-//     Object.assign(this, { type, size, fill });
-//   }
-// }
-
-// class ArrayType {
-//   constructor(memberType) {
-//     Object.assign(this, { memberType });
-//   }
-// }
 class Argument {
   constructor(id, expression) {
     Object.assign(this, { id, expression });
@@ -107,93 +96,18 @@ class Arr {
     Object.assign(this, { expressions });
   }
 }
-// class Binding {
-//   constructor(id, value) {
-//     Object.assign(this, { id, value });
-//   }
-// }
 
 class Break {}
 
-// class ExpSeq {
-//   constructor(exps) {
-//     Object.assign(this, { exps });
-//   }
-// }
-
-// class Field {
-//   constructor(id, type) {
-//     Object.assign(this, { id, type });
-//   }
-// }
-
-// class Func {
-//   constructor(id, params, returnType, body) {
-//     Object.assign(this, { id, params, returnType, body });
-//   }
-// }
-
-// class IfExp {
-//   constructor(test, consequent, alternate) {
-//     Object.assign(this, { test, consequent, alternate });
-//   }
-// }
-
-// class LetExp {
-//   constructor(decs, body) {
-//     Object.assign(this, { decs, body });
-//   }
-// }
-
-// class MemberExp {
-//   constructor(record, id) {
-//     Object.assign(this, { record, id });
-//   }
-// }
-
 class Null {}
 
-// class Param {
-//   constructor(id, type) {
-//     Object.assign(this, { id, type });
-//   }
-// }
+if (process.argv[2] == "-a") {
+  const fs = require("fs");
+  const parse = require("./parser");
+  const source = fs.readFileSync(process.argv[3]);
 
-// class PrimitiveType {
-//   constructor(id) {
-//     Object.assign(this, { id });
-//   }
-// }
-
-// class RecordExp {
-//   constructor(type, bindings) {
-//     Object.assign(this, { type, bindings });
-//   }
-// }
-
-// class RecordType {
-//   constructor(fields) {
-//     Object.assign(this, { fields });
-//   }
-// }
-
-// class SubscriptedExp {
-//   constructor(array, subscript) {
-//     Object.assign(this, { array, subscript });
-//   }
-// }
-
-// class TypeDec {
-//   constructor(id, type) {
-//     Object.assign(this, { id, type });
-//   }
-// }
-
-// class Variable {
-//   constructor(id, type, init) {
-//     Object.assign(this, { id, type, init });
-//   }
-// }
+  console.log(parse(source));
+}
 
 module.exports = {
   BinaryExp,
@@ -214,7 +128,4 @@ module.exports = {
   Break,
   Rule,
   Arr
-  // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
-  // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
-  // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
 };
