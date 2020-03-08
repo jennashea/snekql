@@ -15,7 +15,9 @@ const {
   ForExp,
   Call,
   Argument,
-  Null
+  Null,
+  Member,
+  SubscriptedRangeable
 } = require("./index");
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/snekql.ohm"));
@@ -36,11 +38,24 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Statement_for(_for, id, _in, iterable, _colon, suite) {
     return new ForExp(id.ast(), iterable.ast(), suite.ast());
   },
-  // Statement_Lvalue(target, operator, source) {
-  //   return new Assignment(operator.ast(), target.ast(), source.ast());
-  // },
+  Statement_assign(target, assignment, source) {
+    return new Assignment(assignment.ast(), target.ast(), source.ast());
+  },
   Suite(indent, stmt, dedent) {
     return new Suite(stmt.ast());
+  },
+  Lvalue_subscripted(lval, _open, exp, _colon, exp2, _close) {
+    return new SubscriptedRangeable(
+      lval.ast(),
+      exp.ast(),
+      arrayToNullable(exp2.ast())
+    );
+  },
+  Lvalue_field(lval, _dot, callOrID) {
+    return new Member(lval.ast(), callOrID.ast());
+  },
+  Lvalue_id(lval) {
+    return lval.ast();
   },
   // Dec(varDec, operator, funDec) {
   //   // return new ???(varDec.ast(), operator.ast(), funDec.ast());

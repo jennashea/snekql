@@ -24,7 +24,9 @@ const {
   ForExp,
   Call,
   Argument,
-  Null
+  Null,
+  Member,
+  SubscriptedRangeable
 } = require("../../ast");
 
 const fixture = {
@@ -101,6 +103,24 @@ const fixture = {
         new Argument(null, new Literal(5)),
         new Argument(null, new Literal(10))
       ])
+    ]
+  ],
+  subscripted: [
+    String.raw`
+    foo[0]
+    `,
+    [new SubscriptedRangeable(new IdExp("foo"), new Literal(0), null)]
+  ],
+  assignmentOfLvals: [
+    String.raw`
+    foo[0] = 100
+    `,
+    [
+      new Assignment(
+        "=",
+        new SubscriptedRangeable(new IdExp("foo"), new Literal(0), null),
+        new Literal(100)
+      )
     ]
   ]
 

@@ -69,6 +69,16 @@ class WhileExp {
     Object.assign(this, { test, body });
   }
 }
+class SubscriptedRangeable {
+  constructor(target, firstExp, secondExp) {
+    Object.assign(this, { target, firstExp, secondExp });
+  }
+}
+class Member {
+  constructor(target, firstExp, secondExp) {
+    Object.assign(this, { target, firstExp, secondExp });
+  }
+}
 // class Binding {
 //   constructor(id, value) {
 //     Object.assign(this, { id, value });
@@ -170,7 +180,9 @@ module.exports = {
   ForExp,
   Call,
   Argument,
-  Null
+  Null,
+  Member,
+  SubscriptedRangeable
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
