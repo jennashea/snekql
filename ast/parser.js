@@ -12,7 +12,10 @@ const {
   NegationExp,
   WhileExp,
   Suite,
-  ForExp
+  ForExp,
+  Call,
+  Argument,
+  Null
 } = require("./index");
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/snekql.ohm"));
@@ -30,21 +33,21 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Statement_while(_while, condition, _colon, suite) {
     return new WhileExp(condition.ast(), suite.ast());
   },
-  Statement_for(_for, id, _in, iterable, _colon, suite){
+  Statement_for(_for, id, _in, iterable, _colon, suite) {
     return new ForExp(id.ast(), iterable.ast(), suite.ast());
   },
-  Statement_Lvalue(target, operator, source) {
-    return new Assignment(operator.ast(), target.ast(), source.ast());
-  },
+  // Statement_Lvalue(target, operator, source) {
+  //   return new Assignment(operator.ast(), target.ast(), source.ast());
+  // },
   Suite(indent, stmt, dedent) {
     return new Suite(stmt.ast());
   },
-  Dec(varDec, operator, funDec) {
-    // return new ???(varDec.ast(), operator.ast(), funDec.ast());
-  },
-  FunDec(_fnc, _id, params, _colon, suite) {
-    // return new ???();
-  },
+  // Dec(varDec, operator, funDec) {
+  //   // return new ???(varDec.ast(), operator.ast(), funDec.ast());
+  // },
+  // FunDec(_fnc, _id, params, _colon, suite) {
+  //   // return new ???();
+  // },
 
   // Exp_let(_let, decs, _in, body, _end) {
   //   return new LetExp(decs.ast(), body.ast());
@@ -61,8 +64,6 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   // Param(id, _colon, ???) {
   //   return new (id.ast(), ???)
   // }
-
-
 
   // Binding(id, _eq, value) {
   //   return new Binding(id.ast(), value.ast());
@@ -124,9 +125,9 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Exp7_negation(_negative, operand) {
     return new NegationExp(operand.ast());
   },
-  // Literal_nil(_nil) {
-  //   return new Nil();
-  // },
+  Literal_null(_null) {
+    return new null();
+  },
   // Lvalue_id(id) {
   //   return new IdExp(id.ast());
   // },
@@ -142,19 +143,21 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   // RecordExp(type, _open, bindings, _close) {
   //   return new RecordExp(type.ast(), bindings.ast());
   // },
-  // Call(callee, _open, args, _close) {
-  //   return new Call(callee.ast(), args.ast());
-  // },
+  Call(callee, _open, args, _close) {
+    return new Call(callee.ast(), args.ast());
+  },
   // ExpSeq(_open, exps, _close) {
   //   return new ExpSeq(exps.ast());
   // },
-  // NonemptyListOf(first, _separator, rest) {
-  //   return [first.ast(), ...rest.ast()];
-  // },
-  // EmptyListOf() {
-  //   return [];
-  // },
-
+  NonemptyListOf(first, _separator, rest) {
+    return [first.ast(), ...rest.ast()];
+  },
+  EmptyListOf() {
+    return [];
+  },
+  Argument(id, _assignment, expression) {
+    return new Argument(arrayToNullable(id.ast()), expression.ast());
+  },
   numlit(whole, dot, fraction) {
     return new Literal(+this.sourceString);
   },

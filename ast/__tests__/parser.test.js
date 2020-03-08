@@ -7,51 +7,62 @@
  * may have semantic errors.
  */
 
-const parse = require('../parser');
+const parse = require("../parser");
 
 const {
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
-  BinaryExp, Literal, IdExp, Print, Assignment, NegationExp, WhileExp, Suite, ForExp
-} = require('../../ast');
+  BinaryExp,
+  Literal,
+  IdExp,
+  Print,
+  Assignment,
+  NegationExp,
+  WhileExp,
+  Suite,
+  ForExp,
+  Call,
+  Argument,
+  Null
+} = require("../../ast");
 
 const fixture = {
-  binaryOperators :[
+  binaryOperators: [
     String.raw`1 or 0`,
-    [new BinaryExp('or', new Literal(1), new Literal(0))],
+    [new BinaryExp("or", new Literal(1), new Literal(0))]
   ],
-  binaryOperators2 :[
+  binaryOperators2: [
     String.raw`1 and 0`,
-    [new BinaryExp('and', new Literal(1), new Literal(0))],
+    [new BinaryExp("and", new Literal(1), new Literal(0))]
   ],
-  binaryOperators3 :[
+  binaryOperators3: [
     String.raw`1 + 0`,
-    [new BinaryExp('+', new Literal(1), new Literal(0))],
+    [new BinaryExp("+", new Literal(1), new Literal(0))]
   ],
-  binaryOperators4 :[
+  binaryOperators4: [
     String.raw`1 * 2`,
-    [new BinaryExp('*', new Literal(1), new Literal(2))],
+    [new BinaryExp("*", new Literal(1), new Literal(2))]
   ],
-  binaryOperators5 :[
+  binaryOperators5: [
     String.raw`10 <= 100`,
-    [new BinaryExp('<=', new Literal(10), new Literal(100))],
+    [new BinaryExp("<=", new Literal(10), new Literal(100))]
   ],
-  binaryOperators6 :[
+  binaryOperators6: [
     String.raw`2 ** 3`,
-    [new BinaryExp('**', new Literal(2), new Literal(3))],
+    [new BinaryExp("**", new Literal(2), new Literal(3))]
   ],
-  negation :[
+  negation: [
     String.raw`-200 + 100`,
-    [new BinaryExp('+', new NegationExp(new Literal(200)), new Literal(100))],
+    [new BinaryExp("+", new NegationExp(new Literal(200)), new Literal(100))]
   ],
   hello: [
     String.raw`hiss("Hello, world")`,
-    [new Print(new Literal('Hello, world'))],
+    [new Print(new Literal("Hello, world"))]
   ],
   assignment: [
     String.raw`c = 1000`,
-    [[new Assignment('=', new IdExp('c'), new Literal(1000))]],
+    [[new Assignment("=", new IdExp("c"), new Literal(1000))]]
   ],
   whileLoop: [
     String.raw`
@@ -59,9 +70,12 @@ const fixture = {
     ⇨hiss("Hello World")
     ⇦
     `,
-    [new WhileExp(new BinaryExp('<', new Literal(1), new Literal(5)), 
-      new Suite([new Print(new Literal("Hello World"))])
-    )],
+    [
+      new WhileExp(
+        new BinaryExp("<", new Literal(1), new Literal(5)),
+        new Suite([new Print(new Literal("Hello World"))])
+      )
+    ]
   ],
   forLoop: [
     String.raw`
@@ -69,11 +83,26 @@ const fixture = {
     ⇨hiss("Hello World")
     ⇦
     `,
-    [new ForExp(new IdExp('i'), new IdExp('snek'),
-      new Suite([new Print(new Literal("Hello World"))]))
-    ],
+    [
+      new ForExp(
+        new IdExp("i"),
+        new IdExp("snek"),
+        new Suite([new Print(new Literal("Hello World"))])
+      )
+    ]
   ],
+  calls: [
+    String.raw`
+    foo(5, 10)
+    `,
 
+    [
+      new Call(new IdExp("foo"), [
+        new Argument(null, new Literal(5)),
+        new Argument(null, new Literal(10))
+      ])
+    ]
+  ]
 
   // breaks: [
   //   String.raw`while 0 do (break; break)`,
@@ -147,16 +176,16 @@ const fixture = {
   // ],
 };
 
-describe('The parser', () => {
+describe("The parser", () => {
   Object.entries(fixture).forEach(([name, [source, expected]]) => {
-    test(`produces the correct AST for ${name}`, (done) => {
+    test(`produces the correct AST for ${name}`, done => {
       expect(parse(source)).toEqual(expected);
       done();
     });
   });
 
-  test('throws an exception on a syntax error', (done) => {
-    expect(() => parse('as$df^&%*$&')).toThrow();
+  test("throws an exception on a syntax error", done => {
+    expect(() => parse("as$df^&%*$&")).toThrow();
     done();
   });
 });

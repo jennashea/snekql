@@ -9,7 +9,11 @@
 //     Object.assign(this, { memberType });
 //   }
 // }
-
+class Argument {
+  constructor(id, expression) {
+    Object.assign(this, { id, expression });
+  }
+}
 class Assignment {
   constructor(operator, target, source) {
     Object.assign(this, { operator, target, source });
@@ -21,7 +25,50 @@ class BinaryExp {
     Object.assign(this, { op, left, right });
   }
 }
+class Call {
+  constructor(callee, args) {
+    Object.assign(this, { callee, args });
+  }
+}
+class ForExp {
+  constructor(id, iterable, suite) {
+    Object.assign(this, { id, iterable, suite });
+  }
+}
 
+class IdExp {
+  constructor(ref) {
+    Object.assign(this, { ref });
+  }
+}
+
+class Literal {
+  constructor(value) {
+    Object.assign(this, { value });
+  }
+}
+
+class NegationExp {
+  constructor(operand) {
+    Object.assign(this, { operand });
+  }
+}
+
+class Print {
+  constructor(expression) {
+    Object.assign(this, { expression });
+  }
+}
+class Suite {
+  constructor(stmt) {
+    Object.assign(this, { stmt });
+  }
+}
+class WhileExp {
+  constructor(test, body) {
+    Object.assign(this, { test, body });
+  }
+}
 // class Binding {
 //   constructor(id, value) {
 //     Object.assign(this, { id, value });
@@ -29,12 +76,6 @@ class BinaryExp {
 // }
 
 // class Break {
-// }
-
-// class Call {
-//   constructor(callee, args) {
-//     Object.assign(this, { callee, args });
-//   }
 // }
 
 // class ExpSeq {
@@ -49,24 +90,11 @@ class BinaryExp {
 //   }
 // }
 
-class ForExp {
-  constructor(id, iterable, suite) {
-    Object.assign(this, { id, iterable, suite });
-  }
-}
-
 // class Func {
 //   constructor(id, params, returnType, body) {
 //     Object.assign(this, { id, params, returnType, body });
 //   }
 // }
-
-class IdExp {
-  constructor(ref) {
-    Object.assign(this, { ref });
-  }
-}
-
 
 // class IfExp {
 //   constructor(test, consequent, alternate) {
@@ -80,26 +108,13 @@ class IdExp {
 //   }
 // }
 
-class Literal {
-  constructor(value) {
-    Object.assign(this, { value });
-  }
-}
-
 // class MemberExp {
 //   constructor(record, id) {
 //     Object.assign(this, { record, id });
 //   }
 // }
 
-class NegationExp {
-  constructor(operand) {
-    Object.assign(this, { operand });
-  }
-}
-
-// class Nil {
-// }
+class Null {}
 
 // class Param {
 //   constructor(id, type) {
@@ -113,11 +128,6 @@ class NegationExp {
 //   }
 // }
 
-class Print{
-  constructor(expression){
-    Object.assign(this, {expression});
-  }
-}
 // class RecordExp {
 //   constructor(type, bindings) {
 //     Object.assign(this, { type, bindings });
@@ -136,12 +146,6 @@ class Print{
 //   }
 // }
 
-class Suite {
-  constructor(stmt) {
-    Object.assign(this, { stmt});
-  }
-}
-
 // class TypeDec {
 //   constructor(id, type) {
 //     Object.assign(this, { id, type });
@@ -154,14 +158,19 @@ class Suite {
 //   }
 // }
 
-class WhileExp {
-  constructor(test, body) {
-    Object.assign(this, { test, body });
-  }
-}
-
 module.exports = {
-  BinaryExp, IdExp, Literal, Print, Assignment, NegationExp, WhileExp, Suite, ForExp
+  BinaryExp,
+  IdExp,
+  Literal,
+  Print,
+  Assignment,
+  NegationExp,
+  WhileExp,
+  Suite,
+  ForExp,
+  Call,
+  Argument,
+  Null
   // ArrayExp, ArrayType, Assignment, BinaryExp, Binding, Break, Call, ExpSeq, Field,
   // ForExp, Func, IdExp, IfExp, LetExp, Literal, MemberExp, NegationExp, Nil, Param,
   // PrimitiveType, RecordExp, RecordType, SubscriptedExp, TypeDec, Variable, WhileExp,
