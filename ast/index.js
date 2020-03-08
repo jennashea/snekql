@@ -101,14 +101,6 @@ class Break {}
 
 class Null {}
 
-if (process.argv[2] == "-a") {
-  const fs = require("fs");
-  const parse = require("./parser");
-  const source = fs.readFileSync(process.argv[3]);
-
-  console.log(parse(source));
-}
-
 module.exports = {
   BinaryExp,
   IdExp,
@@ -129,3 +121,11 @@ module.exports = {
   Rule,
   Arr
 };
+
+if (process.argv[2] == "-a") {
+  const fs = require("fs");
+  const parse = require("./parser");
+  const source = fs.readFileSync(process.argv[3]);
+
+  console.log(parse(source));
+}
