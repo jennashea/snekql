@@ -19,7 +19,12 @@ const {
   IfStmt,
   Break,
   Rule,
-  Arr
+  Arr,
+  FunctionDeclaration,
+  ArrayType,
+  Types,
+  Param,
+  Params
 } = require("./index");
 
 const grammar = ohm.grammar(
@@ -89,16 +94,24 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   Arr(_open, expressions, _close) {
     return new Arr(expressions.ast());
   },
-
   Statement_break(_break) {
     return new Break();
   },
-  // Type_array(array, type) {
-  //   return new Types();
-  // },
-  // Type(type) {
-  //   return new Types();
-  // },
+  FunDec(_fnc, id, parameters, _colon, suite) {
+    return new FunctionDeclaration(id.ast(), parameters.ast(), suite.ast());
+  },
+  Param(id, _colon, type) {
+    return new Param(id.ast(), type.ast());
+  },
+  Params(_open, parameters, _close) {
+    return new Params(parameters.ast());
+  },
+  Type_array(array, _open, type, _close) {
+    return new ArrayTypes(array.ast(), type.ast());
+  },
+  Type(types) {
+    return new Types(types.ast());
+  },
   Exp1_binary(left, op, right) {
     return new BinaryExp(op.ast(), left.ast(), right.ast());
   },
@@ -143,6 +156,9 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   },
   strlit(_openQuote, chars, _closeQuote) {
     return new Literal(this.sourceString.slice(1, -1));
+  },
+  boolit(value) {
+    return new Literal(value.sourceString);
   },
   id(_firstChar, _restChars) {
     return new IdExp(this.sourceString);

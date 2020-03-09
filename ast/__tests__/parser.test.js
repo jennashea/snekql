@@ -18,7 +18,12 @@ const {
   IfStmt,
   Break,
   Rule,
-  Arr
+  Arr,
+  FunctionDeclaration,
+  ArrayType,
+  Types,
+  Param,
+  Params
 } = require("../../ast");
 
 const fixture = {
@@ -153,6 +158,26 @@ const fixture = {
       [1, 2, 3, 4]
     `,
     [new Arr([new Literal(1), new Literal(2), new Literal(3), new Literal(4)])]
+  ],
+  functionDeclaration: [
+    String.raw`
+      fnc foo(a:int, b:boo, c:str):
+      ⇨hiss("a, b, and c were passed in")
+      ⇦
+    `,
+    [
+      [
+        new FunctionDeclaration(
+          new IdExp("foo"),
+          new Params([
+            new Param(new IdExp("a"), new Types("int")),
+            new Param(new IdExp("b"), new Types("boo")),
+            new Param(new IdExp("c"), new Types("str"))
+          ]),
+          new Suite([new Print(new Literal("a, b, and c were passed in"))])
+        )
+      ]
+    ]
   ]
 };
 

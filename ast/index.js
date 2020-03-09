@@ -97,6 +97,33 @@ class Arr {
   }
 }
 
+class ArrayType {
+  constructor(array, types) {
+    Object.assign(this, { array, types });
+  }
+}
+
+class Types {
+  constructor(types) {
+    Object.assign(this, { types });
+  }
+}
+class Param {
+  constructor(id, type) {
+    Object.assign(this, { id, type });
+  }
+}
+class Params {
+  constructor(parameters) {
+    Object.assign(this, { parameters });
+  }
+}
+class FunctionDeclaration {
+  constructor(id, parameters, suite) {
+    Object.assign(this, { id, parameters, suite });
+  }
+}
+
 class Break {}
 
 class Null {}
@@ -119,7 +146,12 @@ module.exports = {
   IfStmt,
   Break,
   Rule,
-  Arr
+  Arr,
+  FunctionDeclaration,
+  ArrayType,
+  Types,
+  Param,
+  Params
 };
 
 if (process.argv[2] == "-a") {
