@@ -105,8 +105,12 @@ const fixture = {
   subscripted: [
     String.raw`
     foo[0]
+    foo.b
     `,
-    [new SubscriptedRangeable(new IdExp("foo"), new Literal(0), null)]
+    [
+      new SubscriptedRangeable(new IdExp("foo"), new Literal(0), null),
+      new Member(new IdExp("foo"), new IdExp("b"))
+    ]
   ],
   assignmentOfLvals: [
     String.raw`
@@ -161,7 +165,7 @@ const fixture = {
   ],
   functionDeclaration: [
     String.raw`
-      fnc foo(a:int, b:boo, c:str):
+      fnc foo(a:arr[int], b:boo, c:str):
       ⇨hiss("a, b, and c were passed in")
       ⇦
     `,
@@ -170,7 +174,10 @@ const fixture = {
         new FunctionDeclaration(
           new IdExp("foo"),
           new Params([
-            new Param(new IdExp("a"), new Types("int")),
+            new Param(
+              new IdExp("a"),
+              new Types(new ArrayType("arr", new Types("int")))
+            ),
             new Param(new IdExp("b"), new Types("boo")),
             new Param(new IdExp("c"), new Types("str"))
           ]),

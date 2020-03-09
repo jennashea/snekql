@@ -107,7 +107,7 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return new Params(parameters.ast());
   },
   Type_array(array, _open, type, _close) {
-    return new ArrayTypes(array.ast(), type.ast());
+    return new ArrayType(array.ast(), type.ast());
   },
   Type(types) {
     return new Types(types.ast());
