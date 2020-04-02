@@ -33,7 +33,7 @@ snekQL {
                | Exp7
   Exp7         = "-" Exp8                            -- negation
                | Exp8
-  Exp8         = Call | Literal | Lvalue | Rule | Arr
+  Exp8         = Lvalue | Literal | Rule | Arr
 
   Literal      = numlit
                | strlit
@@ -42,8 +42,9 @@ snekQL {
 
   Lvalue       = Lvalue "[" Exp1 (":" Exp1)? "]"     -- subscripted
                | Lvalue "." (Call | id)              -- field
+               | Call
                | id                                  -- id
-  Call         = id "(" ListOf<Argument, ","> ")"
+  Call         = Lvalue "(" ListOf<Argument, ","> ")"
   Argument     = (id "=")? Exp1
   Return       = return Exp1                         -- returnExpression
                | return                              -- returnNothing
