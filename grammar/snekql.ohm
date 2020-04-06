@@ -8,6 +8,7 @@ snekQL {
                | for id in Exp1 ":" Suite            -- for
                | Lvalue "=" Exp1                     -- assign
                | break                               -- break
+               | Return
                | Print
                | Exp1
 

@@ -24,7 +24,8 @@ const {
   ArrayType,
   Types,
   Param,
-  Params
+  Params,
+  Return,
 } = require("./index");
 
 const grammar = ohm.grammar(
@@ -145,6 +146,9 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   EmptyListOf() {
     return [];
   },
+  Return_returnExpression(_keyword, expression) {
+    return new Return(expression.ast());
+  },
   Argument(id, _assignment, expression) {
     return new Argument(arrayToNullable(id.ast()), expression.ast());
   },
@@ -174,11 +178,11 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   },
   _terminal() {
     return this.sourceString;
-  }
+  },
 });
 /* eslint-enable no-unused-vars */
 
-module.exports = text => {
+module.exports = (text) => {
   const match = grammar.match(text);
   if (!match.succeeded()) {
     throw new Error(`Syntax Error: ${match.message}`);

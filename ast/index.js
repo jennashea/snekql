@@ -38,7 +38,7 @@ class IfStmt {
       firstSuite,
       potentialConditions,
       potentialBlocks,
-      elseCaseSuite
+      elseCaseSuite,
     });
   }
 }
@@ -124,6 +124,12 @@ class FunctionDeclaration {
   }
 }
 
+class Return {
+  constructor(expression) {
+    Object.assign(this, { expression });
+  }
+}
+
 class Break {}
 
 class Null {}
@@ -151,7 +157,8 @@ module.exports = {
   ArrayType,
   Types,
   Param,
-  Params
+  Params,
+  Return,
 };
 
 if (process.argv[2] == "-a") {
