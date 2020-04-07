@@ -25,6 +25,7 @@ const {
   Param,
   Params,
   Return,
+  VariableDeclaration,
 } = require("../../ast");
 
 const fixture = {
@@ -62,8 +63,8 @@ const fixture = {
     [new Print(new Literal("Hello, world"))],
   ],
   assignment: [
-    String.raw`c = 1000`,
-    [new Assignment("=", new IdExp("c"), new Literal(1000))],
+    String.raw`c += 1000`,
+    [new Assignment("+=", new IdExp("c"), new Literal(1000))],
   ],
   whileLoop: [
     String.raw`
@@ -172,21 +173,25 @@ const fixture = {
       ⇦
     `,
     [
-      [
-        new FunctionDeclaration(
-          new IdExp("foo"),
-          new Params([
-            new Param(
-              new IdExp("a"),
-              new Types(new ArrayType("arr", new Types("int")))
-            ),
-            new Param(new IdExp("b"), new Types("boo")),
-            new Param(new IdExp("c"), new Types("str")),
-          ]),
-          new Suite([new Print(new Literal("a, b, and c were passed in"))])
-        ),
-      ],
+      new FunctionDeclaration(
+        new IdExp("foo"),
+        new Params([
+          new Param(
+            new IdExp("a"),
+            new Types(new ArrayType("arr", new Types("int")))
+          ),
+          new Param(new IdExp("b"), new Types("boo")),
+          new Param(new IdExp("c"), new Types("str")),
+        ]),
+        new Suite([new Print(new Literal("a, b, and c were passed in"))])
+      ),
     ],
+  ],
+  variableDeclaration: [
+    String.raw`
+  let apple_stock = 240
+  `,
+    [new VariableDeclaration(new IdExp("apple_stock"), new Literal(240))],
   ],
 };
 

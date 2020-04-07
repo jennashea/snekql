@@ -1,12 +1,12 @@
 snekQL {
   Program      = Statement*
-  Statement    = Dec+
+  Statement    = Dec
                | if Exp1 ":" Suite
                  (elif Exp1 ":" Suite)*
                  (else ":" Suite)?                   -- if
                | while Exp1 ":" Suite                -- while
                | for id in Exp1 ":" Suite            -- for
-               | Lvalue "=" Exp1                     -- assign
+               | Lvalue assignop Exp1                -- assign
                | break                               -- break
                | Return
                | Print
@@ -16,7 +16,7 @@ snekQL {
 
   Dec          = VarDec | FunDec
   FunDec       = fnc id Params ":" Suite
-  VarDec       = id assignop Exp1
+  VarDec       = let id ("=" Exp1)?
   Params       = "(" ListOf<Param, ","> ")"
   Param        = id ":" Type
 
@@ -69,6 +69,7 @@ snekQL {
   if           = "if" ~idrest
   in           = "in" ~idrest
   int          = "int" ~idrest
+  let          = "let" ~idrest
   null         = "null" ~idrest
   return       = "return" ~idrest
   str          = "str" ~idrest
@@ -76,7 +77,7 @@ snekQL {
   while        = "while" ~idrest
 
   keyword      = arr | boo | break | dub | else | elif | false | fnc | for | hiss
-               | if | in | int | null | return | str | true | while
+               | if | in | int | let | null | return | str | true | while
 
   id           = ~keyword letter idrest*
   idrest       = letter | digit | "_"

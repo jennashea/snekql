@@ -26,6 +26,7 @@ const {
   Param,
   Params,
   Return,
+  VariableDeclaration,
 } = require("../ast");
 const { IntType, StringType } = require("./builtins");
 const check = require("./check");
@@ -59,8 +60,10 @@ BinaryExp.prototype.analyze = function(context) {
   this.type = IntType;
 };
 
-Assignment.prototype.analyze = function(context) {
-  this.source.analyze(context);
+VariableDeclaration.prototype.analyze = function(context) {
+  this.id.analyze(context);
+  this.type = this.optionalSource.type;
+  context.add(this);
 };
 
 // Needs function declarations to be defined
@@ -74,7 +77,7 @@ Call.prototype.analyze = function(context) {
 
 IdExp.prototype.analyze = function(context) {
   this.ref = context.lookup(this.ref);
-  this.type = this.ref.type;
+  // this.type = this.ref.type;
 };
 
 Literal.prototype.analyze = function() {
@@ -95,10 +98,10 @@ NegationExp.prototype.analyze = function(context) {
   this.type = IntType;
 };
 
-//Needs suites to be defined
 WhileExp.prototype.analyze = function(context) {
   this.test.analyze(context);
   check.isInteger(this.test, "Test in while");
+
   const suiteContext = context.createChildContextForLoop();
   this.body.stmt.forEach((s) => s.analyze(suiteContext));
 };

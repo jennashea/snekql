@@ -27,6 +27,7 @@ const {
   Param,
   Params,
   Return,
+  VariableDeclaration,
 } = require("./index");
 
 const grammar = ohm.grammar(
@@ -90,8 +91,8 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
     return lval.ast();
   },
 
-  VarDec(target, operator, source) {
-    return new Assignment(operator.ast(), target.ast(), source.ast());
+  VarDec(_let, id, _assignop, source) {
+    return new VariableDeclaration(id.ast(), arrayToNullable(source.ast()));
   },
   Rule(_atSign, operator, expressions) {
     return new Rule(operator.ast(), expressions.ast());

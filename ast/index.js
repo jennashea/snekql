@@ -32,7 +32,13 @@ class ForExp {
 }
 
 class IfStmt {
-  constructor(firstCondition, firstSuite, potentialConditions, potentialBlocks, elseCaseSuite) {
+  constructor(
+    firstCondition,
+    firstSuite,
+    potentialConditions,
+    potentialBlocks,
+    elseCaseSuite
+  ) {
     Object.assign(this, {
       firstCondition,
       firstSuite,
@@ -130,6 +136,12 @@ class Return {
   }
 }
 
+class VariableDeclaration {
+  constructor(id, optionalSource) {
+    Object.assign(this, { id, optionalSource });
+  }
+}
+
 class Break {}
 
 class Null {}
@@ -160,11 +172,12 @@ module.exports = {
   Param,
   Params,
   Return,
+  VariableDeclaration,
 };
 
-if (process.argv[2] == '-a') {
-  const fs = require('fs');
-  const parse = require('./parser');
+if (process.argv[2] == "-a") {
+  const fs = require("fs");
+  const parse = require("./parser");
   const source = fs.readFileSync(process.argv[3]);
 
   console.log(parse(source));
