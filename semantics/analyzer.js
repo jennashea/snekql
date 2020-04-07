@@ -1,6 +1,7 @@
 // The semantic analyzer
 
 const {
+  Program,
   BinaryExp,
   Literal,
   IdExp,
@@ -25,20 +26,24 @@ const {
   Param,
   Params,
   Return,
-} = require("../ast");
-const { IntType, StringType } = require("./builtins");
-const check = require("./check");
-const Context = require("./context");
+} = require('../ast');
+const { IntType, StringType } = require('./builtins');
+const check = require('./check');
+const Context = require('./context');
 
-module.exports = function(exp) {
+module.exports = function (exp) {
   exp.analyze(Context.INITIAL);
 };
 
-Break.prototype.analyze = function(context) {
-  check.inLoop(context, "break");
+Program.prototype.analyze = function (context) {
+  this.statements.forEach(s => s.analyze(context));
 };
 
-BinaryExp.prototype.analyze = function(context) {
+Break.prototype.analyze = function (context) {
+  check.inLoop(context, 'break');
+};
+
+BinaryExp.prototype.analyze = function (context) {
   this.left.analyze(context);
   this.right.analyze(context);
   if (/[-+*/&|]/.test(this.op)) {
@@ -54,39 +59,43 @@ BinaryExp.prototype.analyze = function(context) {
   this.type = IntType;
 };
 
-Assignment.prototype.analyze = function(context) {
+Assignment.prototype.analyze = function (context) {
   this.source.analyze(context);
 };
 
-Call.prototype.analyze = function(context) {
+Call.prototype.analyze = function (context) {
   this.callee = context.lookup(this.callee);
-  check.isFunction(this.callee, "Attempt to call a non-function");
-  this.args.forEach((arg) => arg.analyze(context));
+  check.isFunction(this.callee, 'Attempt to call a non-function');
+  this.args.forEach(arg => arg.analyze(context));
   check.legalArguments(this.args, this.callee.params);
   this.type = this.callee.returnType;
 };
 
-IdExp.prototype.analyze = function(context) {
+IdExp.prototype.analyze = function (context) {
   this.ref = context.lookup(this.ref);
   this.type = this.ref.type;
 };
 
-Literal.prototype.analyze = function() {
-  if (typeof this.value === "number") {
+Literal.prototype.analyze = function () {
+  if (typeof this.value === 'number') {
     this.type = IntType;
   } else {
     this.type = StringType;
   }
 };
 
-NegationExp.prototype.analyze = function(context) {
+Print.prototype.analyze = function (context) {
+  this.expression.analyze(context);
+};
+
+NegationExp.prototype.analyze = function (context) {
   this.operand.analyze(context);
-  check.isInteger(this.operand, "Operand of negation");
+  check.isInteger(this.operand, 'Operand of negation');
   this.type = IntType;
 };
 
-WhileExp.prototype.analyze = function(context) {
+WhileExp.prototype.analyze = function (context) {
   this.test.analyze(context);
-  check.isInteger(this.test, "Test in while");
+  check.isInteger(this.test, 'Test in while');
   this.body.analyze(context.createChildContextForLoop());
 };

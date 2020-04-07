@@ -1,3 +1,9 @@
+class Program {
+  constructor(statements) {
+    Object.assign(this, { statements });
+  }
+}
+
 class Argument {
   constructor(id, expression) {
     Object.assign(this, { id, expression });
@@ -26,13 +32,7 @@ class ForExp {
 }
 
 class IfStmt {
-  constructor(
-    firstCondition,
-    firstSuite,
-    potentialConditions,
-    potentialBlocks,
-    elseCaseSuite
-  ) {
+  constructor(firstCondition, firstSuite, potentialConditions, potentialBlocks, elseCaseSuite) {
     Object.assign(this, {
       firstCondition,
       firstSuite,
@@ -135,6 +135,7 @@ class Break {}
 class Null {}
 
 module.exports = {
+  Program,
   BinaryExp,
   IdExp,
   Literal,
@@ -161,9 +162,9 @@ module.exports = {
   Return,
 };
 
-if (process.argv[2] == "-a") {
-  const fs = require("fs");
-  const parse = require("./parser");
+if (process.argv[2] == '-a') {
+  const fs = require('fs');
+  const parse = require('./parser');
   const source = fs.readFileSync(process.argv[3]);
 
   console.log(parse(source));
