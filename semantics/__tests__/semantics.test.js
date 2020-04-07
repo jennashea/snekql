@@ -5,8 +5,8 @@
  * all of semantic constraints specified by the language.
  */
 
-const parse = require('../../ast/parser');
-const analyze = require('../analyzer');
+const parse = require("../../ast/parser");
+const analyze = require("../analyzer");
 
 // const program = String.raw`
 // fnc batmanSong(times:int):
@@ -35,11 +35,19 @@ const analyze = require('../analyzer');
 // `;
 
 const program = String.raw`
-2
+2+2
+5*100/1000-100
+hiss("hello world")
+-100 + 2000
+
+while 1 < 10:
+⇨hiss("hello world")
+⇦
+
 `;
 
-describe('The semantic analyzer', () => {
-  test('accepts the mega program with all syntactic forms', done => {
+describe("The semantic analyzer", () => {
+  test("accepts the mega program with all syntactic forms", (done) => {
     const astRoot = parse(program);
     expect(astRoot).toBeTruthy();
     analyze(astRoot);
