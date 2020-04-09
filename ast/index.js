@@ -110,8 +110,8 @@ class ArrayType {
 }
 
 class Types {
-  constructor(types) {
-    Object.assign(this, { types });
+  constructor(id) {
+    Object.assign(this, { id });
   }
 }
 class Param {
@@ -137,8 +137,8 @@ class Return {
 }
 
 class VariableDeclaration {
-  constructor(id, optionalSource) {
-    Object.assign(this, { id, optionalSource });
+  constructor(id, type, optionalSource) {
+    Object.assign(this, { id, type, optionalSource });
   }
 }
 

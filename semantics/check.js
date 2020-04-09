@@ -1,6 +1,6 @@
 const util = require("util");
 const { ArrayType, FunctionDeclaration, IdExp } = require("../ast");
-const { IntType, StringType } = require("./builtins");
+const { IntType, StringType, BooleanType, DoubleType } = require("./builtins");
 
 function doCheck(condition, message) {
   if (!condition) {
@@ -11,6 +11,15 @@ function doCheck(condition, message) {
 module.exports = {
   isInteger(expression) {
     doCheck(expression.type === IntType, "Not an integer");
+  },
+  isDouble(expression) {
+    doCheck(expression.type === DoubleType, "Not a double");
+  },
+  isBoolean(expression) {
+    doCheck(expression.type === BooleanType, "Not a boolean");
+  },
+  isString(expression) {
+    doCheck(expression.type === StringType, "Not a string");
   },
 
   isIntegerOrString(expression) {

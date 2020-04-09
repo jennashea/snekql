@@ -13,7 +13,7 @@ const analyze = require("../analyzer");
 // ⇨na = times*13*"na"
 // hiss(na)
 // ⇦
-// fnc calculatePERatio(dustockPrice:dub, eps:dub):
+// fnc calculatePERatio(stockPrice:dub, eps:dub):
 // ⇨return stockPrice/eps
 // ⇦
 
@@ -44,7 +44,26 @@ while 1 < 10:
 ⇨hiss("hello world")
 ⇦
 
+let a = 10
+let b = 20
+
 `;
+
+// const program = String.raw`
+// fnc batmanSong(times:int, another:str):
+// ⇨let na = times*13*"na"
+// hiss(na)
+// ⇦
+
+// `;
+
+// const program = String.raw`
+
+// while 1 < 10:
+// ⇨hiss("hello world")
+// ⇦
+
+// `;
 
 describe("The semantic analyzer", () => {
   test("accepts the mega program with all syntactic forms", (done) => {

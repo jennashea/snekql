@@ -92,7 +92,11 @@ const astGenerator = grammar.createSemantics().addOperation("ast", {
   },
 
   VarDec(_let, id, _assignop, source) {
-    return new VariableDeclaration(id.ast(), arrayToNullable(source.ast()));
+    return new VariableDeclaration(
+      id.ast(),
+      null,
+      arrayToNullable(source.ast())
+    );
   },
   Rule(_atSign, operator, expressions) {
     return new Rule(operator.ast(), expressions.ast());

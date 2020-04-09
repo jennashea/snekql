@@ -6,7 +6,7 @@
  *   const Context = require('./semantics/context');
  */
 
-const { standardFunctions, IntType, StringType } = require("./builtins");
+const { IntType, StringType, DoubleType, BooleanType } = require("./builtins");
 
 require("./analyzer");
 
@@ -60,12 +60,11 @@ class Context {
 
   // Adds a declaration to this context.
   add(declaration) {
-    if (this.locals.has(declaration.types)) {
-      throw new Error(`${declaration.types} already declared in this scope`);
+    if (this.locals.has(declaration.id)) {
+      throw new Error(`${declaration.id} already declared in this scope`);
     }
     const entity = declaration;
-    //declaration instanceof TypeDec ? declaration.type : declaration;
-    this.locals.set(declaration.types, entity);
+    this.locals.set(declaration.id, entity);
   }
 
   // Returns the entity bound to the given identifier, starting from this
@@ -81,7 +80,7 @@ class Context {
 }
 
 Context.INITIAL = new Context();
-[IntType, StringType].forEach((entity) => {
+[IntType, StringType, DoubleType, BooleanType].forEach((entity) => {
   Context.INITIAL.add(entity);
 });
 
