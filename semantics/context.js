@@ -7,7 +7,7 @@
  */
 
 const { IntType, StringType, DoubleType, BooleanType } = require("./builtins");
-
+const { IdExp } = require("../ast");
 require("./analyzer");
 
 // When doing semantic analysis we pass around context objects.
@@ -60,11 +60,22 @@ class Context {
 
   // Adds a declaration to this context.
   add(declaration) {
-    if (this.locals.has(declaration.id)) {
+    //if dec.id.constructor == IDEXP .ref too
+    if (
+      this.locals.has(declaration.id) ||
+      this.locals.has(declaration.id.ref)
+    ) {
       throw new Error(`${declaration.id} already declared in this scope`);
     }
     const entity = declaration;
-    this.locals.set(declaration.id, entity);
+    if (declaration.id.constructor === IdExp)
+      this.locals.set(declaration.id.ref, entity);
+    else this.locals.set(declaration.id, entity);
+
+    if (declaration.id.ref === "d") {
+      console.log(declaration.id.ref);
+      console.log(this);
+    }
   }
 
   // Returns the entity bound to the given identifier, starting from this

@@ -71,10 +71,14 @@ BinaryExp.prototype.analyze = function(context) {
 };
 
 VariableDeclaration.prototype.analyze = function(context) {
-  this.optionalSource.analyze(context);
-  if (this.type) this.type = context.lookup(this.type);
-  else this.type = this.optionalSource.type;
+  if(this.optionalSource != null){
+    this.optionalSource.analyze(context);
+    this.type = this.optionalSource.type;
+  }
   context.add(this);
+  // console.log(this);
+  // console.log(context);
+  
 };
 
 // Needs function declarations to be defined
@@ -116,7 +120,9 @@ FunctionDeclaration.prototype.analyze = function(context) {
 };
 
 IdExp.prototype.analyze = function(context) {
+  // console.log("Before: ", this.ref)
   this.ref = context.lookup(this.ref);
+  // console.log("After: ", this.ref)
   this.type = this.ref.type;
 };
 

@@ -40,12 +40,20 @@ const program = String.raw`
 hiss("hello world")
 -100 + 2000
 
-while 1 < 10:
-⇨hiss("hello world")
-⇦
-
 let a = 10
 let b = 20
+
+a = 1000*a*b
+let c
+
+while 1 < 10:
+⇨hiss("hello world")
+b += 100
+c = 10000
+let d = 1000
+hiss(d)
+⇦
+
 
 `;
 
