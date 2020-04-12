@@ -65,7 +65,7 @@ snekQL {
   false        = "false" ~idrest
   fnc          = "fnc" ~idrest
   for          = "for" ~idrest
-  hiss         = "for" ~idrest
+  hiss         = "hiss" ~idrest
   if           = "if" ~idrest
   in           = "in" ~idrest
   int          = "int" ~idrest

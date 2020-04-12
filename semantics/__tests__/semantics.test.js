@@ -34,36 +34,38 @@ const analyze = require("../analyzer");
 // ⇦
 // `;
 
-const program = String.raw`
-2+2
-5*100/1000-100
-hiss("hello world")
--100 + 2000
-
-let a = 10
-let b = 20
-
-a = 1000*a*b
-let c
-
-while 1 < 10:
-⇨hiss("hello world")
-b += 100
-c = 10000
-let d = 1000
-hiss(d)
-⇦
-
-
-`;
-
 // const program = String.raw`
-// fnc batmanSong(times:int, another:str):
-// ⇨let na = times*13*"na"
-// hiss(na)
+// 2+2
+// 5*100/1000-100
+// hiss("hello world")
+// -100 + 2000
+
+// let a = 10
+// let b = 20
+
+// a = 1000*a*b
+// let c
+
+// while 1 < 10:
+// ⇨hiss("hello world")
+// b += 100
+// c = 10000
+// let d = 1000
+// hiss(d)
 // ⇦
 
 // `;
+
+const program = String.raw`
+fnc batmanSong(times:int, another:str):
+⇨let na = times*13
+hiss(na)
+⇦
+
+batmanSong(100, "brandon")
+
+
+`;
 
 // const program = String.raw`
 
@@ -74,11 +76,11 @@ hiss(d)
 // `;
 
 describe("The semantic analyzer", () => {
-  test("accepts the mega program with all syntactic forms", (done) => {
-    const astRoot = parse(program);
-    expect(astRoot).toBeTruthy();
-    analyze(astRoot);
-    expect(astRoot).toBeTruthy();
-    done();
-  });
+    test("accepts the mega program with all syntactic forms", (done) => {
+        const astRoot = parse(program);
+        expect(astRoot).toBeTruthy();
+        analyze(astRoot);
+        expect(astRoot).toBeTruthy();
+        done();
+    });
 });

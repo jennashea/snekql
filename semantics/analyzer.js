@@ -37,15 +37,23 @@ module.exports = function(exp) {
 
 Program.prototype.analyze = function(context) {
   this.statements.forEach((s) => {
-    // console.log(s);
+    this.statements
+      .filter((d) => d.constructor === FunctionDeclaration)
+      .map((d) => d.analyzeSignature(context));
     s.analyze(context);
-    //do signature analysis in here?
   });
 };
 
 Assignment.prototype.analyze = function(context) {
   this.source.analyze(context);
   this.target.analyze(context);
+};
+
+Argument.prototype.analyze = function(context) {
+  // console.log(this.expression);
+  this.expression.analyze(context);
+  // console.log(this.expression);
+  // this.type = this.expresion.type;
 };
 
 Break.prototype.analyze = function(context) {
@@ -71,65 +79,48 @@ BinaryExp.prototype.analyze = function(context) {
 };
 
 VariableDeclaration.prototype.analyze = function(context) {
-  if(this.optionalSource != null){
+  if (this.optionalSource != null) {
     this.optionalSource.analyze(context);
     this.type = this.optionalSource.type;
   }
   context.add(this);
-  // console.log(this);
-  // console.log(context);
-  
 };
 
 // Needs function declarations to be defined
 Call.prototype.analyze = function(context) {
-  this.callee = context.lookup(this.callee);
+  console.log(this.callee.ref);
+  this.callee = context.lookup(this.callee.ref);
   check.isFunction(this.callee, "Attempt to call a non-function");
   this.args.forEach((arg) => arg.analyze(context));
-  check.legalArguments(this.args, this.callee.params);
-  this.type = this.callee.returnType;
+  console.log(this);
+  check.legalArguments(this.args, this.callee.parameters.parameters);
 };
 
 // Function analysis is broken up into two parts in order to support (nutual)
 // recursion. First we have to do semantic analysis just on the signature
 // (including the return type). This is so other functions that may be declared
 // before this one have calls to this one checked.
-// FunctionDeclaration.prototype.analyzeSignature = function(context) {
-//   this.bodyContext = context.createChildContextForFunctionBody();
-//   this.parameters.forEach((p) => p.analyze(this.bodyContext));
-//   // this.returnType = !this.returnType
-//   //   ? undefined
-//   //   : context.lookup(this.returnType);
-// };
+FunctionDeclaration.prototype.analyzeSignature = function(context) {
+  this.bodyContext = context.createChildContextForFunctionBody(this);
+  this.parameters.analyze(this.bodyContext);
+};
 
 FunctionDeclaration.prototype.analyze = function(context) {
-  //1. Disallow function decs in suites only top-level program
-  //2. Break this into 2 functions
-  let bodyContext = context.createChildContextForFunctionBody();
-  this.parameters.analyze(bodyContext);
-  this.suite.analyze(bodyContext);
+  this.suite.analyze(this.bodyContext);
   context.add(this);
-  //add this function to the above context
-
-  // check.isAssignableTo(
-  //   this.body,
-  //   this.returnType,
-  //   "Type mismatch in function return"
-  // );
-  // delete this.bodyContext; // This was only temporary, delete to keep output clean.
+  delete this.bodyContext; // This was only temporary, delete to keep output clean.
 };
 
 IdExp.prototype.analyze = function(context) {
-  // console.log("Before: ", this.ref)
   this.ref = context.lookup(this.ref);
-  // console.log("After: ", this.ref)
   this.type = this.ref.type;
+  console.log(this.type);
 };
 
 Literal.prototype.analyze = function() {
   if (Number.isInteger(this.value)) {
     this.type = IntType;
-  } else if (!Number.isInteger(this.value)) {
+  } else if (this.value % 1 >= 0 || this.value % 1 <= 0) {
     this.type = DoubleType;
   } else if (typeof variable === "boolean") {
     this.type = BooleanType;
@@ -149,8 +140,10 @@ Print.prototype.analyze = function(context) {
 };
 
 Param.prototype.analyze = function(context) {
+  console.log(context);
   this.type = context.lookup(this.type.id);
   context.add(this);
+  console.log(context);
 };
 
 Params.prototype.analyze = function(context) {

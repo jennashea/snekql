@@ -6,8 +6,8 @@ const BooleanType = new Types("boo");
 const DoubleType = new Types("dub");
 
 module.exports = {
-  IntType,
-  StringType,
-  BooleanType,
-  DoubleType,
+    IntType,
+    StringType,
+    BooleanType,
+    DoubleType,
 };

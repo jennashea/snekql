@@ -71,11 +71,6 @@ class Context {
     if (declaration.id.constructor === IdExp)
       this.locals.set(declaration.id.ref, entity);
     else this.locals.set(declaration.id, entity);
-
-    if (declaration.id.ref === "d") {
-      console.log(declaration.id.ref);
-      console.log(this);
-    }
   }
 
   // Returns the entity bound to the given identifier, starting from this
