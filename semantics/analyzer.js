@@ -88,11 +88,11 @@ VariableDeclaration.prototype.analyze = function(context) {
 
 // Needs function declarations to be defined
 Call.prototype.analyze = function(context) {
-  console.log(this.callee.ref);
+  // console.log(this.callee.ref);
   this.callee = context.lookup(this.callee.ref);
   check.isFunction(this.callee, "Attempt to call a non-function");
   this.args.forEach((arg) => arg.analyze(context));
-  console.log(this);
+  // console.log(this);
   check.legalArguments(this.args, this.callee.parameters.parameters);
 };
 
@@ -114,7 +114,7 @@ FunctionDeclaration.prototype.analyze = function(context) {
 IdExp.prototype.analyze = function(context) {
   this.ref = context.lookup(this.ref);
   this.type = this.ref.type;
-  console.log(this.type);
+  // console.log(this.type);
 };
 
 Literal.prototype.analyze = function() {
@@ -140,10 +140,10 @@ Print.prototype.analyze = function(context) {
 };
 
 Param.prototype.analyze = function(context) {
-  console.log(context);
+  // console.log(context);
   this.type = context.lookup(this.type.id);
   context.add(this);
-  console.log(context);
+  // console.log(context);
 };
 
 Params.prototype.analyze = function(context) {
