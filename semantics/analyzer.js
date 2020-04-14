@@ -27,7 +27,17 @@ const {
   Return,
   VariableDeclaration,
 } = require("../ast");
-const { IntType, StringType, DoubleType, BooleanType } = require("./builtins");
+const {
+  IntType,
+  StringType,
+  DoubleType,
+  BooleanType,
+  ArrayOfType,
+  ArrayOfIntType,
+  ArrayOfStringType,
+  ArrayOfBooleanType,
+  ArrayOfDoubleType,
+} = require("./builtins");
 const check = require("./check");
 const Context = require("./context");
 
@@ -42,6 +52,21 @@ Program.prototype.analyze = function(context) {
       .map((d) => d.analyzeSignature(context));
     s.analyze(context);
   });
+};
+
+Arr.prototype.analyze = function(context) {
+  this.expressions.forEach((e) => e.analyze(context));
+  check.arrayAllSameType(this.expressions);
+  let arrType = this.expressions[0].type.id;
+  if (arrType == "int") {
+    this.type = ArrayOfIntType;
+  } else if (arrType == "str") {
+    this.type = ArrayOfStringType;
+  } else if (arrType == "boo") {
+    this.type = ArrayOfBooleanType;
+  } else if (arrType == "dub") {
+    this.type = ArrayOfDoubleType;
+  }
 };
 
 Assignment.prototype.analyze = function(context) {
@@ -151,8 +176,16 @@ Params.prototype.analyze = function(context) {
 };
 
 Suite.prototype.analyze = function(context) {
-  //Do more analysis? Like letexp?
   this.stmt.forEach((s) => s.analyze(context));
+};
+
+Return.prototype.analyze = function(context) {
+  //make sure inside of function
+  //assign type to it? can't because think of conditionals
+};
+
+ForExp.prototype.analyze = function(context) {
+  const bodyContext = context.createChildContextForLoop();
 };
 
 WhileExp.prototype.analyze = function(context) {

@@ -64,6 +64,7 @@ hiss(na)
 
 batmanSong(100, "brandon")
 
+[1, 2, 3, 4, 5]
 
 `;
 

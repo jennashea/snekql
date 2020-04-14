@@ -59,4 +59,15 @@ module.exports = {
       this.isAssignableTo(arg.expression, params[i].type)
     );
   },
+  arrayAllSameType(array) {
+    if (array.length >= 2) {
+      const firstElementType = array[0].type;
+      array.forEach((e) =>
+        doCheck(
+          e.type === firstElementType,
+          `All elements in the array must be of the same type`
+        )
+      );
+    }
+  },
 };
