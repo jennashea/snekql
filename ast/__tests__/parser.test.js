@@ -191,7 +191,7 @@ const fixture = {
     String.raw`
   let apple_stock = 240
   `,
-    [new VariableDeclaration(new IdExp("apple_stock"), new Literal(240))],
+    [new VariableDeclaration(new IdExp("apple_stock"), null, new Literal(240))],
   ],
 };
 

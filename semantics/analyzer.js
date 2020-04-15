@@ -67,6 +67,7 @@ Arr.prototype.analyze = function(context) {
   } else if (arrType == "dub") {
     this.type = ArrayOfDoubleType;
   }
+  this.iterator = this.type.types;
 };
 
 Assignment.prototype.analyze = function(context) {
@@ -136,6 +137,19 @@ FunctionDeclaration.prototype.analyze = function(context) {
   delete this.bodyContext; // This was only temporary, delete to keep output clean.
 };
 
+IfStmt.prototype.analyze = function(context) {
+  this.firstCondition.analyze(context);
+  console.log(this.firstCondition);
+  check.isBoolean(this.firstCondition);
+  this.firstSuite.analyze(context);
+  this.potentialConditions.forEach((condition, i) => {
+    condition.analyze(context);
+    check.isBoolean(condition);
+    this.potentialBlocks[i].analyze(context);
+  });
+  this.elseCaseSuite.analyze(context);
+};
+
 IdExp.prototype.analyze = function(context) {
   this.ref = context.lookup(this.ref);
   this.type = this.ref.type;
@@ -151,6 +165,7 @@ Literal.prototype.analyze = function() {
     this.type = BooleanType;
   } else {
     this.type = StringType;
+    this.iterator = this.type;
   }
 };
 
@@ -176,16 +191,22 @@ Params.prototype.analyze = function(context) {
 };
 
 Suite.prototype.analyze = function(context) {
-  this.stmt.forEach((s) => s.analyze(context));
+  const suiteContext = context.createChildContextForBlock();
+  this.stmt.forEach((s) => s.analyze(suiteContext));
 };
 
 Return.prototype.analyze = function(context) {
-  //make sure inside of function
-  //assign type to it? can't because think of conditionals
+  check.inFunction(context);
 };
 
 ForExp.prototype.analyze = function(context) {
   const bodyContext = context.createChildContextForLoop();
+  this.iterable.analyze(context);
+  check.isIterable(this.iterable);
+  this.id = new VariableDeclaration(this.id, this.iterable.iterator);
+  bodyContext.add(this.id);
+  this.suite.analyze(bodyContext);
+  // console.log(this);
 };
 
 WhileExp.prototype.analyze = function(context) {

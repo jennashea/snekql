@@ -49,6 +49,19 @@ module.exports = {
   inLoop(context, keyword) {
     doCheck(context.inLoop, `${keyword} can only be used in a loop`);
   },
+  inFunction(context) {
+    doCheck(
+      context.currentFunction !== null,
+      `return statements can only be used in a function`
+    );
+  },
+  isIterable(variable) {
+    doCheck(
+      Object.prototype.hasOwnProperty.call(variable, "iterator"),
+      `${variable.id} is not iterable`
+    );
+  },
+
   // Same number of args and params; all types compatible
   legalArguments(args, params) {
     doCheck(
