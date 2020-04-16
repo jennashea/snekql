@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>SnekQL</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<h1>SnekQL</h1>
+						<p>A multi-paradigm query language
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="#intro" class="active">Introduction</a></li>
+							<li><a href="#first">About SnekQL</a></li>
+							<li><a href="#second">Programming Examples</a></li>
+							<li><a href="#cta">Developer Team</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Introduction -->
+							<section id="intro" class="main">
+								<div class="spotlight">
+									<div class="content">
+										<header class="major">
+											<h2><b>Introduction to SnekQL</b></h2>
+										</header>
+										<p>
+											SnekQL is a multi-paradigm query language oriented towards
+											data science. Pragmatic and intuitive, our language is intended
+											to provide a simple yet powerful way of manipulating (representing
+											and visualizing) data.
+										</p>
+									</div>
+									<span class="image"><img src="images/snek-logo.jpg" alt="" /></span>
+								</div>
+							</section>
+
+						<!-- First Section -->
+							<section id="first" class="main special">
+								<header class="major">
+									<h2 class="major"><b>About SnekQL</b></h2>
+									<h3><b>Features</b></h3>
+									<ul>
+										Dynamically Typed<br>
+										Optional Parameters<br>
+										Pass-by-Reference Values<br>
+										No Pointers<br>
+										Weakly Typed<br>
+									</ul>
+								</header>
+
+								<h2 style="text-align:center"><b>Types, Variables, and Declarations</b></h2>
+
+								<table border = "1" width = "100%">
+									<tr>
+										<td><b>Booleans: boo</b></td>
+										<td>truthy = true <br>
+											falsy = false
+										</td>
+									</tr>
+									<tr>
+										<td><b>Doubles: dub</b></td>
+										<td>doubleValue = 5.0</td>
+									</tr>
+									<tr>
+										<td><b>Integers: int</b></td>
+										<td>integerValue = 42</td>
+									</tr>
+									<tr>
+										<td><b>Strings: str</b></td>
+										<td>stringValue = "Hello, There!"</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td><b>Arrays: arr</b></td>
+										<td>array = [2, 3, 4] <br>
+											array[1] <b># 3</b>
+										</td>
+									</tr>
+									<tr>
+										<td><b>Functions: fnc</b></td>
+										<td>fnc helloWorld(): <br>
+											hiss("Hello World")</Space>
+										</td>
+
+									</tr>
+									<tr>
+										<td><b>Rules: rul</b></td>
+										<td>rule1 = @ > 0 <b># @ represents the vairable to be passed in</b><br>
+										rule2 = @ == "Jenna"
+										</td>
+									</tr>
+									<tr>
+										<td><b>Columns</b></td>
+										<td>firstName = column("name, ["Jenna", "Jared"], true, false<br>
+											firstName.name <b># 'name'</b><br>
+											firstName.value <b># ["Jenna", "Jared"]</b> <br>
+											firstName.notNull <b># true</b><br>
+											firstName.unique <b># false</b><br>
+											firstName.addRow("Brandon") <b># ["Jenna", "Jared", "Brandon"]</b><br>
+											firstName.addRule(@ != "Jenna") <b># Rule 1 not satisfied for row 1 </b>
+										</td>
+									</tr>
+									<tr>
+										<td><b>Tables: tbl</b></td>
+										<td>groupName = tabulate(firstName, lastName) <br>
+											groupNames.column <b># [firstName, lastName]</b><br>
+											groupName.addColumn(middleName) <b># [firstName, lastName, middleName]</b><br>
+											groupName.dropColumn(lastName) <b># [firstName, middleName]</b><br>
+											groupName.addRule(firstName @ != "Jared")<br>
+											groupName.addRow(["Jared, Matthew"]) <b># rule 1 not satisfied for new row</b>
+										</td>
+									</tr>
+								</table>
+								<h2><b>Operators</b></h2>
+									<table border = "1" width ="100%">
+										<tr>
+											<td><b>Additive Operators: +, -, +=, -= </b></td>
+											<td>addition = 9 + 10 <b># 19</b> <br>
+												subtraction = 5 - 1 <b># 4 </b><br>
+												subtraction += 1.0 <b># 5.0 </b><br>
+												addition -= 3 <b># 16</b><br>
+												greeting = "Hi"<br>
+												let = 't'<br>
+												please = greeting + let <b>#'Hit'</b><br>
+												please += 'me' <b># 'Hit me'</b>
+											</td>
+										</tr>
+										<tr>
+											<td><b>Multiplicative Operators:<br> *, /, %, *=, /=, **</b></td>
+											<td>multiplication = 7 * 81 <b># 567</b><br>
+												division = 54 / 6 <b># 9</b><br>
+												modulus= 79 % 11 <b># 2</b><br>
+												division *= 3 <b># 27</b><br>
+												multiplication /= 21 <b># 27</b><br>
+												batman = "Na" * 5 <b># "NaNaNaNaNa"</b>
+											</td>
+										</tr>
+										<tr>
+											<td><b>Relational Operators and Reference Equality:<br>
+												 <, >, <=, >=, ==, !=</b></td>
+											<td>22 > 1<br>
+												5.2 != 4.9
+											</td>
+										</tr>
+										<tr>
+											<td><b>Logic and Prefix Operators:<br> and, or, not, !</b></td>
+											<td>truthy = true and true<br>
+												falsy = not true
+											</td>
+										</tr>
+									</table>
+									<h2><b>Control Flow</b></h2>
+									<table border = "1" width ="100%"></table>
+									<h2>for Loop</h2>
+									<span class="image"><img src="images/for.png" alt="" /></span>
+
+									<h2>while Loop</h2>
+									<span class="image"><img src="images/while.png" alt="" /></span>
+
+									<h2>if/else Loop</h2>
+									<span class="image"><img src="images/if:else.png" alt="" /></span>
+								</footer>
+							</section>
+
+						<!-- Second Section -->
+							<section id="second" class="main special">
+								<header class="major">
+									<h2><b>Programming Examples</b></h2>
+								</header>
+
+								<h2>Area of a Circle:</h2>
+								<span class="image"><img src="images/area_circle.jpg" alt="" /></span>
+
+								<h2>Fibonacci + Load to Column Object:</h2>
+								<span class="image"><img src="images/fib.png" alt="" /></span>
+
+								<h2>Table Creation for Pythagorean Triples:</h2>
+								<span class="image"><img src="images/py_trip.png" alt="" /></span>
+
+								<h2>Rule Creation for Tables:</h2>
+								<span class="image"><img src="images/table_rule.png" alt="" /></span>
+
+								<h2>Sorting Column with Bubble Sort Algorithm:</h2>
+								<span class="image"><img src="images/bubble.png" alt="" /></span>
+							</section>
+
+						<!-- Developer Team -->
+							<section id="cta" class="main special">
+								<header class="major">
+									<h2>Developer Team</h2>
+									<p>
+										Qiyue Aixinjueluo<br>Jenna Berlinberg<br>Brandon
+										Golshirazian<br>Alvin Lai<br>Imani Martin<br>
+										Jared Rebuyon
+									</p>
+								</header>
+
+							</section>
+
+					</div>
+				<!-- Footer-->
+					<footer id="footer"></footer>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
