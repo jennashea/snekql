@@ -10,11 +10,11 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 ## Features
 
-* Dynamically Typed
-* Optional Parameters
-* Pass-by-reference Values
-* No Pointers
-* Weakly Typed
+-   Dynamically Typed
+-   Optional Parameters
+-   Pass-by-reference Values
+-   No Pointers
+-   Weakly Typed
 
 ## Types, Variables, and Declarations
 
@@ -38,28 +38,28 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 ### Arrays: `arr`
 
-````python
+```python
 array = [2, 3, 4]
 array[1]  # 3
-````
+```
 
 ### Functions: `fnc`
 
-````python
+```python
 fnc helloWorld():
-    hiss("Hello World)
-````
+    hiss("Hello World")
+```
 
 ### Rules: `rul`
 
-````python
+```python
 rule1 = @ > 0  # @ represents the variable to be passed in.
 rule2 = @ == "Jenna"
-````
+```
 
 ### Columns: `col`
 
-````python
+```python
 firstName = column("name", ["Jenna", "Jared"], true, false)
 firstName.name  # 'name'
 firstName.value  # ["Jenna", "Jared"]
@@ -67,11 +67,11 @@ firstName.notNull  # true
 firstName.unique  # false
 firstName.addRow("Brandon")  # ["Jenna", "Jared", "Brandon"]
 firstName.addRule(@ != "Jenna")  # Rule 1 not satisfied for row 1.
-````
+```
 
 ### Tables `tbl`
 
-````python
+```python
 groupName = tabulate(firstName, lastName)
 groupName.columns   # [firstName, lastName]
 groupName.addColumn(middleName) # [firstName, lastName, middleName]
@@ -79,13 +79,13 @@ groupName.addRow(["Jenna", "Berlinberg", "Shea"])
 groupName.dropColumn(lastName)  # [firstName, middleName]
 groupName.addRule(firstName, @ != "Jared")
 groupName.addRow(["Jared", "Matthew"])  # Rule 1 not satisfied for new row
-````
+```
 
 ## Operators
 
 ### Additive Operators: `+, -, +=, -=`
 
-````python
+```python
 addition = 9 + 10  # 19
 subtraction = 5 - 1  # 4
 subtraction += 1.0  # 5.0
@@ -94,38 +94,38 @@ greeting = "Hi"
 let = 't'
 please = greeting + let  # 'Hit'
 please += ' me'  # 'Hit me'
-````
+```
 
 ### Multiplicative Operators: `*, /, %, *=, /=, **`
 
-````python
+```python
 multiplication = 7 * 81  # 567
 division = 54 / 6  # 9
 modulus =  79 % 11  # 2
 division *= 3  # 27
 multiplication /= 21  # 27
 batman = "Na" * 20  # "NaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNa"
-````
+```
 
 ### Relational Operators and Reference Equality: `<, >, <=, >=, ==, !=`
 
-````python
+```python
 22 > 1
-5.2 != 4.9  
-````
+5.2 != 4.9
+```
 
 ### Logic and Prefix Operators: `and, or, not, !`
 
-````python
+```python
 truthy = true and true
 falsy = not true
-````
+```
 
 ## Control Flow
 
 ### `for` Loop
 
-````python
+```python
 uni = "Loyola Marymount"
 arr = [1, 2, 3, 4, 5, 6]
 
@@ -137,22 +137,22 @@ for i in range(4):
 
 for i in arr:
     hiss(i)
-````
+```
 
 ### `while` Loop
 
-````python
+```python
 j = 10
 naught = 0.0
 
 while true:
     naught += 2.7
     j -= 1
-````
+```
 
 ### `if/else` Loop
 
-````python
+```python
 k = 100
 l = 62
 
@@ -165,21 +165,21 @@ if k - l == 38:
     hiss("Values are Equal")
 
 hiss("Values are Equal") if k -l == 38 else anotherEqualizerFunc(k, l)
-````
+```
 
 ## Example Programs
 
 ### Area of a Circle:
 
-````python
+```python
 fnc areaOfACircle(radius):
     pi = 3.14
     return pi * radius ** 2  # Precendence follows PEMDAS
-````
+```
 
 ### Fibonacci + Load to Column Object:
 
-````python
+```python
 numberOfTerms = 10
 array = []
 fibonacciNumbers = column("Numbers", array, True, True)
@@ -193,11 +193,11 @@ fnc fibonacci(n):
 fnc addValuesToColumn():
     for i in range(numberOfTerms):
        array.add(fibonacci(i))
-````
+```
 
 ### Table Creation for Pythagorean Triples:
 
-````python
+```python
 legAValues = []
 legBValues = []
 hypotenuseValues = []
@@ -226,11 +226,11 @@ fnc pythagoreanTriplets(limit):
         two += 1
 
 pythagoreanTriplets(20)
-````
+```
 
 ### Rule Creation for Tables:
 
-````python
+```python
 array = [32, 7, 60, 100, 5]
 digits = column("Double Digits", array, True, True)
 fnc removeSingleDigitValues(oldColumn):
@@ -239,15 +239,15 @@ fnc removeSingleDigitValues(oldColumn):
 
     for i in oldColumn:
         parsedColumn.addRow(oldColumn[i])
-        
+
     return parsedColumn
 
 removeSingleDigitValues(digits)
-````
+```
 
 ### Sorting Column with Bubble Sort Algorithm:
 
-````python
+```python
 values = column("List of Numbers", [22, 23434, 2332, 7543, 10132], True, True)
 
 fnc bubbleSort(column):
@@ -267,4 +267,24 @@ fnc bubbleSort(column):
                 switch  = true
 
 bubbleSort(values)
-````
+```
+
+### Semantic Error Checks
+
+-   use of undeclared variable
+-   non boolean while condition
+-   non integer boolean condition
+-   non integer in add
+-   non integer in subtract
+-   types do not match in inequality test
+-   too many function arguments
+-   too few function arguments
+-   wrong type of function argument
+-   member of nonrecord
+-   subscript of nonarray
+-   call of nonfunction
+-   not iterable type
+-   array not all same type
+-   return must be inside a function
+-   break must be inside a function
+-   Rule not proper expression type
