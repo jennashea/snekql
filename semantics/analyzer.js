@@ -41,11 +41,11 @@ const {
 const check = require("./check");
 const Context = require("./context");
 
-module.exports = function(exp) {
+module.exports = function (exp) {
   exp.analyze(Context.INITIAL);
 };
 
-Program.prototype.analyze = function(context) {
+Program.prototype.analyze = function (context) {
   this.statements.forEach((s) => {
     this.statements
       .filter((d) => d.constructor === FunctionDeclaration)
@@ -54,7 +54,7 @@ Program.prototype.analyze = function(context) {
   });
 };
 
-Arr.prototype.analyze = function(context) {
+Arr.prototype.analyze = function (context) {
   this.expressions.forEach((e) => e.analyze(context));
   check.arrayAllSameType(this.expressions);
   let arrType = this.expressions[0].type.id;
@@ -70,23 +70,23 @@ Arr.prototype.analyze = function(context) {
   this.iterator = this.type.types;
 };
 
-Assignment.prototype.analyze = function(context) {
+Assignment.prototype.analyze = function (context) {
   this.source.analyze(context);
   this.target.analyze(context);
 };
 
-Argument.prototype.analyze = function(context) {
+Argument.prototype.analyze = function (context) {
   // console.log(this.expression);
   this.expression.analyze(context);
   // console.log(this.expression);
   // this.type = this.expresion.type;
 };
 
-Break.prototype.analyze = function(context) {
+Break.prototype.analyze = function (context) {
   check.inLoop(context, "break");
 };
 
-BinaryExp.prototype.analyze = function(context) {
+BinaryExp.prototype.analyze = function (context) {
   this.left.analyze(context);
   this.right.analyze(context);
   if (/[-+*/&|]/.test(this.op)) {
@@ -104,7 +104,7 @@ BinaryExp.prototype.analyze = function(context) {
   }
 };
 
-VariableDeclaration.prototype.analyze = function(context) {
+VariableDeclaration.prototype.analyze = function (context) {
   if (this.optionalSource != null) {
     this.optionalSource.analyze(context);
     this.type = this.optionalSource.type;
@@ -112,34 +112,26 @@ VariableDeclaration.prototype.analyze = function(context) {
   context.add(this);
 };
 
-// Needs function declarations to be defined
-Call.prototype.analyze = function(context) {
-  // console.log(this.callee.ref);
+Call.prototype.analyze = function (context) {
   this.callee = context.lookup(this.callee.ref);
   check.isFunction(this.callee, "Attempt to call a non-function");
   this.args.forEach((arg) => arg.analyze(context));
-  // console.log(this);
   check.legalArguments(this.args, this.callee.parameters.parameters);
 };
 
-// Function analysis is broken up into two parts in order to support (nutual)
-// recursion. First we have to do semantic analysis just on the signature
-// (including the return type). This is so other functions that may be declared
-// before this one have calls to this one checked.
-FunctionDeclaration.prototype.analyzeSignature = function(context) {
+FunctionDeclaration.prototype.analyzeSignature = function (context) {
   this.bodyContext = context.createChildContextForFunctionBody(this);
   this.parameters.analyze(this.bodyContext);
 };
 
-FunctionDeclaration.prototype.analyze = function(context) {
+FunctionDeclaration.prototype.analyze = function (context) {
   this.suite.analyze(this.bodyContext);
   context.add(this);
   delete this.bodyContext; // This was only temporary, delete to keep output clean.
 };
 
-IfStmt.prototype.analyze = function(context) {
+IfStmt.prototype.analyze = function (context) {
   this.firstCondition.analyze(context);
-  console.log(this.firstCondition);
   check.isBoolean(this.firstCondition);
   this.firstSuite.analyze(context);
   this.potentialConditions.forEach((condition, i) => {
@@ -150,13 +142,12 @@ IfStmt.prototype.analyze = function(context) {
   this.elseCaseSuite.analyze(context);
 };
 
-IdExp.prototype.analyze = function(context) {
+IdExp.prototype.analyze = function (context) {
   this.ref = context.lookup(this.ref);
   this.type = this.ref.type;
-  // console.log(this.type);
 };
 
-Literal.prototype.analyze = function() {
+Literal.prototype.analyze = function () {
   if (Number.isInteger(this.value)) {
     this.type = IntType;
   } else if (this.value % 1 >= 0 || this.value % 1 <= 0) {
@@ -169,47 +160,48 @@ Literal.prototype.analyze = function() {
   }
 };
 
-NegationExp.prototype.analyze = function(context) {
+NegationExp.prototype.analyze = function (context) {
   this.operand.analyze(context);
   check.isInteger(this.operand, "Operand of negation");
   this.type = IntType;
 };
 
-Print.prototype.analyze = function(context) {
+Print.prototype.analyze = function (context) {
   this.expression.analyze(context);
 };
 
-Param.prototype.analyze = function(context) {
-  // console.log(context);
+Param.prototype.analyze = function (context) {
   this.type = context.lookup(this.type.id);
   context.add(this);
-  // console.log(context);
 };
 
-Params.prototype.analyze = function(context) {
+Params.prototype.analyze = function (context) {
   this.parameters.forEach((s) => s.analyze(context));
 };
 
-Suite.prototype.analyze = function(context) {
+Suite.prototype.analyze = function (context) {
   const suiteContext = context.createChildContextForBlock();
   this.stmt.forEach((s) => s.analyze(suiteContext));
 };
 
-Return.prototype.analyze = function(context) {
+Return.prototype.analyze = function (context) {
   check.inFunction(context);
 };
 
-ForExp.prototype.analyze = function(context) {
+Rule.prototype.analyze = function (context) {
+  check.inFunction(context);
+};
+
+ForExp.prototype.analyze = function (context) {
   const bodyContext = context.createChildContextForLoop();
   this.iterable.analyze(context);
   check.isIterable(this.iterable);
   this.id = new VariableDeclaration(this.id, this.iterable.iterator);
   bodyContext.add(this.id);
   this.suite.analyze(bodyContext);
-  // console.log(this);
 };
 
-WhileExp.prototype.analyze = function(context) {
+WhileExp.prototype.analyze = function (context) {
   this.test.analyze(context);
   check.isBoolean(this.test, "Test in while");
   const suiteContext = context.createChildContextForLoop();

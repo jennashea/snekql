@@ -28,12 +28,45 @@ const errors = [
   ["non integer in add", '3 + "dog"'],
   ["non integer in subtract", '"dog" - 5'],
   ["types do not match in inequality test", '2 > "dog"'],
-  // ["too many function arguments", "pythagorean(1, 2, 3)"],
-  // ["too few function arguments", 'repeat("x")'],
-  // ["wrong type of function argument", "ord(8)"],
+  [
+    "too many function arguments",
+    `fnc doubleIt(x:int):
+    ⇨return x*2
+    ⇦
+    doubleIt(1, 2)
+   `,
+  ],
+  [
+    "too few function arguments",
+    `fnc multiply(x:int , y:int):
+    ⇨return x*y
+    ⇦
+    multiply(1)
+  `,
+  ],
+  [
+    "wrong type of function argument",
+    `
+   fnc split(word:str):
+    ⇨return word[0:2]
+    ⇦
+    multiply(100)
+   `,
+  ],
   ["member of nonrecord", "person.chair"],
   ["subscript of nonarray", "a = 10 a[10] = 1"],
   ["call of nonfunction", "a = 10 a(1000)"],
+  [
+    "not iterable type",
+    `for i in 100:
+  ⇨hiss("hello world")
+  ⇦
+  `,
+  ],
+  ["array not all same type", `[1, 2, 3, "brandon"]`],
+  ["return must be inside a function", `return 10`],
+  ["break must be inside a function", `break`],
+  ["Rule not proper expression type", `@ >= [1, 2, 3]`],
 ];
 
 describe("The semantic analyzer", () => {

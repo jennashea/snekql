@@ -33,12 +33,20 @@ module.exports = {
     doCheck(value.constructor === FunctionDeclaration, "Not a function");
   },
 
+  isProperRule(rule) {
+    doCheck(
+      isBoolean(rule.expressions) ||
+        isInteger(rule.expressions) ||
+        isDouble(rule.expressions) ||
+        isString(rule.expressions),
+      "Rule expression not proper type"
+    );
+  },
+
   expressionsHaveTheSameType(e1, e2) {
     doCheck(e1.type === e2.type, "Types must match exactly");
   },
   isAssignableTo(expression, type) {
-    console.log(expression);
-    console.log(type);
     doCheck(
       expression.type === type,
       `Expression of type ${util.format(
