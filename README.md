@@ -2,6 +2,8 @@
 
 ![SnekQL Logo](docs/images/snekQLLogoOff.png)
 
+## GitHub Page : https://imani-martin.github.io/snekql/
+
 ## Introduction
 
 SnekQL is a multi-paradigm query language oriented towards data science. Pragmatic and intuitive, our language is intended to provide a simple yet powerful way of manipulating (representing &amp; visualizing) data.
