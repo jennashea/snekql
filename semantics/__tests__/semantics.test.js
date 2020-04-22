@@ -34,9 +34,16 @@ hiss(na)
 return "na"
 ⇦
 
+@ > 25
+@ > 99.9
+@ == true
+
 batmanSong(100, "brandon")
 
 [1, 2, 3, 4, 5]
+["brandon", "jenna", "jared", "imani", "alvin", "qiyue"]
+[1.1 , 2.2, 3.3, 4.4, 5.5]
+[true, false, true,  false]
 
 for i in "brandon":
 ⇨hiss(i)
@@ -57,11 +64,11 @@ while 1 < 10:
 `;
 
 describe("The semantic analyzer", () => {
-    test("accepts the mega program with all syntactic forms", (done) => {
-        const astRoot = parse(program);
-        expect(astRoot).toBeTruthy();
-        analyze(astRoot);
-        expect(astRoot).toBeTruthy();
-        done();
-    });
+	test("accepts the mega program with all syntactic forms", (done) => {
+		const astRoot = parse(program);
+		expect(astRoot).toBeTruthy();
+		analyze(astRoot);
+		expect(astRoot).toBeTruthy();
+		done();
+	});
 });

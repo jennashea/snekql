@@ -12,21 +12,8 @@ module.exports = {
   isInteger(expression) {
     doCheck(expression.type === IntType, "Not an integer");
   },
-  isDouble(expression) {
-    doCheck(expression.type === DoubleType, "Not a double");
-  },
   isBoolean(expression) {
     doCheck(expression.type === BooleanType, "Not a boolean");
-  },
-  isString(expression) {
-    doCheck(expression.type === StringType, "Not a string");
-  },
-
-  isIntegerOrString(expression) {
-    doCheck(
-      expression.type === IntType || expression.type === StringType,
-      "Not an integer or string"
-    );
   },
 
   isFunction(value) {
@@ -35,10 +22,10 @@ module.exports = {
 
   isProperRule(rule) {
     doCheck(
-      isBoolean(rule.expressions) ||
-        isInteger(rule.expressions) ||
-        isDouble(rule.expressions) ||
-        isString(rule.expressions),
+      rule.expressions.type === IntType ||
+        rule.expressions.type === DoubleType ||
+        rule.expressions.type === BooleanType ||
+        rule.expressions.type === StringType,
       "Rule expression not proper type"
     );
   },

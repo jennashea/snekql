@@ -76,10 +76,7 @@ Assignment.prototype.analyze = function (context) {
 };
 
 Argument.prototype.analyze = function (context) {
-  // console.log(this.expression);
   this.expression.analyze(context);
-  // console.log(this.expression);
-  // this.type = this.expresion.type;
 };
 
 Break.prototype.analyze = function (context) {
@@ -98,9 +95,6 @@ BinaryExp.prototype.analyze = function (context) {
     check.isInteger(this.left);
     check.isInteger(this.right);
     this.type = BooleanType;
-  } else {
-    check.expressionsHaveTheSameType(this.left, this.right);
-    this.type = StringType;
   }
 };
 
@@ -127,7 +121,7 @@ FunctionDeclaration.prototype.analyzeSignature = function (context) {
 FunctionDeclaration.prototype.analyze = function (context) {
   this.suite.analyze(this.bodyContext);
   context.add(this);
-  delete this.bodyContext; // This was only temporary, delete to keep output clean.
+  delete this.bodyContext;
 };
 
 IfStmt.prototype.analyze = function (context) {
@@ -152,7 +146,7 @@ Literal.prototype.analyze = function () {
     this.type = IntType;
   } else if (this.value % 1 >= 0 || this.value % 1 <= 0) {
     this.type = DoubleType;
-  } else if (typeof variable === "boolean") {
+  } else if (this.value === "true" || this.value === "false") {
     this.type = BooleanType;
   } else {
     this.type = StringType;
@@ -189,7 +183,8 @@ Return.prototype.analyze = function (context) {
 };
 
 Rule.prototype.analyze = function (context) {
-  check.inFunction(context);
+  this.expressions.analyze(context);
+  check.isProperRule(this);
 };
 
 ForExp.prototype.analyze = function (context) {

@@ -158,7 +158,7 @@ const fixture = {
     String.raw`
       @ > 100
     `,
-    [new Rule(">", [new Literal(100)])],
+    [new Rule(">", new Literal(100))],
   ],
   arrays: [
     String.raw`

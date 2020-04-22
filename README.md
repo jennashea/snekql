@@ -272,6 +272,7 @@ bubbleSort(values)
 ### Semantic Error Checks
 
 -   use of undeclared variable
+-   redeclaration of declared variable
 -   non boolean while condition
 -   non integer boolean condition
 -   non integer in add

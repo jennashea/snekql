@@ -10,6 +10,7 @@ const Context = require("../context");
 
 const errors = [
   ["use of undeclared variable", "x + 1"],
+  ["redeclaration of declared variable", "let x = 10 let x"],
   [
     "non boolean while condition",
     `

@@ -85,7 +85,7 @@ snekQL {
   indent      =  "⇨"
   dedent      =  "⇦"
 
-  Rule         = "@" relop Exp1+
+  Rule         = "@" relop Exp1
   Arr          =  "[" ListOf<Exp1, ","> "]"
   Print        = "hiss(" Exp1 ")"
   numlit       =  digit+ ("." digit+)?
