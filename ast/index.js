@@ -174,11 +174,3 @@ module.exports = {
   Return,
   VariableDeclaration,
 };
-
-if (process.argv[2] == "-a") {
-  const fs = require("fs");
-  const parse = require("./parser");
-  const source = fs.readFileSync(process.argv[3]);
-
-  console.log(parse(source));
-}

@@ -10,9 +10,9 @@
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
+    "ignorePatterns": ["assets/"],
     "parserOptions": {
         "ecmaVersion": 2018
     },
-    "rules": {
-    }
+    "rules": {}
 }

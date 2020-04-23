@@ -12,7 +12,6 @@ const {
   ForExp,
   Call,
   Argument,
-  Null,
   Member,
   SubscriptedRangeable,
   IfStmt,
@@ -24,7 +23,6 @@ const {
   Types,
   Param,
   Params,
-  Return,
   VariableDeclaration,
 } = require("../../ast");
 

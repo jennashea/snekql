@@ -1,5 +1,5 @@
 const util = require("util");
-const { ArrayType, FunctionDeclaration, IdExp } = require("../ast");
+const { FunctionDeclaration } = require("../ast");
 const { IntType, StringType, BooleanType, DoubleType } = require("./builtins");
 
 function doCheck(condition, message) {

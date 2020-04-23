@@ -1,6 +1,3 @@
-const fs = require("fs");
-const ohm = require("ohm-js");
-const path = require("path");
 const {
   Program,
   BinaryExp,
@@ -14,7 +11,6 @@ const {
   ForExp,
   Call,
   Argument,
-  Null,
   Member,
   SubscriptedRangeable,
   IfStmt,
@@ -29,10 +25,6 @@ const {
   Return,
   VariableDeclaration,
 } = require("./index");
-
-const grammar = ohm.grammar(
-  fs.readFileSync(path.resolve(__dirname, "../grammar/snekql.ohm"))
-);
 
 // Ohm turns `x?` into either [x] or [], which we should clean up for our AST.
 function arrayToNullable(a) {
