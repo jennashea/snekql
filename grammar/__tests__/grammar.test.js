@@ -5,7 +5,7 @@
  * syntactic forms of the language.
  */
 
-const syntaxCheck = require("../syntax-checker");
+const syntaxCheck = require('../syntax-checker');
 
 const program = String.raw`
 rule1 = @ >= 390284
@@ -25,11 +25,6 @@ while 1:
 
 const program2 = String.raw`
 firstName = column("name", ["Jenna", "Jared"], true, false)
-firstName.name  # 'name'
-firstName.value  # ["Jenna", "Jared"]
-firstName.notNull  # true
-firstName.unique  # false
-firstName.addRow("Brandon")  # ["Jenna", "Jared", "Brandon"]
 `;
 
 const arithmetic = String.raw`
@@ -97,64 +92,64 @@ if a > b:
     hiss("a is greater than b")
 `;
 
-describe("The syntax checker", () => {
-  describe("large programs", () => {
-    test("with all syntactic forms", (done) => {
+describe('The syntax checker', () => {
+  describe('large programs', () => {
+    test('with all syntactic forms', done => {
       expect(syntaxCheck(program)).toBe(true);
       done();
     });
-    test("with columns example", (done) => {
+    test('with columns example', done => {
       expect(syntaxCheck(program2)).toBe(true);
       done();
     });
   });
-  describe("individual tests", () => {
-    test("comments", (done) => {
+  describe('individual tests', () => {
+    test('comments', done => {
       expect(syntaxCheck(comments)).toBe(true);
       done();
     });
 
-    test("integer division", (done) => {
+    test('integer division', done => {
       expect(syntaxCheck(integerDivision)).toBe(true);
       done();
     });
 
-    test("decimals", (done) => {
+    test('decimals', done => {
       expect(syntaxCheck(decimals)).toBe(true);
       done();
     });
 
-    test("loops", (done) => {
+    test('loops', done => {
       expect(syntaxCheck(loops)).toBe(true);
       done();
     });
 
-    test("arithmetic", (done) => {
+    test('arithmetic', done => {
       expect(syntaxCheck(arithmetic)).toBe(true);
       done();
     });
 
-    test("leftValues", (done) => {
+    test('leftValues', done => {
       expect(syntaxCheck(leftValues)).toBe(true);
       done();
     });
 
-    test("if_statements", (done) => {
+    test('if_statements', done => {
       expect(syntaxCheck(if_statements)).toBe(true);
       done();
     });
 
-    test("if_statements2", (done) => {
+    test('if_statements2', done => {
       expect(syntaxCheck(if_statements2)).toBe(true);
       done();
     });
 
-    test("if_statements3", (done) => {
+    test('if_statements3', done => {
       expect(syntaxCheck(if_statements3)).toBe(true);
       done();
     });
 
-    test("if_statements4", (done) => {
+    test('if_statements4', done => {
       expect(syntaxCheck(if_statements4)).toBe(true);
       done();
     });

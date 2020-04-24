@@ -6,6 +6,7 @@ const {
   Program,
   BinaryExp,
   Literal,
+  Null,
   IdExp,
   Print,
   Assignment,
@@ -15,7 +16,6 @@ const {
   ForExp,
   Call,
   Argument,
-  Member,
   SubscriptedRangeable,
   IfStmt,
   Break,
@@ -78,9 +78,6 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
   Lvalue_subscripted(lval, _open, exp, _colon, exp2, _close) {
     return new SubscriptedRangeable(lval.ast(), exp.ast(), arrayToNullable(exp2.ast()));
   },
-  Lvalue_field(lval, _dot, callOrID) {
-    return new Member(lval.ast(), callOrID.ast());
-  },
   Lvalue_id(lval) {
     return lval.ast();
   },
@@ -134,7 +131,7 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
     return new NegationExp(operand.ast());
   },
   Literal_null(_null) {
-    return new null();
+    return new Null();
   },
   Call(callee, _open, args, _close) {
     return new Call(callee.ast(), args.ast());

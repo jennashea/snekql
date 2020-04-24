@@ -32,13 +32,7 @@ class ForExp {
 }
 
 class IfStmt {
-  constructor(
-    firstCondition,
-    firstSuite,
-    potentialConditions,
-    potentialBlocks,
-    elseCaseSuite
-  ) {
+  constructor(firstCondition, firstSuite, potentialConditions, potentialBlocks, elseCaseSuite) {
     Object.assign(this, {
       firstCondition,
       firstSuite,
@@ -83,11 +77,6 @@ class WhileExp {
   }
 }
 class SubscriptedRangeable {
-  constructor(target, firstExp, secondExp) {
-    Object.assign(this, { target, firstExp, secondExp });
-  }
-}
-class Member {
   constructor(target, firstExp, secondExp) {
     Object.assign(this, { target, firstExp, secondExp });
   }
@@ -160,7 +149,6 @@ module.exports = {
   Call,
   Argument,
   Null,
-  Member,
   SubscriptedRangeable,
   IfStmt,
   Break,
