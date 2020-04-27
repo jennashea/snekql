@@ -39,10 +39,10 @@ function compile(sourceCode, { astOnly, frontEndOnly, shouldOptimize }) {
   }
   analyze(program);
   if (shouldOptimize) {
-    // TODO
+    program = program.optimize();
   }
   if (frontEndOnly) {
-    // TODO
+    return util.inspect(program, { depth: null });
   }
   return generate(program);
 }
