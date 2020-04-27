@@ -1,3 +1,4 @@
+const beautify = require('js-beautify');
 const {
   Program,
   BinaryExp,
@@ -38,20 +39,43 @@ const {
   ArrayOfDoubleType,
 } = require("../semantics/builtins");
 
+// function makeOp(op) {
+//   return {}[op]|| op;
+// }
+
+const javaScriptId = (() => {
+  let lastId = 0;
+  const map = new Map();
+  return v => {
+    if (!map.has(v)) {
+      map.set(v, ++lastId); // eslint-disable-line no-plusplus
+    }
+    return `${v.id}_${map.get(v)}`;
+  };
+})();
+
 Program.prototype.gen = function() {
   return
 };
 
 BinaryExp.prototype.gen = function() {
-  return
+  return `(${this.left.gen()} ${makeOp(this.op)} ${this.right.gen()})`;
 };
 
 Literal.prototype.gen = function() {
-  return
+  return this.type === IntType ? `"${this.value}"` : this.value;
+  return this.type === StringType ? `"${this.value}"` : this.value;
+  return this.type === DoubleType ? `"${this.value}"` : this.value;
+  return this.type === BooleanType ? `"${this.value}"` : this.value;
+  return this.type === ArrayOfType ? `"${this.value}"` : this.value;
+  return this.type === ArrayOfIntType ? `"${this.value}"` : this.value;
+  return this.type === ArrayOfStringType ? `"${this.value}"` : this.value;
+  return this.type === ArrayOfBooleanType ? `"${this.value}"` : this.value;
+  return this.type === ArrayOfDoubleType ? `"${this.value}"` : this.value;
 };
 
 IdExp.prototype.gen = function() {
-  return
+  return javaScriptId(this.ref);
 };
 
 Print.prototype.gen = function() {
@@ -59,15 +83,15 @@ Print.prototype.gen = function() {
 };
 
 Assignment.prototype.gen = function() {
-  return
+  return `${this.target.gen()} = ${this.source.gen()}`;
 };
 
 NegationExp.prototype.gen = function() {
-  return
+  return `(- (${this.operand.gen()}))`;
 };
 
 WhileExp.prototype.gen = function() {
-  return
+  return `while (${this.test.gen()}) { ${this.body.gen()} }`;
 };
 
 Suite.prototype.gen = function() {
@@ -79,7 +103,11 @@ ForExp.prototype.gen = function() {
 };
 
 Call.prototype.gen = function() {
-  return
+  const args = this.args.map(a => a.gen());
+  if (this.callee.builtin) {
+    return builtin[this.callee.id](args);
+  }
+  return `${javaScriptId(this.callee)}(${args.join(',')})`;
 };
 
 Argument.prototype.gen = function() {
@@ -87,23 +115,25 @@ Argument.prototype.gen = function() {
 };
 
 Null.prototype.gen = function() {
-  return
+  return 'null';
 };
 
 Member.prototype.gen = function() {
-  return
+  return `${this.record.gen()}.${this.id}`;
 };
 
 SubscriptedRangeable.prototype.gen = function() {
-  return
+  return `${this.array.gen()}[${this.subscript.gen()}]`;
 };
 
 IfStmt.prototype.gen = function() {
-  return
+  const thenPart = this.consequent.gen();
+  const elsePart = this.alternate ? this.alternate.gen() : 'null';
+  return `((${this.test.gen()}) ? (${thenPart}) : (${elsePart}))`;
 };
 
 Break.prototype.gen = function() {
-  return
+  return 'break';
 };
 
 Rule.prototype.gen = function() {
@@ -115,7 +145,10 @@ Arr.prototype.gen = function() {
 };
 
 FunctionDeclaration.prototype.gen = function() {
-  return
+  const name = javaScriptId(this);
+  const params = this.params.map(javaScriptId);
+  const body = this.body.type ? makeReturn(this.body) : this.body.gen();
+  return `function ${name} (${params.join(',')}) {${body}}`;
 };
 
 ArrayType.prototype.gen = function() {
@@ -139,5 +172,5 @@ Return.prototype.gen = function() {
 };
 
 VariableDeclaration.prototype.gen = function() {
-  return
+  return `let ${javaScriptId(this)} = ${this.init.gen()}`;
 };
