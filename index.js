@@ -30,6 +30,9 @@ const util = require('util');
 const yargs = require('yargs');
 const parse = require('./ast/parser');
 const analyze = require('./semantics/analyzer');
+const Context = require('./semantics/context');
+// const optimize = require('./semantics/optimizer');
+const generate = require('./backend/javascript-generator');
 
 // If compiling from a string, return the AST, IR, or compiled code as a string.
 function compile(sourceCode, { astOnly, frontEndOnly, shouldOptimize }) {
