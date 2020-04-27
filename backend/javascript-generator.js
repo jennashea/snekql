@@ -1,3 +1,5 @@
+// Translation to JavaScript
+
 const beautify = require('js-beautify');
 const {
   Program,
@@ -43,6 +45,16 @@ const {
 //   return {}[op]|| op;
 // }
 
+// function makeOp(op) { // Is this needed?
+//   return { '=': '===', '<>': '!==', '&': '&&', '|': '||' }[op] || op;
+// }
+
+module.exports = function(exp) {
+  return beautify(exp.gen(), { indent_size: 2 });
+};
+
+  // Do we need "function makeReturn(exp)" too? not sure
+  
 const javaScriptId = (() => {
   let lastId = 0;
   const map = new Map();

@@ -13,7 +13,20 @@ const fixture = {
   hello: [
     String.raw`hiss("Hello, world\n")`, 
     String.raw`console.log("Hello, world\n")`
-  ]
+  ],
+
+  call: [
+
+  ],
+
+  whileLoop: [
+
+  ],
+
+  forLoop:[
+
+  ],
+  
 };
 
 describe('The JavaScript generator', () => {
