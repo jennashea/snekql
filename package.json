@@ -6,6 +6,7 @@
   "dependencies": {
     "eslint-config-prettier": "^6.10.1",
     "jest": "^25.2.3",
+    "js-beautify": "^1.11.0",
     "mkdirp": "^1.0.3",
     "ohm-js": "^0.14.0"
   },
