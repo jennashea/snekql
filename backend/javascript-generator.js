@@ -54,6 +54,10 @@ const javaScriptId = (() => {
   };
 })();
 
+const builtin = {
+  hiss([s]) {return `console.log(${s})`;},
+}
+
 Program.prototype.gen = function() {
   return
 };
@@ -148,7 +152,7 @@ FunctionDeclaration.prototype.gen = function() {
   const name = javaScriptId(this);
   const params = this.params.map(javaScriptId);
   const body = this.body.type ? makeReturn(this.body) : this.body.gen();
-  return `function ${name} (${params.join(',')}) {${body}}`;
+  return `fnc ${name} (${params.join(',')}) {${body}}`;
 };
 
 ArrayType.prototype.gen = function() {
@@ -160,7 +164,7 @@ Types.prototype.gen = function() {
 };
 
 Param.prototype.gen = function() {
-  return
+  return javaScriptId(this);
 };
 
 Params.prototype.gen = function() {
@@ -168,7 +172,7 @@ Params.prototype.gen = function() {
 };
 
 Return.prototype.gen = function() {
-  return
+  return `return ${this.returnValue ? this.returnValue.gen() : ''}`;
 };
 
 VariableDeclaration.prototype.gen = function() {
