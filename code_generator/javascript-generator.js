@@ -42,9 +42,6 @@ const {
     return { '=': '===', '<>': '!==', '&': '&&', '|': '||' }[op] || op;
   }
 
-
-
-
   module.exports = function(exp) {
     return beautify(exp.gen(), { indent_size: 2 });
   };
@@ -73,7 +70,7 @@ const {
   };
 
   Assignment.prototype.gen = function() {
-    
+    return `${this.target.gen()} = ${this.source.gen()}`;
   };
 
   NegationExp.prototype.gen = function() {
@@ -154,13 +151,3 @@ const {
   VariableDeclaration.prototype.gen = function() {
     
   };
-
-
-
-
-
-
-
-
-
-
