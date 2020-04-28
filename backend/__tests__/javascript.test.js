@@ -10,7 +10,10 @@ const analyze = require("../../semantics/analyzer");
 const generate = require("../javascript-generator");
 
 const fixture = {
-  hello: [String.raw`"Hello World"`, String.raw`"Hello World"`],
+  hello: [
+    String.raw`hiss("Hello World")`,
+    String.raw`console.log("Hello World")`,
+  ],
 };
 
 describe("The JavaScript generator", () => {
