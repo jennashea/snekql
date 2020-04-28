@@ -38,26 +38,21 @@ const {
   ArrayOfDoubleType,
 } = require("../semantics/builtins");
 
-// function makeOp(op) {
-//   return {}[op]|| op;
-// }
+function makeOp(op) {
+  return { "=": "===", "!=": "!==" }[op] || op;
+}
 
 const javaScriptId = (() => {
   let lastId = 0;
   const map = new Map();
   return (v) => {
-    if (!map.has(v)) {
-      map.set(v, ++lastId); // eslint-disable-line no-plusplus
+    console.log(v);
+    if (!map.has(v.id.ref)) {
+      map.set(v.id.ref, ++lastId); // eslint-disable-line no-plusplus
     }
-    return `${v.id}_${map.get(v)}`;
+    return `${v.id.ref}_${map.get(v.id.ref)}`;
   };
 })();
-
-// const builtin = {
-//   hiss([s]) {
-//     return `console.log(${s})`;
-//   },
-// };
 
 module.exports = function (exp) {
   return beautify(exp.gen(), { indent_size: 2 });
@@ -97,7 +92,7 @@ WhileExp.prototype.gen = function () {
 };
 
 Suite.prototype.gen = function () {
-  return this.stmt.map(s => s.gen()).join(';');;
+  return this.stmt.map((s) => s.gen()).join(";");
 };
 
 ForExp.prototype.gen = function () {
@@ -139,7 +134,7 @@ Rule.prototype.gen = function () {
 };
 
 Arr.prototype.gen = function () {
-  return this.expressions.map(e => e.gen()).join(';');
+  return this.expressions.map((e) => e.gen()).join(";");
 };
 
 FunctionDeclaration.prototype.gen = function () {
@@ -162,7 +157,7 @@ Param.prototype.gen = function () {
 };
 
 Params.prototype.gen = function () {
-  return this.parameters.map(s => s.gen()).join(';');
+  return this.parameters.map((s) => s.gen()).join(";");
 };
 
 Return.prototype.gen = function () {
@@ -170,5 +165,6 @@ Return.prototype.gen = function () {
 };
 
 VariableDeclaration.prototype.gen = function () {
-  return `let ${javaScriptId(this)} = ${this.init.gen()}`;
+  console.log(this);
+  return `let ${javaScriptId(this)} = ${this.optionalSource.gen()}`;
 };

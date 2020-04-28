@@ -14,6 +14,10 @@ const fixture = {
     String.raw`hiss("Hello World")`,
     String.raw`console.log("Hello World")`,
   ],
+  stringLiterals: [String.raw`"Hello World"`, String.raw`"Hello World"`],
+  numLiterals: [String.raw`500.15`, String.raw`500.15`],
+  binaryexp: [String.raw`100 ** 100`, String.raw`100 ** 100`],
+  declarations: [String.raw`let a = 100`, String.raw`let a_1 = 100`],
 };
 
 describe("The JavaScript generator", () => {
