@@ -54,18 +54,18 @@ const javaScriptId = (() => {
   };
 })();
 
-const builtin = {
-  hiss([s]) {
-    return `console.log(${s})`;
-  },
-};
+// const builtin = {
+//   hiss([s]) {
+//     return `console.log(${s})`;
+//   },
+// };
 
 module.exports = function (exp) {
   return beautify(exp.gen(), { indent_size: 2 });
 };
 
 Program.prototype.gen = function () {
-  return;
+  this.statements.map((s) => s.gen()).join(";");
 };
 
 BinaryExp.prototype.gen = function () {
@@ -89,7 +89,8 @@ IdExp.prototype.gen = function () {
 };
 
 Print.prototype.gen = function () {
-  return;
+  console.log(this.expression.value);
+  return `console.log(${this.expression.gen()})`;
 };
 
 Assignment.prototype.gen = function () {
