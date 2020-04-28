@@ -21,23 +21,23 @@ const standardFunctions = [
   new FunctionDeclaration(new IdExp("tabulate")),
   new FunctionDeclaration(
     new IdExp("addRow"),
-    new Params([new Param(new IdExp("row"), ArrayOfStringType)])
+    new Params([new Param(new IdExp("row"))])
   ),
   new FunctionDeclaration(
     new IdExp("addColumn"),
-    new Params([new Param(new IdExp("column"), ArrayOfStringType)])
+    new Params([new Param(new IdExp("column"))])
   ),
   new FunctionDeclaration(
     new IdExp("dropRow"),
-    new Params([new Param(new IdExp("row"), ArrayOfStringType)])
+    new Params([new Param(new IdExp("row"))])
   ),
   new FunctionDeclaration(
     new IdExp("dropColumn"),
-    new Params([new Param(new IdExp("column"), ArrayOfStringType)])
+    new Params([new Param(new IdExp("column"))])
   ),
   new FunctionDeclaration(
     new IdExp("addRule"),
-    new Params([new Param(new IdExp("column"), BooleanType)])
+    new Params([new Param(new IdExp("column"))])
   ),
 ];
 

@@ -18,6 +18,14 @@ const fixture = {
   numLiterals: [String.raw`500.15`, String.raw`500.15`],
   binaryexp: [String.raw`100 ** 100`, String.raw`100 ** 100`],
   declarations: [String.raw`let a = 100`, String.raw`let a_1 = 100`],
+  assignments: [
+    String.raw`
+      let test = 234
+      test = 1999
+    `,
+    String.raw`let test_2 = 234;
+test_2 = 1999`,
+  ],
 };
 
 describe("The JavaScript generator", () => {
