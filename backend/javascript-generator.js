@@ -65,7 +65,7 @@ module.exports = function (exp) {
 };
 
 Program.prototype.gen = function () {
-  this.statements.map((s) => s.gen()).join(";");
+  return this.statements.map((s) => s.gen()).join(";");
 };
 
 BinaryExp.prototype.gen = function () {
@@ -73,15 +73,8 @@ BinaryExp.prototype.gen = function () {
 };
 
 Literal.prototype.gen = function () {
-  return this.type === IntType ? `"${this.value}"` : this.value;
-  return this.type === StringType ? `"${this.value}"` : this.value;
-  return this.type === DoubleType ? `"${this.value}"` : this.value;
-  return this.type === BooleanType ? `"${this.value}"` : this.value;
-  return this.type === ArrayOfType ? `"${this.value}"` : this.value;
-  return this.type === ArrayOfIntType ? `"${this.value}"` : this.value;
-  return this.type === ArrayOfStringType ? `"${this.value}"` : this.value;
-  return this.type === ArrayOfBooleanType ? `"${this.value}"` : this.value;
-  return this.type === ArrayOfDoubleType ? `"${this.value}"` : this.value;
+  if (this.type == IntType || this.type == DoubleType) return this.value;
+  else return `"${this.value}"`;
 };
 
 IdExp.prototype.gen = function () {
@@ -89,7 +82,6 @@ IdExp.prototype.gen = function () {
 };
 
 Print.prototype.gen = function () {
-  console.log(this.expression.value);
   return `console.log(${this.expression.gen()})`;
 };
 
