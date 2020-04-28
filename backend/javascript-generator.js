@@ -13,7 +13,6 @@ const {
   Call,
   Argument,
   Null,
-  Member,
   SubscriptedRangeable,
   IfStmt,
   Break,
@@ -98,11 +97,11 @@ WhileExp.prototype.gen = function () {
 };
 
 Suite.prototype.gen = function () {
-  return;
+  return this.stmt.map(s => s.gen()).join(';');;
 };
 
 ForExp.prototype.gen = function () {
-  return;
+  return `for (${this.iterable.gen()}) { ${this.suite.gen()} }`;
 };
 
 Call.prototype.gen = function () {
@@ -114,16 +113,12 @@ Call.prototype.gen = function () {
 };
 
 Argument.prototype.gen = function () {
-  return;
+  return this.expression.gen();
 };
 
 Null.prototype.gen = function () {
   return "null";
 };
-
-// Member.prototype.gen = function() {
-//   return `${this.record.gen()}.${this.id}`;
-// };
 
 SubscriptedRangeable.prototype.gen = function () {
   return `${this.array.gen()}[${this.subscript.gen()}]`;
@@ -140,11 +135,11 @@ Break.prototype.gen = function () {
 };
 
 Rule.prototype.gen = function () {
-  return;
+  return this.expressions.gen();
 };
 
 Arr.prototype.gen = function () {
-  return;
+  return this.expressions.map(e => e.gen()).join(';');
 };
 
 FunctionDeclaration.prototype.gen = function () {
@@ -154,20 +149,20 @@ FunctionDeclaration.prototype.gen = function () {
   return `fnc ${name} (${params.join(",")}) {${body}}`;
 };
 
-ArrayType.prototype.gen = function () {
-  return;
-};
+// ArrayType.prototype.gen = function () {
+//   return;
+// }; // we might not need this since there isn't a analyzing part???
 
-Types.prototype.gen = function () {
-  return;
-};
+// Types.prototype.gen = function () {
+//   return;
+// }; // we might not need this since there isn't a analyzing part???
 
 Param.prototype.gen = function () {
   return javaScriptId(this);
 };
 
 Params.prototype.gen = function () {
-  return;
+  return this.parameters.map(s => s.gen()).join(';');
 };
 
 Return.prototype.gen = function () {
