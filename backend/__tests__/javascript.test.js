@@ -26,3 +26,18 @@ describe("The JavaScript generator", () => {
     });
   });
 });
+
+Object.entries(fixture).forEach(([name, [source, expected]]) => {
+  const ast = parse(source);
+  analyze(ast);
+  console.log(
+    `name: ${name}\n 
+    source: ${source}\n 
+    ast: ${ast}\n
+    astType: ${typeof ast}\n
+    astGenType: ${typeof generate(ast)}\n
+    received: ${generate(ast)}\n
+    expected: ${expected}\n 
+    `
+  );
+});
