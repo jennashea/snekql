@@ -46,11 +46,16 @@ const javaScriptId = (() => {
   let lastId = 0;
   const map = new Map();
   return (v) => {
+    console.log("--------------");
     console.log(v);
-    if (!map.has(v.id.ref)) {
-      map.set(v.id.ref, ++lastId); // eslint-disable-line no-plusplus
+    let id = v.id.ref; // = typeof v === IdExp ? v.id.ref : v.ref;
+    console.log("Your id: ", id);
+    console.log(map);
+    console.log("--------------");
+    if (!map.has(id)) {
+      map.set(id, ++lastId); // eslint-disable-line no-plusplus
     }
-    return `${v.id.ref}_${map.get(v.id.ref)}`;
+    return `${id}_${map.get(id)}`;
   };
 })();
 
@@ -96,7 +101,10 @@ Suite.prototype.gen = function () {
 };
 
 ForExp.prototype.gen = function () {
-  return `for (${this.iterable.gen()}) { ${this.suite.gen()} }`;
+  console.log(this.id);
+  return `for (const ${javaScriptId(
+    this.id
+  )} of ${this.iterable.gen()}) { ${this.suite.gen()} }`;
 };
 
 Call.prototype.gen = function () {
@@ -165,6 +173,6 @@ Return.prototype.gen = function () {
 };
 
 VariableDeclaration.prototype.gen = function () {
-  console.log(this);
+  // console.log(this);
   return `let ${javaScriptId(this)} = ${this.optionalSource.gen()}`;
 };

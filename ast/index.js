@@ -32,7 +32,13 @@ class ForExp {
 }
 
 class IfStmt {
-  constructor(firstCondition, firstSuite, potentialConditions, potentialBlocks, elseCaseSuite) {
+  constructor(
+    firstCondition,
+    firstSuite,
+    potentialConditions,
+    potentialBlocks,
+    elseCaseSuite
+  ) {
     Object.assign(this, {
       firstCondition,
       firstSuite,

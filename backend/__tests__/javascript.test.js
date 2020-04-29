@@ -10,21 +10,44 @@ const analyze = require("../../semantics/analyzer");
 const generate = require("../javascript-generator");
 
 const fixture = {
-  hello: [
-    String.raw`hiss("Hello World")`,
-    String.raw`console.log("Hello World")`,
-  ],
-  stringLiterals: [String.raw`"Hello World"`, String.raw`"Hello World"`],
-  numLiterals: [String.raw`500.15`, String.raw`500.15`],
-  binaryexp: [String.raw`100 ** 100`, String.raw`100 ** 100`],
-  declarations: [String.raw`let a = 100`, String.raw`let a_1 = 100`],
+  hello: [`hiss("Hello World")`, `console.log("Hello World")`],
+  stringLiterals: [`"Hello World"`, `"Hello World"`],
+  numLiterals: [`500.15`, `500.15`],
+  binaryexp: [`100 ** 100`, `100 ** 100`],
+  binaryexpWithNeg: [`-100 ** 100`, `((-(100)) ** 100)`],
+  declarations: [`let a = 100`, `let a_1 = 100`],
   assignments: [
-    String.raw`
+    `
       let test = 234
       test = 1999
     `,
-    String.raw`let test_2 = 234;
+    `let test_2 = 234;
 test_2 = 1999`,
+  ],
+  // nullExamples: [`let empty = null`, `null`],
+  whileLoop: [
+    `
+  let i = 10
+  while i < 10:
+  ⇨i = i + 1
+  hiss(i)
+  ⇦
+`,
+    `let i_3 = 10;
+while ((i_3 < 10)) {
+  i_3 = (i_3 + 1);
+  console.log(i_3)
+}`,
+  ],
+  forLoop: [
+    `
+  for letter in "brandon":
+  ⇨hiss(letter)
+  ⇦
+  `,
+    `for (const letter_4 of \"brandon\") {
+  console.log(letter_4)
+}`,
   ],
 };
 

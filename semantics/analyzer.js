@@ -24,7 +24,7 @@ const {
   Params,
   Return,
   VariableDeclaration,
-} = require('../ast');
+} = require("../ast");
 const {
   IntType,
   StringType,
@@ -34,9 +34,9 @@ const {
   ArrayOfStringType,
   ArrayOfBooleanType,
   ArrayOfDoubleType,
-} = require('./builtins');
-const check = require('./check');
-const Context = require('./context');
+} = require("./builtins");
+const check = require("./check");
+const Context = require("./context");
 
 module.exports = function (exp) {
   exp.analyze(Context.INITIAL);
@@ -44,24 +44,24 @@ module.exports = function (exp) {
 
 Program.prototype.analyze = function (context) {
   this.statements
-    .filter(d => d.constructor === FunctionDeclaration)
-    .map(d => d.analyzeSignature(context));
-  this.statements.forEach(s => {
+    .filter((d) => d.constructor === FunctionDeclaration)
+    .map((d) => d.analyzeSignature(context));
+  this.statements.forEach((s) => {
     s.analyze(context);
   });
 };
 
 Arr.prototype.analyze = function (context) {
-  this.expressions.forEach(e => e.analyze(context));
+  this.expressions.forEach((e) => e.analyze(context));
   check.arrayAllSameType(this.expressions);
   let arrType = this.expressions[0].type.id;
-  if (arrType == 'int') {
+  if (arrType == "int") {
     this.type = ArrayOfIntType;
-  } else if (arrType == 'str') {
+  } else if (arrType == "str") {
     this.type = ArrayOfStringType;
-  } else if (arrType == 'boo') {
+  } else if (arrType == "boo") {
     this.type = ArrayOfBooleanType;
-  } else if (arrType == 'dub') {
+  } else if (arrType == "dub") {
     this.type = ArrayOfDoubleType;
   }
   this.iterator = this.type.types;
@@ -79,7 +79,7 @@ Argument.prototype.analyze = function (context) {
 };
 
 Break.prototype.analyze = function (context) {
-  check.inLoop(context, 'break');
+  check.inLoop(context, "break");
 };
 
 BinaryExp.prototype.analyze = function (context) {
@@ -107,8 +107,8 @@ VariableDeclaration.prototype.analyze = function (context) {
 
 Call.prototype.analyze = function (context) {
   this.callee = context.lookup(this.callee.ref);
-  check.isFunction(this.callee, 'Attempt to call a non-function');
-  this.args.forEach(arg => arg.analyze(context));
+  check.isFunction(this.callee, "Attempt to call a non-function");
+  this.args.forEach((arg) => arg.analyze(context));
   check.legalArguments(this.args, this.callee.parameters.parameters);
 };
 
@@ -145,7 +145,7 @@ Literal.prototype.analyze = function () {
     this.type = IntType;
   } else if (this.value % 1 >= 0 || this.value % 1 <= 0) {
     this.type = DoubleType;
-  } else if (this.value === 'true' || this.value === 'false') {
+  } else if (this.value === "true" || this.value === "false") {
     this.type = BooleanType;
   } else {
     this.type = StringType;
@@ -155,7 +155,7 @@ Literal.prototype.analyze = function () {
 
 NegationExp.prototype.analyze = function (context) {
   this.operand.analyze(context);
-  check.isInteger(this.operand, 'Operand of negation');
+  check.isInteger(this.operand, "Operand of negation");
   // TODO allow negation for doubles
   // Maaaaayyyyyybbbbe allow for arrays of numbers
   this.type = IntType;
@@ -171,12 +171,12 @@ Param.prototype.analyze = function (context) {
 };
 
 Params.prototype.analyze = function (context) {
-  this.parameters.forEach(s => s.analyze(context));
+  this.parameters.forEach((s) => s.analyze(context));
 };
 
 Suite.prototype.analyze = function (context) {
   const suiteContext = context.createChildContextForBlock();
-  this.stmt.forEach(s => s.analyze(suiteContext));
+  this.stmt.forEach((s) => s.analyze(suiteContext));
 };
 
 Return.prototype.analyze = function (context) {
@@ -203,7 +203,7 @@ ForExp.prototype.analyze = function (context) {
 
 WhileExp.prototype.analyze = function (context) {
   this.test.analyze(context);
-  check.isBoolean(this.test, 'Test in while');
+  check.isBoolean(this.test, "Test in while");
   const suiteContext = context.createChildContextForLoop();
   this.body.analyze(suiteContext);
 };
