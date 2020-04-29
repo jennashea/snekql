@@ -31,12 +31,14 @@ test_2 = 1999`,
   while i < 10:
   ⇨i = i + 1
   hiss(i)
+  break
   ⇦
 `,
     `let i_3 = 10;
 while ((i_3 < 10)) {
   i_3 = (i_3 + 1);
-  console.log(i_3)
+  console.log(i_3);
+  break;
 }`,
   ],
   forLoop: [
@@ -48,6 +50,20 @@ while ((i_3 < 10)) {
     `for (const letter_4 of \"brandon\") {
   console.log(letter_4)
 }`,
+  ],
+  functions: [
+    `fnc double(x: int):
+    ⇨return x*2
+    ⇦
+`,
+    `function double_5(x_6) {
+  return (x_6 * 2)
+}`,
+  ],
+  calls: [
+    `double(100)
+    `,
+    `double_5(100)`,
   ],
 };
 

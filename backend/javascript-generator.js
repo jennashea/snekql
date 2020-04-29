@@ -48,7 +48,7 @@ const javaScriptId = (() => {
   return (v) => {
     console.log("--------------");
     console.log(v);
-    let id = v.id.ref; // = typeof v === IdExp ? v.id.ref : v.ref;
+    let id = typeof v === "string" ? v : v.id.ref;
     console.log("Your id: ", id);
     console.log(map);
     console.log("--------------");
@@ -72,8 +72,8 @@ BinaryExp.prototype.gen = function () {
 };
 
 Literal.prototype.gen = function () {
-  if (this.type == IntType || this.type == DoubleType) return this.value;
-  else return `"${this.value}"`;
+  if (this.type == StringType) return `"${this.value}"`;
+  else return this.value;
 };
 
 IdExp.prototype.gen = function () {
@@ -109,9 +109,6 @@ ForExp.prototype.gen = function () {
 
 Call.prototype.gen = function () {
   const args = this.args.map((a) => a.gen());
-  if (this.callee.builtin) {
-    return builtin[this.callee.id](args);
-  }
   return `${javaScriptId(this.callee)}(${args.join(",")})`;
 };
 
@@ -134,7 +131,7 @@ IfStmt.prototype.gen = function () {
 };
 
 Break.prototype.gen = function () {
-  return "break";
+  return "break;";
 };
 
 Rule.prototype.gen = function () {
@@ -147,9 +144,10 @@ Arr.prototype.gen = function () {
 
 FunctionDeclaration.prototype.gen = function () {
   const name = javaScriptId(this);
-  const params = this.params.map(javaScriptId);
-  const body = this.body.type ? makeReturn(this.body) : this.body.gen();
-  return `fnc ${name} (${params.join(",")}) {${body}}`;
+  console.log(this.parameters);
+  // const params =
+  const suite = this.suite.gen();
+  return `function ${name} (${this.parameters.gen()}) {${suite}}`;
 };
 
 // ArrayType.prototype.gen = function () {
@@ -169,7 +167,8 @@ Params.prototype.gen = function () {
 };
 
 Return.prototype.gen = function () {
-  return `return ${this.returnValue ? this.returnValue.gen() : ""}`;
+  // console.log(this.expression);
+  return `return ${this.expression.gen()}`;
 };
 
 VariableDeclaration.prototype.gen = function () {
