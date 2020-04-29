@@ -132,7 +132,7 @@ IfStmt.prototype.analyze = function (context) {
     check.isBoolean(condition);
     this.potentialBlocks[i].analyze(context);
   });
-  this.elseCaseSuite.analyze(context);
+  if (this.elseCaseSuite != null) this.elseCaseSuite.analyze(context);
 };
 
 IdExp.prototype.analyze = function (context) {

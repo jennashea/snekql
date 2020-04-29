@@ -125,9 +125,14 @@ SubscriptedRangeable.prototype.gen = function () {
 };
 
 IfStmt.prototype.gen = function () {
-  const thenPart = this.consequent.gen();
-  const elsePart = this.alternate ? this.alternate.gen() : "null";
-  return `((${this.test.gen()}) ? (${thenPart}) : (${elsePart}))`;
+  let statements = `if(${this.firstCondition.gen()}){${this.firstSuite.gen()}}`;
+  if (this.potentialConditions != null)
+    this.potentialConditions.forEach((s, i) => {
+      statements.concat(`
+        else if(${s.gen()}) {${this.potentialBlocks[i].gen()}}
+          `);
+    });
+  return statements;
 };
 
 Break.prototype.gen = function () {
@@ -135,11 +140,11 @@ Break.prototype.gen = function () {
 };
 
 Rule.prototype.gen = function () {
-  return this.expressions.gen();
+  return `(value) => value ${makeOp(this.operator)} ${this.expressions.gen()}`;
 };
 
 Arr.prototype.gen = function () {
-  return this.expressions.map((e) => e.gen()).join(";");
+  return `[${this.expressions.map((e) => e.gen()).join(",")}]`;
 };
 
 FunctionDeclaration.prototype.gen = function () {
@@ -149,14 +154,6 @@ FunctionDeclaration.prototype.gen = function () {
   const suite = this.suite.gen();
   return `function ${name} (${this.parameters.gen()}) {${suite}}`;
 };
-
-// ArrayType.prototype.gen = function () {
-//   return;
-// }; // we might not need this since there isn't a analyzing part???
-
-// Types.prototype.gen = function () {
-//   return;
-// }; // we might not need this since there isn't a analyzing part???
 
 Param.prototype.gen = function () {
   return javaScriptId(this);

@@ -60,10 +60,22 @@ while ((i_3 < 10)) {
   return (x_6 * 2)
 }`,
   ],
-  calls: [
-    `double(100)
-    `,
-    `double_5(100)`,
+  calls: [`double(100)`, `double_5(100)`],
+  ifStatements: [
+    `if i < 10:
+    ⇨hiss(i)
+    ⇦elif i > 10:
+    ⇨hiss(i)
+    ⇦
+  `,
+    `if ((i_3 < 10)) {
+  console.log(i_3)
+}`,
+  ],
+  arrays: [`[1, 2, 3, 4]`, `[1, 2, 3, 4]`],
+  rules: [
+    `let constraint = @ != i`,
+    `let constraint_7 = (value) => value !== i_3`,
   ],
 };
 
