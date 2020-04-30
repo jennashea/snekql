@@ -1,6 +1,6 @@
-const fs = require('fs');
-const ohm = require('ohm-js');
-const path = require('path');
+const fs = require("fs");
+const ohm = require("ohm-js");
+const path = require("path");
 
 const {
   Program,
@@ -28,9 +28,11 @@ const {
   Params,
   Return,
   VariableDeclaration,
-} = require('./index');
+} = require("./index");
 
-const grammar = ohm.grammar(fs.readFileSync(path.resolve(__dirname, '../grammar/snekql.ohm')));
+const grammar = ohm.grammar(fs.readFileSync("grammar/snekql.ohm"));
+const syntaxCheck = require("../grammar/syntax-checker");
+const { withIndentsAndDedents } = require("../grammar/preparser");
 
 // Ohm turns `x?` into either [x] or [], which we should clean up for our AST.
 function arrayToNullable(a) {
@@ -38,7 +40,7 @@ function arrayToNullable(a) {
 }
 
 /* eslint-disable no-unused-vars */
-const astGenerator = grammar.createSemantics().addOperation('ast', {
+const astGenerator = grammar.createSemantics().addOperation("ast", {
   Program(s) {
     return new Program(s.ast());
   },
@@ -76,14 +78,22 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
     return new Suite(stmt.ast());
   },
   Lvalue_subscripted(lval, _open, exp, _colon, exp2, _close) {
-    return new SubscriptedRangeable(lval.ast(), exp.ast(), arrayToNullable(exp2.ast()));
+    return new SubscriptedRangeable(
+      lval.ast(),
+      exp.ast(),
+      arrayToNullable(exp2.ast())
+    );
   },
   Lvalue_id(lval) {
     return lval.ast();
   },
 
   VarDec(_let, id, _assignop, source) {
-    return new VariableDeclaration(id.ast(), null, arrayToNullable(source.ast()));
+    return new VariableDeclaration(
+      id.ast(),
+      null,
+      arrayToNullable(source.ast())
+    );
   },
   Rule(_atSign, operator, expressions) {
     return new Rule(operator.ast(), expressions.ast());
@@ -178,7 +188,8 @@ const astGenerator = grammar.createSemantics().addOperation('ast', {
 });
 /* eslint-enable no-unused-vars */
 
-module.exports = text => {
+module.exports = (text) => {
+  // console.log(withIndentsAndDedents(text));
   const match = grammar.match(text);
   if (!match.succeeded()) {
     throw new Error(`Syntax Error: ${match.message}`);
