@@ -17,8 +17,6 @@ const {
   Rule,
   Arr,
   FunctionDeclaration,
-  ArrayType,
-  Types,
   Param,
   Params,
   Return,
@@ -144,18 +142,18 @@ Argument.prototype.optimize = function () {
   return this;
 };
 
-// SubscriptedRangeable.prototype.optimize = function() {
-
-// };   //I think we don't need this either (?)
+SubscriptedRangeable.prototype.optimize = function () {};
 
 IfStmt.prototype.optimize = function () {
   this.firstCondition = this.firstCondition.optimize();
   this.firstSuite = this.firstSuite.optimize();
-  this.potentialConditions = this.potentialConditions.map((condition, i) =>
-    condition.optimize()
-  );
-  this.potentialBlocks[i] = this.potentialBlocks[i].optimize();
-  this.elseCaseSuite = this.elseCaseSuite.optimize();
+  if (this.potentialConditions !== null)
+    this.potentialConditions = this.potentialConditions.map((condition, i) => {
+      condition.optimize();
+      this.potentialBlocks[i] = this.potentialBlocks[i].optimize();
+    });
+  if (this.elseCaseSuite !== null)
+    this.elseCaseSuite = this.elseCaseSuite.optimize();
   return this;
 };
 
@@ -173,14 +171,6 @@ FunctionDeclaration.prototype.optimize = function () {
   this.suite = this.suite.optimize();
   return this;
 };
-
-// ArrayType.prototype.optimize = function() {
-
-// }; //I think we don't need this (?)
-
-// Types.prototype.optimize = function() {
-
-// }; //I think we don't need this (?)
 
 Params.prototype.optimize = function () {
   this.parameters = this.parameters.map((s) => s.optimize());

@@ -41,7 +41,7 @@ while ((i_3 < 10)) {
     `for letter in "brandon":
   hiss(letter)
   `,
-    `for (const letter_4 of \"brandon\") {
+    `for (const letter_4 of "brandon") {
   console.log(letter_4)
 }`,
   ],
@@ -59,8 +59,14 @@ while ((i_3 < 10)) {
   hiss(i)
 elif i > 10:
   hiss(i)
+else:
+  hiss(i)
 `,
     `if ((i_3 < 10)) {
+  console.log(i_3)
+} else if ((i_3 > 10)) {
+  console.log(i_3)
+} else {
   console.log(i_3)
 }`,
   ],
@@ -68,6 +74,36 @@ elif i > 10:
   rules: [
     `let constraint = @ != i`,
     `let constraint_7 = (value) => value !== i_3`,
+  ],
+  subscripted: [
+    `let array = [1, 2, 3]
+array[0:3]`,
+    `let array_8 = [1, 2, 3];
+array_8.slice(0, 3)`,
+  ],
+  nullTest: [`let empty = null`, `let empty_9 = null`],
+  usingRange: [
+    `let animals = ["dogs", "cats", "birds"]
+hiss(animals[0])
+hiss(animals[1:3])`,
+    `let animals_10 = ["dogs", "cats", "birds"];
+console.log(animals_10[0]);
+console.log(animals_10.slice(1, 3))`,
+  ],
+  noInitialization: [`let nothing`, `let nothing_11`],
+  functionsReturnString: [
+    `fnc hi():
+  return "hello!"
+`,
+    `function hi_12() {
+  return "hello!"
+}`,
+  ],
+  simpleIf: [
+    `if 1 > 0:
+  hiss("WTF?")
+  `,
+    `if`,
   ],
 };
 

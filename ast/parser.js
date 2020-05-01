@@ -1,6 +1,5 @@
 const fs = require("fs");
 const ohm = require("ohm-js");
-const path = require("path");
 
 const {
   Program,
@@ -31,7 +30,6 @@ const {
 } = require("./index");
 
 const grammar = ohm.grammar(fs.readFileSync("grammar/snekql.ohm"));
-const syntaxCheck = require("../grammar/syntax-checker");
 const { withIndentsAndDedents } = require("../grammar/preparser");
 
 // Ohm turns `x?` into either [x] or [], which we should clean up for our AST.

@@ -1,1 +1,12 @@
-let a a = 100*123+78*0
+let i = 10
+
+if i > 10:
+  hiss("i greater than 10")
+elif i < 10:
+  hiss("i less than 10")
+elif i < 10:
+  hiss("i less than 10")
+elif i < 10:
+  hiss("i less than 10")
+else:
+  hiss("i equal to 10")

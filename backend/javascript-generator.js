@@ -26,17 +26,7 @@ const {
   Return,
   VariableDeclaration,
 } = require("../ast");
-const {
-  IntType,
-  StringType,
-  DoubleType,
-  BooleanType,
-  ArrayOfType,
-  ArrayOfIntType,
-  ArrayOfStringType,
-  ArrayOfBooleanType,
-  ArrayOfDoubleType,
-} = require("../semantics/builtins");
+const { StringType } = require("../semantics/builtins");
 
 function makeOp(op) {
   return { "=": "===", "!=": "!==" }[op] || op;
@@ -110,22 +100,31 @@ Argument.prototype.gen = function () {
   return this.expression.gen();
 };
 
+Types.prototype.gen = function () {};
+
+ArrayType.prototype.gen = function () {};
+
 Null.prototype.gen = function () {
   return "null";
 };
 
 SubscriptedRangeable.prototype.gen = function () {
-  return `${this.array.gen()}[${this.subscript.gen()}]`;
+  if (this.secondExp === null)
+    return `${this.target.gen()}[${this.firstExp.gen()}]`;
+  else
+    return `${this.target.gen()}.slice(${this.firstExp.gen()}, ${this.secondExp.gen()})`;
 };
 
 IfStmt.prototype.gen = function () {
   let statements = `if(${this.firstCondition.gen()}){${this.firstSuite.gen()}}`;
-  if (this.potentialConditions != null)
+  if (this.potentialConditions !== null)
     this.potentialConditions.forEach((s, i) => {
-      statements.concat(`
+      statements = statements.concat(`
         else if(${s.gen()}) {${this.potentialBlocks[i].gen()}}
           `);
     });
+  if (this.elseCaseSuite !== null)
+    statements = statements.concat(`else {${this.elseCaseSuite.gen()}}`);
   return statements;
 };
 
@@ -156,7 +155,9 @@ Params.prototype.gen = function () {
 };
 
 Return.prototype.gen = function () {
-  return `return ${this.expression.gen()}`;
+  if (typeof this.expression.value == "string")
+    return `return "${this.expression.gen()}"`;
+  else return `return ${this.expression.gen()}`;
 };
 
 VariableDeclaration.prototype.gen = function () {

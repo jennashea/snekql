@@ -23,6 +23,7 @@ const {
   Param,
   Params,
   VariableDeclaration,
+  Null,
 } = require("../../ast");
 
 const fixture = {
@@ -157,6 +158,10 @@ else:
   variableDeclaration: [
     String.raw`let apple_stock = 240`,
     [new VariableDeclaration(new IdExp("apple_stock"), null, new Literal(240))],
+  ],
+  nullVariables: [
+    String.raw`let a = null`,
+    [new VariableDeclaration(new IdExp("a"), null, new Null())],
   ],
 };
 

@@ -18,12 +18,11 @@ const {
   Rule,
   Arr,
   FunctionDeclaration,
-  ArrayType,
-  Types,
   Param,
   Params,
   Return,
   VariableDeclaration,
+  Null,
 } = require("../ast");
 const {
   IntType,
@@ -47,6 +46,7 @@ Program.prototype.analyze = function (context) {
     .filter((d) => d.constructor === FunctionDeclaration)
     .map((d) => d.analyzeSignature(context));
   this.statements.forEach((s) => {
+    // console.log(s);
     s.analyze(context);
   });
 };
@@ -61,13 +61,11 @@ Arr.prototype.analyze = function (context) {
     this.type = ArrayOfStringType;
   } else if (arrType == "boo") {
     this.type = ArrayOfBooleanType;
-  } else if (arrType == "dub") {
+  } else {
     this.type = ArrayOfDoubleType;
   }
   this.iterator = this.type.types;
 };
-
-ArrayType.prototype.analyze = function (context) {};
 
 Assignment.prototype.analyze = function (context) {
   this.source.analyze(context);
@@ -161,6 +159,10 @@ NegationExp.prototype.analyze = function (context) {
   this.type = IntType;
 };
 
+Null.prototype.analyze = function (context) {
+  this.type = null;
+};
+
 Print.prototype.analyze = function (context) {
   this.expression.analyze(context);
 };
@@ -188,9 +190,11 @@ Rule.prototype.analyze = function (context) {
   check.isProperRule(this);
 };
 
-SubscriptedRangeable.analyze = function (context) {};
-
-Types.prototype.analyze = function (context) {};
+SubscriptedRangeable.prototype.analyze = function (context) {
+  this.target.analyze(context);
+  this.firstExp.analyze(context);
+  if (this.secondExp !== null) this.secondExp.analyze(context);
+};
 
 ForExp.prototype.analyze = function (context) {
   const bodyContext = context.createChildContextForLoop();

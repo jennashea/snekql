@@ -39,13 +39,17 @@ fnc batmanSong(times:int, another:str):
 batmanSong(100, "brandon")
 
 [1, 2, 3, 4, 5]
-["brandon", "jenna", "jared", "imani", "alvin", "qiyue"]
+let names = ["brandon", "jenna", "jared", "imani", "alvin", "qiyue"]
 [1.1 , 2.2, 3.3, 4.4, 5.5]
 [true, false, true,  false]
+[1]
+
+names[0]
+names[1:4]
 
 for i in "brandon":
   hiss(i)
-
+let empty = null
 let i = 100
 
 if i < 1:
@@ -55,7 +59,7 @@ elif i > 1:
 else:
   hiss("i is equivalent to 1")
 
-while 1 < 10:
+while 1 <= 10:
   hiss("hello world")
 
 `;
