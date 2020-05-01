@@ -48,11 +48,6 @@ Assignment.prototype.optimize = function () {
   return this;
 };
 
-// Binding.prototype.optimize = function() {
-//   this.value = this.value.optimize();
-//   return this;
-// };
-
 Break.prototype.optimize = function () {
   return this;
 };
@@ -135,7 +130,6 @@ BinaryExp.prototype.optimize = function () {
 };
 
 Print.prototype.optimize = function () {
-  // console.log(this.expression);
   this.expression = this.expression.optimize();
   return this;
 };

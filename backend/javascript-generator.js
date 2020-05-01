@@ -156,7 +156,6 @@ Params.prototype.gen = function () {
 };
 
 Return.prototype.gen = function () {
-  // console.log(this.expression);
   return `return ${this.expression.gen()}`;
 };
 
