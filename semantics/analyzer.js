@@ -46,7 +46,6 @@ Program.prototype.analyze = function (context) {
     .filter((d) => d.constructor === FunctionDeclaration)
     .map((d) => d.analyzeSignature(context));
   this.statements.forEach((s) => {
-    // console.log(s);
     s.analyze(context);
   });
 };
@@ -83,7 +82,7 @@ Break.prototype.analyze = function (context) {
 BinaryExp.prototype.analyze = function (context) {
   this.left.analyze(context);
   this.right.analyze(context);
-  if (/[-+*/&|]/.test(this.op)) {
+  if (/[-+*/]/.test(this.op)) {
     check.isInteger(this.left);
     check.isInteger(this.right);
     this.type = IntType;
@@ -91,6 +90,11 @@ BinaryExp.prototype.analyze = function (context) {
     check.expressionsHaveTheSameType(this.left, this.right);
     check.isInteger(this.left);
     check.isInteger(this.right);
+    this.type = BooleanType;
+  } else if (this.op === "and" || this.op === "or") {
+    check.expressionsHaveTheSameType(this.left, this.right);
+    check.isBoolean(this.left);
+    check.isBoolean(this.right);
     this.type = BooleanType;
   }
 };
@@ -159,7 +163,7 @@ NegationExp.prototype.analyze = function (context) {
   this.type = IntType;
 };
 
-Null.prototype.analyze = function (context) {
+Null.prototype.analyze = function () {
   this.type = null;
 };
 

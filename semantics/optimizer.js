@@ -21,6 +21,7 @@ const {
   Params,
   Return,
   VariableDeclaration,
+  Null,
 } = require("../ast");
 
 module.exports = (program) => program.optimize();
@@ -51,9 +52,8 @@ Break.prototype.optimize = function () {
 };
 
 ForExp.prototype.optimize = function () {
-  this.low = this.low.optimize();
-  this.high = this.high.optimize();
-  this.body = this.body.optimize();
+  this.iterable = this.iterable.optimize();
+  this.suite = this.suite.optimize();
   return this;
 };
 
@@ -95,9 +95,9 @@ Param.prototype.optimize = function () {
 
 WhileExp.prototype.optimize = function () {
   this.test = this.test.optimize();
-  // if (this.test instanceof Literal && !this.test.value) {
-  //   return new Nil();
-  // }      // this needs to be changed to the boolean way instead of integer
+  if (this.test instanceof Literal && this.test.value == "false") {
+    return new Null();
+  }
   this.body = this.body.optimize();
   return this;
 };
@@ -124,6 +124,16 @@ BinaryExp.prototype.optimize = function () {
     if (this.op === "/") return new Literal(x / y);
   }
 
+  // Added logical operator optimization for boolean expressions
+  if (this.op === "and" && this.right.value === "false") return this.right;
+  if (this.op === "and" && this.left.value === "false") return this.left;
+  if (this.op === "or" && this.right.value === "true") return this.right;
+  if (this.op === "or" && this.left.value === "true") return this.left;
+  if (this.left.value === "false" && this.right.value === "false")
+    return this.left;
+  if (this.left.value === "true" || this.right.value === "true")
+    return this.left;
+
   return this;
 };
 
@@ -144,6 +154,7 @@ Argument.prototype.optimize = function () {
 
 SubscriptedRangeable.prototype.optimize = function () {};
 
+// Optimizations added for if, else if, and else statements
 IfStmt.prototype.optimize = function () {
   this.firstCondition = this.firstCondition.optimize();
   this.firstSuite = this.firstSuite.optimize();

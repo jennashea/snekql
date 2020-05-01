@@ -25,22 +25,20 @@
  * would be really nice to add.
  */
 
-/* eslint-disable no-unused-vars */
 const fs = require("fs");
 const util = require("util");
 const yargs = require("yargs");
 const parse = require("./ast/parser");
 const analyze = require("./semantics/analyzer");
+/* eslint-disable no-unused-vars */
 const Context = require("./semantics/context");
 const optimize = require("./semantics/optimizer");
-const generate = require("./backend/javascript-generator");
-const syntaxCheck = require("./grammar/syntax-checker");
 /* eslint-enable no-unused-vars */
+const generate = require("./backend/javascript-generator");
 
 // If compiling from a string, return the AST, IR, or compiled code as a string.
 function compile(sourceCode, { astOnly, frontEndOnly, shouldOptimize }) {
   let program = parse(sourceCode);
-  // console.log(syntaxCheck(sourceCode));
   if (astOnly) {
     return util.inspect(program, { depth: null, compact: true });
   }
