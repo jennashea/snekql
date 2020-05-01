@@ -31,14 +31,14 @@ const yargs = require("yargs");
 const parse = require("./ast/parser");
 const analyze = require("./semantics/analyzer");
 const Context = require("./semantics/context");
-// const optimize = require('./semantics/optimizer');
+const optimize = require("./semantics/optimizer");
 const generate = require("./backend/javascript-generator");
 const syntaxCheck = require("./grammar/syntax-checker");
 
 // If compiling from a string, return the AST, IR, or compiled code as a string.
 function compile(sourceCode, { astOnly, frontEndOnly, shouldOptimize }) {
   let program = parse(sourceCode);
-  console.log(syntaxCheck(sourceCode));
+  // console.log(syntaxCheck(sourceCode));
   if (astOnly) {
     return util.inspect(program, { depth: null, compact: true });
   }

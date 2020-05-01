@@ -46,12 +46,7 @@ const javaScriptId = (() => {
   let lastId = 0;
   const map = new Map();
   return (v) => {
-    console.log("--------------");
-    console.log(v);
     let id = typeof v === "string" ? v : v.id.ref;
-    console.log("Your id: ", id);
-    console.log(map);
-    console.log("--------------");
     if (!map.has(id)) {
       map.set(id, ++lastId); // eslint-disable-line no-plusplus
     }
@@ -101,7 +96,6 @@ Suite.prototype.gen = function () {
 };
 
 ForExp.prototype.gen = function () {
-  console.log(this.id);
   return `for (const ${javaScriptId(
     this.id
   )} of ${this.iterable.gen()}) { ${this.suite.gen()} }`;
@@ -149,8 +143,6 @@ Arr.prototype.gen = function () {
 
 FunctionDeclaration.prototype.gen = function () {
   const name = javaScriptId(this);
-  console.log(this.parameters);
-  // const params =
   const suite = this.suite.gen();
   return `function ${name} (${this.parameters.gen()}) {${suite}}`;
 };
@@ -169,6 +161,7 @@ Return.prototype.gen = function () {
 };
 
 VariableDeclaration.prototype.gen = function () {
-  // console.log(this);
-  return `let ${javaScriptId(this)} = ${this.optionalSource.gen()}`;
+  if (this.optionalSource !== null)
+    return `let ${javaScriptId(this)} = ${this.optionalSource.gen()}`;
+  else return `let ${javaScriptId(this)}`;
 };

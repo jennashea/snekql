@@ -17,22 +17,18 @@ const fixture = {
   binaryexpWithNeg: [`-100 ** 100`, `((-(100)) ** 100)`],
   declarations: [`let a = 100`, `let a_1 = 100`],
   assignments: [
-    `
-      let test = 234
-      test = 1999
+    `let test = 234
+test = 1999
     `,
     `let test_2 = 234;
 test_2 = 1999`,
   ],
-  // nullExamples: [`let empty = null`, `null`],
   whileLoop: [
-    `
-  let i = 10
-  while i < 10:
-  ⇨i = i + 1
+    `let i = 10
+while i < 10:
+  i = i + 1
   hiss(i)
   break
-  ⇦
 `,
     `let i_3 = 10;
 while ((i_3 < 10)) {
@@ -42,10 +38,8 @@ while ((i_3 < 10)) {
 }`,
   ],
   forLoop: [
-    `
-  for letter in "brandon":
-  ⇨hiss(letter)
-  ⇦
+    `for letter in "brandon":
+  hiss(letter)
   `,
     `for (const letter_4 of \"brandon\") {
   console.log(letter_4)
@@ -53,8 +47,7 @@ while ((i_3 < 10)) {
   ],
   functions: [
     `fnc double(x: int):
-    ⇨return x*2
-    ⇦
+  return x*2
 `,
     `function double_5(x_6) {
   return (x_6 * 2)
@@ -63,11 +56,10 @@ while ((i_3 < 10)) {
   calls: [`double(100)`, `double_5(100)`],
   ifStatements: [
     `if i < 10:
-    ⇨hiss(i)
-    ⇦elif i > 10:
-    ⇨hiss(i)
-    ⇦
-  `,
+  hiss(i)
+elif i > 10:
+  hiss(i)
+`,
     `if ((i_3 < 10)) {
   console.log(i_3)
 }`,

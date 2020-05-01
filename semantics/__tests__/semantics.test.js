@@ -21,18 +21,16 @@ a = 1000*a*b
 let c
 
 while 1 < 10:
-⇨hiss("hello world")
-b += 100
-c = 10000
-let d = 1000
-hiss(d)
-⇦
+  hiss("hello world")
+  b += 100
+  c = 10000
+  let d = 1000
+  hiss(d)
 
 fnc batmanSong(times:int, another:str):
-⇨let na = times*13
-hiss(na)
-return "na"
-⇦
+  let na = times*13
+  hiss(na)
+  return "na"
 
 @ > 25
 @ > 99.9
@@ -46,29 +44,28 @@ batmanSong(100, "brandon")
 [true, false, true,  false]
 
 for i in "brandon":
-⇨hiss(i)
-⇦
+  hiss(i)
+
 let i = 100
 
 if i < 1:
-⇨hiss("i is less than 1")
-⇦elif i > 1:
-⇨hiss("i is greater than 1")
-⇦else:
-⇨hiss("i is equivalent to 1")
-⇦
+  hiss("i is less than 1")
+elif i > 1:
+  hiss("i is greater than 1")
+else:
+  hiss("i is equivalent to 1")
+
 while 1 < 10:
-⇨hiss("hello world")
-⇦
+  hiss("hello world")
 
 `;
 
 describe("The semantic analyzer", () => {
-	test("accepts the mega program with all syntactic forms", (done) => {
-		const astRoot = parse(program);
-		expect(astRoot).toBeTruthy();
-		analyze(astRoot);
-		expect(astRoot).toBeTruthy();
-		done();
-	});
+  test("accepts the mega program with all syntactic forms", (done) => {
+    const astRoot = parse(program);
+    expect(astRoot).toBeTruthy();
+    analyze(astRoot);
+    expect(astRoot).toBeTruthy();
+    done();
+  });
 });
