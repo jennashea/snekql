@@ -5,3 +5,13 @@ for i in "brandon":
 
 if true or true:
   hiss("yay")
+
+let j = 10
+let naught = 0.0
+while true:
+    naught += 2.7
+    j -= 1
+
+fnc areaOfACircle(radius:dub):
+    let pi = 3.14
+    return pi * radius ** 2
