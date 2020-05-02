@@ -10,6 +10,9 @@ for i in "brandon":
 if true or true:
   hiss("yay")
 
+if a < 12:
+  b = a
+
 let fib = [1,2,3,5,8]
 
 let j = 10
@@ -25,4 +28,4 @@ fnc areaOfACircle(radius:dub):
   let pi = 3.14
   return pi * radius ** 2
 
-areaOfACircle(2.00)
+areaOfACircle(2.01)
