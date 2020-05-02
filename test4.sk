@@ -1,0 +1,10 @@
+fnc batmanSong(times:int, another:str):
+  let na = times*13
+  hiss(na)
+  return "na"
+
+@ > 25
+@ > 99.9
+@ == true
+
+batmanSong(100, "brandon")

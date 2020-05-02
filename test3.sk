@@ -1,0 +1,8 @@
+[1, 2, 3, 4, 5]
+let names = ["brandon", "jenna", "jared", "imani", "alvin", "qiyue"]
+[1.1 , 2.2, 3.3, 4.4, 5.5]
+[true, false, true,  false]
+[1]
+
+names[0]
+names[1:4]

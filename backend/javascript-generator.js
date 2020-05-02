@@ -151,7 +151,7 @@ Param.prototype.gen = function () {
 };
 
 Params.prototype.gen = function () {
-  return this.parameters.map((s) => s.gen()).join(";");
+  return this.parameters.map((s) => s.gen()).join(",");
 };
 
 Return.prototype.gen = function () {
