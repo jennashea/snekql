@@ -29,7 +29,7 @@ const {
 const { StringType } = require("../semantics/builtins");
 
 function makeOp(op) {
-  return { "=": "===", "!=": "!==" }[op] || op;
+  return { "==": "===", "!=": "!==", and: "&&", or: "||" }[op] || op;
 }
 
 const javaScriptId = (() => {
@@ -70,7 +70,7 @@ Print.prototype.gen = function () {
 };
 
 Assignment.prototype.gen = function () {
-  return `${this.target.gen()} = ${this.source.gen()}`;
+  return `${this.target.gen()} ${makeOp(this.operator)} ${this.source.gen()}`;
 };
 
 NegationExp.prototype.gen = function () {
