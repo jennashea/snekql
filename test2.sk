@@ -5,8 +5,10 @@ let i = 100
 
 if i < 1:
   hiss("i is less than 1")
-elif i > 1:
-  hiss("i is greater than 1")
+elif i > 1*0:
+  hiss("i is greater than 0")
+elif i > 2:
+  hiss("i is greater than 2")
 else:
   hiss("i is equivalent to 1")
 

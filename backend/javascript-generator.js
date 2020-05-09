@@ -117,12 +117,14 @@ SubscriptedRangeable.prototype.gen = function () {
 
 IfStmt.prototype.gen = function () {
   let statements = `if(${this.firstCondition.gen()}){${this.firstSuite.gen()}}`;
-  if (this.potentialConditions !== null)
+  console.log("This is pc: ", this.potentialConditions);
+  if (this.potentialConditions[0] !== undefined) {
     this.potentialConditions.forEach((s, i) => {
       statements = statements.concat(`
         else if(${s.gen()}) {${this.potentialBlocks[i].gen()}}
           `);
     });
+  }
   if (this.elseCaseSuite !== null)
     statements = statements.concat(`else {${this.elseCaseSuite.gen()}}`);
   return statements;

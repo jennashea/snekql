@@ -158,8 +158,9 @@ SubscriptedRangeable.prototype.optimize = function () {};
 IfStmt.prototype.optimize = function () {
   this.firstCondition = this.firstCondition.optimize();
   this.firstSuite = this.firstSuite.optimize();
-  if (this.potentialConditions !== null)
-    this.potentialConditions = this.potentialConditions.map((condition, i) => {
+  // console.log(this);
+  if (this.potentialConditions[0] !== undefined)
+    this.potentialConditions.map((condition, i) => {
       condition.optimize();
       this.potentialBlocks[i] = this.potentialBlocks[i].optimize();
     });
@@ -193,7 +194,8 @@ Return.prototype.optimize = function () {
 };
 
 VariableDeclaration.prototype.optimize = function () {
-  if (this.optionalSource !== null) {
+  console.log(this.optionalSource);
+  if (this.optionalSource.type !== null) {
     this.optionalSource = this.optionalSource.optimize();
     return this;
   } else return this;
