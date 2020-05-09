@@ -272,7 +272,11 @@ fnc bubbleSort(column):
 
 bubbleSort(values)
 ```
-
+---
+### Optimizations
+- Removed unreacheable return statements within functions
+- Removed function declarations with no calls
+---
 ### Semantic Error Checks
 
 -   use of undeclared variable
