@@ -2,6 +2,10 @@ fnc batmanSong(times:int, another:str):
   let na = times*13
   hiss(na)
   return "na"
+  return "na"
+  return "na"
+  return "na"
+  return "na"
 
 @ > 25
 @ > 99.9

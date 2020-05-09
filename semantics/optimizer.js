@@ -142,7 +142,14 @@ Print.prototype.optimize = function () {
   return this;
 };
 
+// If a return statement appears more than once in the body of a suite, it will
+// remove it. (Semantic Analysis will check to make sure it's a function)
 Suite.prototype.optimize = function () {
+  this.stmt
+    .filter((s) => s.constructor === Return)
+    .forEach((s, i) => {
+      if (i !== 0) this.stmt.splice(this.stmt.indexOf(s), 1);
+    });
   this.stmt = this.stmt.map((s) => s.optimize());
   return this;
 };
@@ -152,13 +159,16 @@ Argument.prototype.optimize = function () {
   return this;
 };
 
-SubscriptedRangeable.prototype.optimize = function () {};
+SubscriptedRangeable.prototype.optimize = function () {
+  if (this.secondExp !== null) this.secondExp = this.secondExp.optimize();
+  this.firstExp = this.firstExp.optimize();
+  return this;
+};
 
 // Optimizations added for if, else if, and else statements
 IfStmt.prototype.optimize = function () {
   this.firstCondition = this.firstCondition.optimize();
   this.firstSuite = this.firstSuite.optimize();
-  // console.log(this);
   if (this.potentialConditions[0] !== undefined)
     this.potentialConditions.map((condition, i) => {
       condition.optimize();
@@ -194,7 +204,6 @@ Return.prototype.optimize = function () {
 };
 
 VariableDeclaration.prototype.optimize = function () {
-  console.log(this.optionalSource);
   if (this.optionalSource.type !== null) {
     this.optionalSource = this.optionalSource.optimize();
     return this;

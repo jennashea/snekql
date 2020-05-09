@@ -4,5 +4,5 @@ let names = ["brandon", "jenna", "jared", "imani", "alvin", "qiyue"]
 [true, false, true,  false]
 [1]
 
-names[0]
+names[5]
 names[1:4]
