@@ -15,7 +15,10 @@ fnc robinSong(times:int, another:str):
 fnc piNum(num:dub):
   return 22/7 # ???
 
-
+let i = 0
+while i != 0:
+  hiss(i)
+  i += 1
 
 @ > 25
 @ > 99.9

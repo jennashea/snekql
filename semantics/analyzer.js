@@ -86,7 +86,7 @@ BinaryExp.prototype.analyze = function (context) {
     check.isInteger(this.left);
     check.isInteger(this.right);
     this.type = IntType;
-  } else if (/<=?|>=?/.test(this.op)) {
+  } else if (/<=?|>=?|!=|==/.test(this.op)) {
     check.expressionsHaveTheSameType(this.left, this.right);
     check.isInteger(this.left);
     check.isInteger(this.right);
