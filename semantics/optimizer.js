@@ -106,7 +106,7 @@ Program.prototype.optimize = function () {
   // Will detect all function declarations, and if no calls have been made to them
   // we remove them from the program.
   let functionDecs = new Map();
-  this.statements.forEach((s, i) => {
+  this.statements.forEach((s) => {
     if (s.constructor == FunctionDeclaration) functionDecs.set(s.id.ref, s);
     if (s.constructor == Call && functionDecs.has(s.callee.id.ref))
       functionDecs.delete(s.callee.id.ref);
