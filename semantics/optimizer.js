@@ -103,6 +103,23 @@ WhileExp.prototype.optimize = function () {
 };
 
 Program.prototype.optimize = function () {
+  // Will detect all function declarations, and if no calls have been made to them
+  // we remove them from the program.
+  let functionDecs = new Map();
+  this.statements.forEach((s, i) => {
+    if (s.constructor == FunctionDeclaration) functionDecs.set(s.id.ref, s);
+    if (s.constructor == Call && functionDecs.has(s.callee.id.ref))
+      functionDecs.delete(s.callee.id.ref);
+  });
+
+  functionDecs.forEach((s) => {
+    if (s.constructor == FunctionDeclaration && functionDecs.has(s.id.ref))
+      this.statements.splice(
+        this.statements.indexOf(functionDecs.get(s.id.ref)),
+        1
+      );
+  });
+
   this.statements = this.statements.map((s) => s.optimize());
   return this;
 };
@@ -142,14 +159,14 @@ Print.prototype.optimize = function () {
   return this;
 };
 
-// If a return statement appears more than once in the body of a suite, it will
-// remove it. (Semantic Analysis will check to make sure it's a function)
 Suite.prototype.optimize = function () {
+  // If a return statement appears more than once in the body of a suite, it will remove it
   this.stmt
     .filter((s) => s.constructor === Return)
     .forEach((s, i) => {
       if (i !== 0) this.stmt.splice(this.stmt.indexOf(s), 1);
     });
+
   this.stmt = this.stmt.map((s) => s.optimize());
   return this;
 };

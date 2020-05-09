@@ -60,7 +60,6 @@ class Context {
 
   // Adds a declaration to this context.
   add(declaration) {
-    //if dec.id.constructor == IDEXP .ref too
     if (
       this.locals.has(declaration.id) ||
       this.locals.has(declaration.id.ref)

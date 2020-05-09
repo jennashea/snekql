@@ -7,6 +7,16 @@ fnc batmanSong(times:int, another:str):
   return "na"
   return "na"
 
+fnc robinSong(times:int, another:str):
+  let da = times*13
+  hiss(da)
+  return "da"
+
+fnc piNum(num:dub):
+  return 22/7 # ???
+
+
+
 @ > 25
 @ > 99.9
 @ == true
