@@ -11,6 +11,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+		<style>
+			pre{
+				text-align:left;width: 60%;
+                font-family:consolas;
+                font-weight: 500;
+			}
+			
+		</style>
 	</head>
 	<body class="is-preload">
 
@@ -70,11 +79,11 @@
 
 								<h2 style="text-align:center"><b>Types, Variables, and Declarations</b></h2>
 
-								<table border = "1" width = "100%">
+								<table style="text-align: left;font-family:consolas;font-size: large;font-weight: 700;" border = "1" width = "100%">
 									<tr>
 										<td><b>Booleans: boo</b></td>
-										<td>truthy = true <br>
-											falsy = false
+										<td>true <br>
+											false
 										</td>
 									</tr>
 									<tr>
@@ -99,7 +108,7 @@
 									<tr>
 										<td><b>Functions: fnc</b></td>
 										<td>fnc helloWorld(): <br>
-											hiss("Hello World")</Space>
+												hiss("Hello World")</Space>
 										</td>
 
 									</tr>
@@ -111,7 +120,7 @@
 									</tr>
 									<tr>
 										<td><b>Columns</b></td>
-										<td>firstName = column("name, ["Jenna", "Jared"], true, false<br>
+										<td>firstName = column("name, ["Jenna", "Jared"], true, false)<br>
 											firstName.name <b># 'name'</b><br>
 											firstName.value <b># ["Jenna", "Jared"]</b> <br>
 											firstName.notNull <b># true</b><br>
@@ -132,7 +141,7 @@
 									</tr>
 								</table>
 								<h2><b>Operators</b></h2>
-									<table border = "1" width ="100%">
+									<table style="text-align: left;font-family:consolas;font-size: large;font-weight: 700;" border = "1" width ="100%">
 										<tr>
 											<td><b>Additive Operators: +, -, +=, -= </b></td>
 											<td>addition = 9 + 10 <b># 19</b> <br>
@@ -170,15 +179,50 @@
 										</tr>
 									</table>
 									<h2><b>Control Flow</b></h2>
-									<table border = "1" width ="100%"></table>
+
 									<h2>for Loop</h2>
-									<span class="image"><img src="images/for.png" alt="" /></span>
+									<div style="display:flex;justify-content: center;align-items: center;">
+									<pre class="prettyprint">
+uni = "Loyola Marymount"
+arr = [1, 2, 3, 4, 5, 6]
 
+for i in uni:
+    hiss(i)
+
+for i in range(4):
+    hiss(i)
+
+for i in arr:
+    hiss(i)
+									</pre>
+									</div>
 									<h2>while Loop</h2>
-									<span class="image"><img src="images/while.png" alt="" /></span>
+									<div style="display:flex;justify-content: center;align-items: center;">
+										<pre class="prettyprint">
+j = 10
+naught = 0.0
 
+while true:
+    naught += 2.7
+    j -= 1
+										</pre>
+									</div>
 									<h2>if/else Loop</h2>
-									<span class="image"><img src="images/if:else.png" alt="" /></span>
+									<div style="display:flex;justify-content: center;align-items: center;">
+										<pre class="prettyprint">
+k = 100
+l = 62
+
+if k == l:
+    hiss("Values are Equal")
+else
+    someEqualizerFunc(k, l)
+
+if k - l == 38:
+    hiss("Values are Equal")
+
+										</pre>
+									</div>
 								</footer>
 							</section>
 
@@ -189,19 +233,115 @@
 								</header>
 
 								<h2>Area of a Circle:</h2>
-								<span class="image"><img src="images/area_circle.jpg" alt="" /></span>
-
+                                <div style="display:flex;justify-content: center;align-items: center;">
+                                    <pre class="prettyprint">
+fnc areaOfACircle(radius):
+    pi = 3.14
+    return pi * radius ** 2  # Precendence -> PEMDAS
+                                    </pre>
+                                </div>
 								<h2>Fibonacci + Load to Column Object:</h2>
-								<span class="image"><img src="images/fib.png" alt="" /></span>
+                                <div style="display:flex;justify-content: center;align-items: center;">
+                                    <pre class="prettyprint">
+numberOfTerms = 10
+array = []
+fibonacciNumbers = column("Numbers", array, True, True)
 
+fnc fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return(fibonacci(n-1) + fibonacci(n-2))
+
+fnc addValuesToColumn():
+    for i in range(numberOfTerms):
+        array.add(fibonacci(i))
+                                    </pre>
+                                </div>
 								<h2>Table Creation for Pythagorean Triples:</h2>
-								<span class="image"><img src="images/py_trip.png" alt="" /></span>
+                                <div style="display:flex;justify-content: center;align-items: center;">
+                                    <pre class="prettyprint">
+legAValues = []
+legBValues = []
+hypotenuseValues = []
 
+legsA = column("Legs", legAValues, True, True)
+legsB = column("Legs", legbValues, True, True)
+hypotenuses = column(
+    "Hyptonuses",
+    hypotenuseValues,
+    True,
+    True
+)
+
+pythagoreanTriples = tabulate(legsA, legsB, hypotenuses)
+
+fnc pythagoreanTriplets(limit):
+    hypotenuse = 0
+    two = 2
+
+    while hypotenuse < limit:
+        for i in range(1, two) :
+            legA = two * two - i * i
+            legB = 2 * two * i
+            hypotenuse = two * two + i * i
+
+            if hypotenuse > limit:
+                break
+            legsA.addRow(legA)
+            legsB.addRow(legB)
+            hypotenuses.addRow(hypotenuse)
+        two += 1
+
+pythagoreanTriplets(20)
+                                    </pre>
+                                </div>
 								<h2>Rule Creation for Tables:</h2>
-								<span class="image"><img src="images/table_rule.png" alt="" /></span>
+                                <div style="display:flex;justify-content: center;align-items: center;">
+                                    <pre class="prettyprint">
+array = [32, 7, 60, 100, 5]
+digits = column("Double Digits", array, True, True)
+fnc removeSingleDigitValues(oldColumn):
+    parsedColumn = oldColumn
+    i = 0
 
-								<h2>Sorting Column with Bubble Sort Algorithm:</h2>
-								<span class="image"><img src="images/bubble.png" alt="" /></span>
+    for i in oldColumn:
+        parsedColumn.addRow(oldColumn[i])
+
+    return parsedColumn
+
+removeSingleDigitValues(digits)
+                                    </pre>
+                                </div>
+                                <h2>Sorting Column with Bubble Sort Algorithm:</h2>
+                                <div style="display:flex;justify-content: center;align-items: center;">
+                                    <pre class="prettyprint">
+values = column(
+    "List of Numbers",
+    [22, 23434, 2332, 7543, 10132], 
+    True,
+    True
+)
+
+fnc bubbleSort(column):
+    length  = 0
+    switch  = true
+
+    for i in column:
+        length += 1
+
+    while switch:
+        switch = false
+        for i in range(length - 1):
+            if column[i] > column[i + 1]:
+                temp = column[i]
+                column[i] = column[i + 1]
+                column[i + 1] = temp
+                switch  = true
+
+bubbleSort(values)
+                                    </pre>
+                                </div>
 							</section>
 
 						<!-- Developer Team -->
