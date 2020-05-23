@@ -2,7 +2,7 @@
 
 ![SnekQL Logo](docs/images/snekQLLogoOff.png)
 
-## GitHub Page : https://imani-martin.github.io/snekql/
+## GitHub Page : https://jennashea.github.io/snekql/
 
 ## [Checkout the Grammar](https://github.com/jennashea/snekql/blob/master/grammar/snekql.ohm)
 
@@ -14,11 +14,11 @@ SnekQL's development group includes **Jenna Berlinberg, Brandon Golshirazian, Al
 
 ## Features
 
--   Dynamically Typed
--   Optional Parameters
--   Pass-by-reference Values
--   No Pointers
--   Weakly Typed
+- Dynamically Typed
+- Optional Parameters
+- Pass-by-reference Values
+- No Pointers
+- Weakly Typed
 
 ## Types, Variables, and Declarations
 
@@ -272,28 +272,33 @@ fnc bubbleSort(column):
 
 bubbleSort(values)
 ```
+
 ---
+
 ### Optimizations
+
 - Removed unreacheable return statements within functions
 - Removed function declarations with no calls
+
 ---
+
 ### Semantic Error Checks
 
--   use of undeclared variable
--   redeclaration of declared variable
--   non boolean while condition
--   non integer boolean condition
--   non integer in add
--   non integer in subtract
--   types do not match in inequality test
--   too many function arguments
--   too few function arguments
--   wrong type of function argument
--   member of nonrecord
--   subscript of nonarray
--   call of nonfunction
--   not iterable type
--   array not all same type
--   return must be inside a function
--   break must be inside a function
--   Rule not proper expression type
+- use of undeclared variable
+- redeclaration of declared variable
+- non boolean while condition
+- non integer boolean condition
+- non integer in add
+- non integer in subtract
+- types do not match in inequality test
+- too many function arguments
+- too few function arguments
+- wrong type of function argument
+- member of nonrecord
+- subscript of nonarray
+- call of nonfunction
+- not iterable type
+- array not all same type
+- return must be inside a function
+- break must be inside a function
+- Rule not proper expression type
